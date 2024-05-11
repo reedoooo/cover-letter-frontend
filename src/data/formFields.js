@@ -1,0 +1,22 @@
+const formFields = [
+  { name: 'url', label: 'URL', type: 'text' },
+  { name: 'yourName', label: 'Your Name', type: 'text' },
+  { name: 'address', label: 'Address', type: 'text' },
+  { name: 'cityStateZip', label: 'City, State, ZIP', type: 'text' },
+  { name: 'emailAddress', label: 'Email Address', type: 'email' },
+  { name: 'todayDate', label: "Today's Date", type: 'date' },
+  { name: 'employerName', label: "Employer's Name", type: 'text' },
+  { name: 'companyName', label: 'Company Name', type: 'text' },
+  { name: 'companyAddress', label: 'Company Address', type: 'text' },
+  {
+    name: 'companyCityStateZip',
+    label: 'Company City, State, ZIP',
+    type: 'text',
+  },
+  { name: 'jobTitle', label: 'Job Title', type: 'text' },
+  { name: 'previousPosition', label: 'Previous Position', type: 'text' },
+  { name: 'previousCompany', label: 'Previous Company', type: 'text' },
+  { name: 'skills', label: 'Skills', type: 'text' },
+  { name: 'softwarePrograms', label: 'Software Programs', type: 'text' },
+  { name: 'reasons', label: 'Reasons', type: 'text' },
+];

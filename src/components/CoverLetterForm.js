@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css'; // include styles
 import axios from 'axios';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import {
   Button,
   Box,
@@ -8,265 +10,278 @@ import {
   Container,
   CircularProgress,
   TextField,
+  Snackbar,
+  Grid,
+  Paper,
+  Tabs,
+  Tab,
 } from '@mui/material';
-import { Editor, EditorState, convertFromRaw, convertToRaw } from 'draft-js'; // Import conversion functions
-
+import {
+  Editor,
+  RichUtils,
+  EditorState,
+  convertFromRaw,
+  convertToRaw,
+} from 'draft-js'; // Import conversion functions
+const formFields = [
+  { name: 'url', label: 'URL', type: 'text', message: 'URL is required' },
+  {
+    name: 'yourName',
+    label: 'Your Name',
+    type: 'text',
+    message: 'Your name is required',
+  },
+  {
+    name: 'address',
+    label: 'Address',
+    type: 'text',
+    message: 'Address is required',
+  },
+  {
+    name: 'cityStateZip',
+    label: 'City, State, ZIP',
+    type: 'text',
+    message: 'City, State, ZIP is required',
+  },
+  {
+    name: 'emailAddress',
+    label: 'Email Address',
+    type: 'email',
+    message: 'Email is required',
+  },
+  {
+    name: 'todayDate',
+    label: "Today's Date",
+    type: 'date',
+    message: "Today's date is required",
+  },
+  {
+    name: 'employerName',
+    label: "Employer's Name",
+    type: 'text',
+    message: "Employer's name is required",
+  },
+  {
+    name: 'companyName',
+    label: 'Company Name',
+    type: 'text',
+    message: 'Company name is required',
+  },
+  {
+    name: 'companyAddress',
+    label: 'Company Address',
+    type: 'text',
+    message: 'Company address is required',
+  },
+  {
+    name: 'companyCityStateZip',
+    label: 'Company City, State, ZIP',
+    type: 'text',
+    message: 'Company city, state, ZIP is required',
+  },
+  {
+    name: 'previousPosition',
+    label: 'Previous Position',
+    type: 'text',
+    message: 'Previous position is required',
+  },
+  {
+    name: 'previousCompany',
+    label: 'Previous Company',
+    type: 'text',
+    message: 'Previous company is required',
+  },
+  {
+    name: 'softwarePrograms',
+    label: 'Software Programs',
+    type: 'text',
+    message: 'Software programs are required',
+  },
+  {
+    name: 'jobTitle',
+    label: 'Job Title',
+    type: 'text',
+    message: 'Job title is required',
+  },
+  {
+    name: 'skills',
+    label: 'Skills',
+    type: 'text',
+    message: 'Skills are required',
+  },
+  {
+    name: 'reasons',
+    label: 'Reasons',
+    type: 'text',
+    message: 'Reasons are required',
+  },
+];
+const validationSchema = Yup.object(
+  formFields.reduce(
+    (schema, field) => ({
+      ...schema,
+      [field.name]: Yup.string().required(`${field.label} is required`),
+    }),
+    {},
+  ),
+);
 function CoverLetterForm() {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty(),
-  );
-  // State variables for user inputs
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [drafts, setDrafts] = useState([]);
+  const [selectedDraft, setSelectedDraft] = useState(0); // Managing selected draft
   const [coverLetter, setCoverLetter] = useState('');
   const [loading, setLoading] = useState(false);
-  const [url, setURL] = useState('');
-  const [yourName, setYourName] = useState('');
-  const [address, setAddress] = useState('');
-  const [cityStateZip, setCityStateZip] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
-  const [todayDate, setTodayDate] = useState('');
-  const [employerName, setEmployerName] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [companyAddress, setCompanyAddress] = useState('');
-  const [companyCityStateZip, setCompanyCityStateZip] = useState('');
-  const [jobTitle, setJobTitle] = useState('');
-  const [skills, setSkills] = useState('');
-  const [reasons, setReasons] = useState('');
-  const [previousPosition, setPreviousPosition] = useState('');
-  const [previousCompany, setPreviousCompany] = useState('');
-  const [softwarePrograms, setSoftwarePrograms] = useState('');
+  const [open, setOpen] = React.useState(false);
 
-  useEffect(() => {
-    const data = localStorage.getItem('coverLetterDraft');
-    if (data) {
+  const formik = useFormik({
+    initialValues: formFields.reduce(
+      (values, field) => ({ ...values, [field.name]: '' }),
+      {},
+    ),
+    validationSchema: validationSchema,
+    onSubmit: async values => {
+      setLoading(true);
       try {
-        const parsedData = JSON.parse(data);
-        if (
-          parsedData &&
-          parsedData.blocks &&
-          parsedData.entityMap !== undefined
-        ) {
-          setEditorState(
-            EditorState.createWithContent(convertFromRaw(parsedData)),
-          );
-        } else {
-          console.error('Invalid draft content state:', parsedData);
-          setEditorState(EditorState.createEmpty());
-        }
+        const content = convertToRaw(editorState.getCurrentContent());
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/generate-cover-letter`,
+          { ...values, content },
+        );
+        setCoverLetter(data.coverLetter);
+        const updatedDrafts = [...drafts];
+        updatedDrafts[selectedDraft] = {
+          ...updatedDrafts[selectedDraft],
+          content: EditorState.createWithContent(
+            convertFromRaw(data.draftContentState),
+          ),
+        };
+        setDrafts(updatedDrafts);
+        setOpen(true);
       } catch (error) {
-        console.error('Error parsing draft content state:', error);
-        setEditorState(EditorState.createEmpty());
+        console.error('Failed to generate cover letter:', error);
+        setCoverLetter(
+          'Failed to generate cover letter. Please try again later.',
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
+  useEffect(() => {
+    const savedDrafts = localStorage.getItem('coverLetterDrafts');
+    if (savedDrafts) {
+      try {
+        const parsedDrafts = JSON.parse(savedDrafts).map(draft => ({
+          ...draft,
+          content: EditorState.createWithContent(convertFromRaw(draft.content)),
+        }));
+        setDrafts(parsedDrafts);
+      } catch (error) {
+        console.error('Failed to load drafts:', error);
+        setDrafts([]);
       }
     }
   }, []);
 
   useEffect(() => {
-    // Save the current content to localStorage when editorState changes
-    localStorage.setItem(
-      'coverLetterDraft',
-      JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-    );
-  }, [editorState]);
-
-  const handleEditorChange = state => {
-    setEditorState(state);
-  };
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const content = convertToRaw(editorState.getCurrentContent());
-      console.log(content);
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/generate-cover-letter`, // Ensure REACT_APP_API_URL is correct
-        {
-          content: JSON.stringify(content),
-          url,
-          yourName,
-          address,
-          cityStateZip,
-          emailAddress,
-          todayDate,
-          employerName,
-          companyName,
-          companyAddress,
-          companyCityStateZip,
-          jobTitle,
-          previousPosition,
-          previousCompany,
-          skills,
-          softwarePrograms,
-          reasons,
-        },
-      );
-      setCoverLetter(response.data.coverLetter);
-    } catch (error) {
-      console.error('Failed to generate cover letter:', error);
-      setCoverLetter(
-        'Failed to generate cover letter. Please try again later.',
-      );
+    if (drafts.length > 0 && drafts[selectedDraft]) {
+      setEditorState(drafts[selectedDraft].content);
+    } else {
+      setEditorState(EditorState.createEmpty());
     }
-    setLoading(false);
+  }, [selectedDraft, drafts]);
+
+  useEffect(() => {
+    const rawDrafts = drafts.map(draft => ({
+      ...draft,
+      content: convertToRaw(draft.content.getCurrentContent()),
+    }));
+    localStorage.setItem('coverLetterDrafts', JSON.stringify(rawDrafts));
+  }, [drafts]);
+  const handleTabChange = (event, newValue) => {
+    setSelectedDraft(newValue);
   };
-
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="lg">
       <Box sx={{ mt: 4 }}>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="URL"
-            variant="outlined"
-            value={url}
-            onChange={e => setURL(e.target.value)}
-            fullWidth
-            sx={{ mt: 2 }}
+        <Typography variant="h4" gutterBottom>
+          Cover Letter Generator
+        </Typography>
+        <Tabs value={selectedDraft} onChange={handleTabChange}>
+          {drafts.map((draft, index) => (
+            <Tab key={index} label={`Draft ${index + 1}`} />
+          ))}
+          <Tab
+            label="+"
+            onClick={() => {
+              const newDraft = {
+                content: convertToRaw(
+                  EditorState.createEmpty().getCurrentContent(),
+                ),
+              };
+              const updatedDrafts = [...drafts, newDraft];
+              setDrafts(updatedDrafts);
+              setSelectedDraft(updatedDrafts.length - 1);
+            }}
           />
-          <TextField
-            label="Your Name"
-            variant="outlined"
-            fullWidth
-            value={yourName}
-            onChange={e => setYourName(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Your Address"
-            variant="outlined"
-            fullWidth
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="City, State, ZIP"
-            variant="outlined"
-            fullWidth
-            value={cityStateZip}
-            onChange={e => setCityStateZip(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Email Address"
-            variant="outlined"
-            fullWidth
-            value={emailAddress}
-            onChange={e => setEmailAddress(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Today's Date"
-            variant="outlined"
-            fullWidth
-            value={todayDate}
-            onChange={e => setTodayDate(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Employer's Name"
-            variant="outlined"
-            fullWidth
-            value={employerName}
-            onChange={e => setEmployerName(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Company Name"
-            variant="outlined"
-            fullWidth
-            value={companyName}
-            onChange={e => setCompanyName(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Company Address"
-            variant="outlined"
-            fullWidth
-            value={companyAddress}
-            onChange={e => setCompanyAddress(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Company City, State, ZIP"
-            variant="outlined"
-            fullWidth
-            value={companyCityStateZip}
-            onChange={e => setCompanyCityStateZip(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Job Title"
-            variant="outlined"
-            fullWidth
-            value={jobTitle}
-            onChange={e => setJobTitle(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Previous Position"
-            variant="outlined"
-            fullWidth
-            value={previousPosition}
-            onChange={e => setPreviousPosition(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Previous Company"
-            variant="outlined"
-            fullWidth
-            value={previousCompany}
-            onChange={e => setPreviousCompany(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Skills"
-            variant="outlined"
-            fullWidth
-            value={skills}
-            onChange={e => setSkills(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Software/Programs"
-            variant="outlined"
-            fullWidth
-            value={softwarePrograms}
-            onChange={e => setSoftwarePrograms(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Reasons for Interest"
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={4}
-            value={reasons}
-            onChange={e => setReasons(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-
-          <Editor editorState={editorState} onChange={handleEditorChange} />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            sx={{ mt: 2, mb: 2 }}
-          >
-            Generate Cover Letter
-          </Button>
+        </Tabs>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6}>
+              {formFields.map(field => (
+                <Grid item xs={12} key={field.name}>
+                  <TextField
+                    label={field.label}
+                    variant="outlined"
+                    fullWidth
+                    {...formik.getFieldProps(field.name)}
+                    error={
+                      formik.touched[field.name] &&
+                      Boolean(formik.errors[field.name])
+                    }
+                    helperText={
+                      formik.touched[field.name] && formik.errors[field.name]
+                    }
+                    sx={{ mt: 2 }}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Paper style={{ padding: 16 }}>
+                <Typography variant="h6">Preview</Typography>
+                {loading && <CircularProgress />}
+                <Editor
+                  editorState={editorState}
+                  onChange={setEditorState}
+                  handleKeyCommand={(command, state) => {
+                    const newState = RichUtils.handleKeyCommand(state, command);
+                    if (newState) {
+                      setEditorState(newState);
+                      return 'handled';
+                    }
+                    return 'not-handled';
+                  }}
+                />
+              </Paper>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                sx={{ mt: 2, mb: 2 }}
+              >
+                Generate Cover Letter
+              </Button>
+            </Grid>
+          </Grid>
         </form>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          coverLetter && (
-            <Box>
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Your Custom Cover Letter
-              </Typography>
-              <Typography variant="body1" sx={{ mt: 1 }}>
-                {coverLetter}
-              </Typography>
-            </Box>
-          )
-        )}
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+          message="Cover letter generated"
+        />
       </Box>
     </Container>
   );
