@@ -8,8 +8,8 @@ const validationSchema = Yup.object(
       ...schema,
       [field.name]: Yup.string().required(`${field.label} is required`),
     }),
-    {},
-  ),
+    {}
+  )
 );
 
 export default validationSchema;

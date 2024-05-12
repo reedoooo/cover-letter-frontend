@@ -1,24 +1,26 @@
 # Cover Letter Generator
 
-The Cover Letter Generator is a React application designed to help users quickly create personalized and professional cover letters. Utilizing the powerful Draft.js for rich text editing and a backend service powered by OpenAI's GPT-3.5, this application offers an intuitive interface for generating and managing multiple cover letter drafts.
+## Overview
+
+The Cover Letter Generator is a web-based application designed to assist users in creating professional and personalized cover letters efficiently. Powered by React and utilizing OpenAI's GPT-3.5 for content generation, this tool offers a rich text editing experience through Draft.js and allows for effective management and storage of multiple cover letter drafts.
 
 ## Features
 
-- **Rich Text Editing**: Leverage Draft.js for a flexible text editing experience.
-- **Dynamic Draft Management**: Create, name, and manage multiple cover letter drafts.
-- **AI-Powered Content Generation**: Use OpenAI's GPT-3.5 model to generate tailored cover letters based on user input.
-- **Persistent State Management**: Drafts are saved in local storage, ensuring no loss of data between sessions.
+- **Rich Text Editing**: Powered by Draft.js, providing a comprehensive suite of text editing tools.
+- **AI-Enhanced Writing**: Integrates OpenAI's GPT-3.5 to generate customized content.
+- **Draft Management**: Supports creation, storage, and management of multiple cover letter drafts.
+- **Persistent Local Storage**: Ensures that user data is preserved between sessions using local storage.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+These instructions will get you a copy of the project up and running on your local machine for development and usage.
 
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
+Ensure you have the following installed:
 
-- Node.js (Download [here](https://nodejs.org/en/download/))
-- npm (Included with Node.js)
+- Node.js (12.x or higher) - [Download here](https://nodejs.org/en/download/)
+- npm (included with Node.js)
 
 ### Installation
 

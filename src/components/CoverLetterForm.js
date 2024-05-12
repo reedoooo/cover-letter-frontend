@@ -12,6 +12,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'; // Import conversion functions
 
 import formFields from '../config/formFields';
@@ -21,48 +22,46 @@ import DownloadButton from './DownloadButton';
 
 function CoverLetterForm({
   editorState,
-  loading,
-  drafts,
   selectedDraft,
-
-  setEditorState,
-  setLoading,
-  setDrafts,
-  setOpen,
-  onDeleteDraft,
-  onEditDraftName,
+  loading,
+  dispatch,
+  drafts,
+  handleSaveDraft,
 }) {
-  const onSubmit = async values => {
-    setLoading(true);
+  const onSubmit = async (values) => {
+    dispatch({ type: 'TOGGLE_LOADING' });
     try {
       const content = convertToRaw(editorState.getCurrentContent());
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/generate-cover-letter`,
-        { ...values, content },
+        `${process.env.REACT_APP_API_URL}/cover-letter/generate-cover-letter`,
+        { ...values, content }
       );
       const updatedDrafts = [...drafts];
       updatedDrafts[selectedDraft] = {
         ...updatedDrafts[selectedDraft],
         content: EditorState.createWithContent(
-          convertFromRaw(data.draftContentState),
+          convertFromRaw(data.draftContentState)
         ),
       };
-      setDrafts(updatedDrafts);
-      setOpen(true);
+      dispatch({
+        type: 'SET_DRAFTS',
+        drafts: updatedDrafts,
+        editorState: updatedDrafts[selectedDraft].content,
+      });
+      dispatch({ type: 'SET_FIELD', field: 'openSnackbar', value: true });
     } catch (error) {
       console.error('Failed to generate cover letter:', error);
     } finally {
-      setLoading(false);
+      dispatch({ type: 'TOGGLE_LOADING' });
     }
   };
-
   const formik = useFormikCoverLetter(onSubmit);
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={1}>
         <Grid item xs={12} md={6}>
-          {formFields.map(field => (
+          {formFields.map((field) => (
             <Grid item xs={12} key={field.name}>
               <TextField
                 label={field.label}
@@ -87,7 +86,13 @@ function CoverLetterForm({
             {loading && <CircularProgress />}
             <CoverLetterEditor
               editorState={editorState}
-              setEditorState={setEditorState}
+              setEditorState={(state) =>
+                dispatch({
+                  type: 'SET_FIELD',
+                  field: 'editorState',
+                  value: state,
+                })
+              }
             />
           </Paper>
           <Paper style={{ mt: 5, padding: 16 }}>
@@ -108,16 +113,10 @@ function CoverLetterForm({
             <Button
               variant="contained"
               color="primary"
-              onClick={() => onEditDraftName(selectedDraft)}
-              // onClick={() => {
-              //   const updatedDrafts = [...drafts];
-              //   updatedDrafts[selectedDraft] = {
-              //     ...updatedDrafts[selectedDraft],
-              //     name: `Draft ${selectedDraft + 1}`,
-              //   };
-              //   setDrafts(updatedDrafts);
-              // }}
-              sx={{ mt: 2, mb: 2, width: '50%' }}
+              onClick={() =>
+                dispatch({ type: 'UPDATE_DRAFT', index: selectedDraft })
+              }
+              sx={{ mt: 2, mb: 2, width: '33.3%' }}
               disabled={loading}
               startIcon={<EditIcon />}
             >
@@ -127,19 +126,25 @@ function CoverLetterForm({
             <Button
               variant="contained"
               color="error"
-              onClick={() => onDeleteDraft(selectedDraft)}
-              // onClick={() => {
-              //   const updatedDrafts = drafts.filter(
-              //     (draft, index) => index !== selectedDraft,
-              //   );
-              //   setDrafts(updatedDrafts);
-              //   setSelectedDraft(0);
-              // }}
-              sx={{ mt: 2, mb: 2, width: '50%' }}
+              onClick={() =>
+                dispatch({ type: 'DELETE_DRAFT', index: selectedDraft })
+              }
+              sx={{ mt: 2, mb: 2, width: '33.3%' }}
               disabled={loading}
               startIcon={<DeleteIcon />}
             >
               Delete Draft
+            </Button>
+            {/* SAVE A DRAFT */}
+            <Button
+              variant="contained"
+              color="info"
+              onClick={() => handleSaveDraft(selectedDraft)}
+              sx={{ mt: 2, mb: 2, width: '33.3%' }}
+              disabled={loading}
+              startIcon={<SaveIcon />}
+            >
+              Save Draft
             </Button>
           </Paper>
         </Grid>

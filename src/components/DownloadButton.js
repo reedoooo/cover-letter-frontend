@@ -9,7 +9,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import styled from 'styled-components';
-const StyledMenu = styled(props => (
+const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -29,6 +29,7 @@ const StyledMenu = styled(props => (
     minWidth: 180,
     color: 'rgb(55, 65, 81)',
     boxShadow:
+      // eslint-disable-next-line max-len
       'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
       padding: '4px 0',
@@ -48,7 +49,7 @@ const StyledMenu = styled(props => (
 function DownloadButton({ editorState, label }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -68,7 +69,7 @@ function DownloadButton({ editorState, label }) {
   };
   const downloadPDF = async (contentState, fileName) => {
     const html = stateToHTML(contentState, {
-      blockStyleFn: block => {
+      blockStyleFn: (block) => {
         const type = block.getType();
         if (type === 'header-one') {
           return {
@@ -141,8 +142,7 @@ function DownloadButton({ editorState, label }) {
       document.body.removeChild(container); // Clean up
     }
   };
-
-  const handleDownload = type => {
+  const handleDownload = (type) => {
     const contentState = editorState.getCurrentContent();
     switch (type) {
       case 'pdf':

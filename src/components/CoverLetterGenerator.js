@@ -1,169 +1,251 @@
-import React, { useState, useEffect } from 'react';
-import 'react-quill/dist/quill.snow.css'; // include styles
-import { Box, Typography, Container, Snackbar, Paper } from '@mui/material';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'; // Import conversion functions
+import React, { useReducer, useEffect } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import { Box, Typography, Container, Snackbar } from '@mui/material';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 
 import DraftTabs from './DraftTabs';
 import AddDraftDialog from './AddDraftDialog';
 import CoverLetterForm from './CoverLetterForm';
+import AuthDialog from './AuthDialog';
+import axios from 'axios';
+
+const initialState = {
+  editorState: EditorState.createEmpty(),
+  drafts: [],
+  selectedDraft: 0,
+  openSnackbar: false,
+  dialogOpen: false,
+  loading: false,
+  isAuthenticated: false,
+  loginDialogOpen: false,
+  newDraftName: '',
+  editedDraftName: '',
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'SET_FIELD':
+      return { ...state, [action.field]: action.value };
+    case 'SET_DRAFTS':
+      return {
+        ...state,
+        drafts: action.drafts,
+        editorState: action.editorState,
+      };
+    case 'UPDATE_DRAFT':
+      return {
+        ...state,
+        drafts: state.drafts.map((draft, idx) =>
+          idx === action.index
+            ? { ...draft, name: state.editedDraftName }
+            : draft
+        ),
+      };
+    case 'DELETE_DRAFT':
+      return {
+        ...state,
+        drafts: state.drafts.filter((_, idx) => idx !== action.index),
+      };
+    case 'SET_OPEN_SNACKBAR':
+      return { ...state, openSnackbar: action.value };
+    case 'SET_OPEN_DIALOG':
+      return { ...state, dialogOpen: action.value };
+    case 'TOGGLE_LOADING':
+      return { ...state, loading: !state.loading }; // Toggle loading state
+    case 'SET_SELECTED_DRAFT':
+      return { ...state, selectedDraft: action.value };
+    case 'SET_LOGIN_DIALOG_OPEN':
+      return { ...state, loginDialogOpen: action.value };
+    case 'SET_NEW_DRAFT_NAME':
+      return { ...state, newDraftName: action.value };
+    case 'SET_EDITED_DRAFT_NAME':
+      return { ...state, editedDraftName: action.value };
+    default:
+      return state;
+  }
+}
 
 function CoverLetterGenerator() {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [drafts, setDrafts] = useState([]);
-  const [selectedDraft, setSelectedDraft] = useState(0); // Managing selected draft
-  const [open, setOpen] = React.useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    editorState,
+    drafts,
+    selectedDraft,
+    openSnackbar,
+    dialogOpen,
+    loading,
+    isAuthenticated,
+    loginDialogOpen,
+    newDraftName,
+    editedDraftName,
+  } = state;
 
-  const [newDraftName, setNewDraftName] = useState('');
-  const [editedDraftName, setEditedDraftName] = useState('');
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      dispatch({ type: 'SET_FIELD', field: 'isAuthenticated', value: true });
+      startTokenValidationTimer();
+    }
+    return () => clearInterval(tokenValidationTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const savedDrafts = localStorage.getItem('coverLetterDrafts');
     if (savedDrafts) {
       try {
-        const parsedDrafts = JSON.parse(savedDrafts).map(draft => ({
+        const parsedDrafts = JSON.parse(savedDrafts).map((draft) => ({
           ...draft,
           content: EditorState.createWithContent(convertFromRaw(draft.content)),
         }));
-        setDrafts(parsedDrafts);
+        dispatch({
+          type: 'SET_DRAFTS',
+          drafts: parsedDrafts,
+          editorState:
+            parsedDrafts[selectedDraft]?.content || EditorState.createEmpty(),
+        });
       } catch (error) {
         console.error('Failed to load drafts:', error);
-        setDrafts([]);
+        dispatch({ type: 'SET_FIELD', field: 'drafts', value: [] });
       }
     }
-  }, []);
+  }, [selectedDraft]);
 
-  useEffect(() => {
-    if (drafts.length > 0 && drafts[selectedDraft]) {
-      setEditorState(drafts[selectedDraft].content);
-    } else {
-      setEditorState(EditorState.createEmpty());
-    }
-  }, [selectedDraft, drafts]);
-
-  useEffect(() => {
-    const rawDrafts = drafts.map(draft => ({
-      ...draft,
-      content: convertToRaw(draft.content.getCurrentContent()),
-    }));
-    localStorage.setItem('coverLetterDrafts', JSON.stringify(rawDrafts));
-  }, [drafts]);
-  const handleDraftUpdate = (draftIndex, updatedDraft) => {
-    setDrafts(
-      drafts.map((draft, idx) => (idx === draftIndex ? updatedDraft : draft)),
-    );
+  let tokenValidationTimer;
+  const startTokenValidationTimer = () => {
+    tokenValidationTimer = setInterval(async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user/validate-token`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+            },
+          }
+        );
+        if (response.status !== 200) throw new Error('Token validation failed');
+      } catch (error) {
+        console.error('Token is invalid:', error);
+        logoutUser();
+      }
+    }, 600000);
   };
-  const handleDialogToggle = isOpen => () => {
-    setDialogOpen(isOpen);
-  };
-
   const handleAddDraft = () => {
     const newDraft = {
       name: newDraftName || `Draft ${drafts.length + 1}`,
       content: EditorState.createEmpty(),
     };
     const updatedDrafts = [...drafts, newDraft];
-    setDrafts(updatedDrafts);
-    setSelectedDraft(updatedDrafts.length - 1);
-    setNewDraftName('');
-    handleDialogToggle(false)();
+
+    dispatch({
+      type: 'SET_DRAFTS',
+      drafts: updatedDrafts,
+      editorState: newDraft.content,
+    });
+    dispatch({
+      type: 'SET_SELECTED_DRAFT',
+      value: updatedDrafts.length - 1,
+    });
+    dispatch({ type: 'SET_FIELD', field: 'newDraftName', value: '' });
+    dispatch({ type: 'SET_OPEN_DIALOG', value: false });
+  };
+  const handleSaveDraft = async () => {
+    if (!isAuthenticated) {
+      dispatch({ type: 'SET_LOGIN_DIALOG_OPEN', value: true });
+      return;
+    }
+    dispatch({ type: 'TOGGLE_LOADING' });
+    const content = convertToRaw(editorState.getCurrentContent());
+    const contentName = drafts[selectedDraft].name;
+    const userId = JSON.parse(localStorage.getItem('user'))._id;
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/cover-letter/save-draft`,
+        { content, contentName, userId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          },
+        }
+      );
+      console.log('Draft saved:', response.data);
+      dispatch({ type: 'SET_OPEN_SNACKBAR', value: true });
+    } catch (error) {
+      console.error('Failed to save draft:', error);
+    } finally {
+      dispatch({ type: 'TOGGLE_LOADING' });
+    }
+  };
+
+  const handleLoginSuccess = (token, userData) => {
+    localStorage.setItem('userToken', token);
+    localStorage.setItem('user', JSON.stringify(userData));
+    dispatch({ type: 'SET_FIELD', field: 'isAuthenticated', value: true });
+    dispatch({ type: 'SET_FIELD', field: 'loginDialogOpen', value: false });
+  };
+
+  const logoutUser = () => {
+    localStorage.removeItem('userToken');
+    dispatch({ type: 'SET_FIELD', field: 'isAuthenticated', value: false });
+    alert('Your session has expired. Please login again.');
   };
 
   return (
     <Container maxWidth="lg">
       <Box sx={{ mt: 4 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: 'auto',
-            alignItems: 'baseline',
-            marginBottom: '8px',
-          }}
-          component={Paper}
-        >
-          <Typography
-            level="title-lg"
-            variant="h3"
-            gutterBottom
-            elevation={3}
-            sx={{ p: 2 }}
-          >
-            Cover Letter Generator
-          </Typography>
-          <Typography
-            level="title-sm"
-            color="text"
-            fontWeight="bold"
-            sx={{
-              opacity: '50%',
-            }}
-            variant="h6"
-          >
-            ReedVogt &copy; 2021
-          </Typography>
-        </Box>
-        <DraftTabs
-          drafts={drafts}
-          selectedDraft={selectedDraft}
-          isEditing={isEditing}
-          editedDraftName={editedDraftName}
-          onTabChange={(event, newValue) => {
-            console.log('event', event);
-            console.log('newValue', newValue);
-            setSelectedDraft(newValue);
-          }}
-          onEditDraftName={index => {
-            setIsEditing(true);
-            setEditedDraftName(drafts[index].name);
-            setSelectedDraft(index);
-          }}
-          onSaveDraftName={index => {
-            handleDraftUpdate(index, {
-              ...drafts[index],
-              name: editedDraftName,
-            });
-            setIsEditing(false);
-          }}
-          setEditedDraftName={setEditedDraftName}
-          onDeleteDraft={index => {
-            setDrafts(drafts.filter((_, idx) => idx !== index));
-            setSelectedDraft(0); // Reset to first draft or handle empty state
-          }}
-          onOpenAddDialog={handleDialogToggle(true)}
-        />
+        <Typography variant="h3" gutterBottom sx={{ mb: 2 }}>
+          Cover Letter Generator
+        </Typography>
+        <DraftTabs {...{ drafts, selectedDraft, editedDraftName, dispatch }} />
         <AddDraftDialog
-          open={dialogOpen}
-          onClose={handleDialogToggle(false)}
-          onSubmit={handleAddDraft}
-          draftName={newDraftName}
-          setDraftName={setNewDraftName}
+          {...{
+            dispatch,
+            open: dialogOpen,
+            onClose: () =>
+              dispatch({
+                type: 'SET_FIELD',
+                field: 'dialogOpen',
+                value: false,
+              }),
+            onSubmit: handleAddDraft,
+            draftName: newDraftName,
+            setDraftName: (name) =>
+              dispatch({
+                type: 'SET_FIELD',
+                field: 'newDraftName',
+                value: name,
+              }),
+          }}
         />
         <CoverLetterForm
-          editorState={editorState}
-          selectedDraft={selectedDraft}
-          loading={loading}
-          drafts={drafts}
-          setEditorState={setEditorState}
-          setLoading={setLoading}
-          setDrafts={setDrafts}
-          setOpen={setOpen}
-          onEditDraftName={index => {
-            setIsEditing(true);
-            setEditedDraftName(drafts[index].name);
-            setSelectedDraft(index);
+          {...{
+            editorState,
+            selectedDraft,
+            loading,
+            dispatch,
+            drafts,
+            handleSaveDraft,
           }}
-          onDeleteDraft={index =>
-            setDrafts(drafts.filter((_, idx) => idx !== index))
-          }
         />
         <Snackbar
-          open={open}
+          open={openSnackbar}
           autoHideDuration={6000}
-          onClose={() => setOpen(false)}
+          onClose={() =>
+            dispatch({ type: 'SET_FIELD', field: 'openSnackbar', value: false })
+          }
           message="Cover letter generated"
+        />
+        <AuthDialog
+          open={loginDialogOpen}
+          onClose={() =>
+            dispatch({
+              type: 'SET_FIELD',
+              field: 'loginDialogOpen',
+              value: false,
+            })
+          }
+          onLoginSuccess={handleLoginSuccess}
+          apiUrl={process.env.REACT_APP_API_URL}
         />
       </Box>
     </Container>
