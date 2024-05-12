@@ -3,21 +3,21 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { EditorState } from 'draft-js';
 import CoverLetterGenerator from '../components/CoverLetterGenerator';
 
-const DraftTabsMock = props => (
+const DraftTabsMock = (props) => (
   <div data-testid="draft-tabs" {...props}>
     DraftTabs Component
   </div>
 );
 DraftTabsMock.displayName = 'DraftTabsMock';
 
-const AddDraftDialogMock = props => (
+const AddDraftDialogMock = (props) => (
   <div data-testid="add-draft-dialog" {...props}>
     AddDraftDialog Component
   </div>
 );
 AddDraftDialogMock.displayName = 'AddDraftDialogMock';
 
-const CoverLetterFormMock = props => (
+const CoverLetterFormMock = (props) => (
   <div data-testid="cover-letter-form" {...props}>
     CoverLetterForm Component
   </div>
@@ -38,13 +38,13 @@ jest.mock('html2canvas', () =>
   jest.fn(() =>
     Promise.resolve({
       toDataURL: () => 'data:image/png;base64,',
-    }),
-  ),
+    })
+  )
 );
 jest.mock('draft-js', () => ({
   EditorState: {
     createEmpty: jest.fn(),
-    createWithContent: jest.fn(content => ({
+    createWithContent: jest.fn((content) => ({
       getCurrentContent: jest.fn(() => content),
     })),
   },
@@ -60,7 +60,7 @@ const mockEditorState = {
   })),
 };
 EditorState.createEmpty.mockReturnValue(mockEditorState);
-EditorState.createWithContent.mockImplementation(content => ({
+EditorState.createWithContent.mockImplementation((content) => ({
   getCurrentContent: jest.fn(() => content),
 }));
 

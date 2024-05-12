@@ -3,25 +3,32 @@
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
-		"plugin:prettier/recommended"
-
+    "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "no-unused-vars": "warn",
     "react/no-unescaped-entities": "off",
-		"no-console": "off",
-    "prettier/prettier": ["error", {
-      "semi": true,
-      "singleQuote": true,
-      "trailingComma": "all",
-      "arrowParens": "avoid",
-      "endOfLine": "auto"
-    }]
+    "no-console": "off",
+    "semi": ["error", "always"],
+    "eol-last": ["error", "always"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "never"],
+    "max-len": ["error", { "code": 120, "ignoreComments": true }],
+    "comma-dangle": ["error", "only-multiline"],
+    "no-dupe-keys": "error",
+    "no-empty": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "tabWidth": 2,
+        "endOfLine": "lf"
+      }
+    ]
   },
   "settings": {
     "react": {

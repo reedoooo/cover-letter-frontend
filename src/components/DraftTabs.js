@@ -3,54 +3,76 @@ import { Box, Tab, Tabs, IconButton, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-function DraftTabs({
-  drafts,
-  selectedDraft,
-  isEditing,
-  editedDraftName,
 
-  onTabChange,
-  onEditDraftName,
-  onSaveDraftName,
-  onDeleteDraft,
-  onOpenAddDialog,
-  setEditedDraftName,
-}) {
+function DraftTabs({ drafts, selectedDraft, dispatch }) {
   const handleKeyDown = (event, index) => {
     if (event.key === 'Enter') {
-      onSaveDraftName(index);
+      dispatch({ type: 'SAVE_DRAFT_NAME', index });
     }
   };
+
+  const handleTabChange = (event, newValue) => {
+    dispatch({ type: 'SET_SELECTED_DRAFT', value: newValue });
+  };
+
+  const handleEditDraftName = (index) => {
+    dispatch({ type: 'EDIT_DRAFT_NAME', index });
+  };
+
+  const handleSaveDraftName = (index) => {
+    dispatch({ type: 'SAVE_DRAFT_NAME', index });
+  };
+
+  const handleDeleteDraft = (index) => {
+    dispatch({ type: 'DELETE_DRAFT', index });
+  };
+
+  const handleOpenAddDialog = () => {
+    dispatch({ type: 'SET_OPEN_DIALOG', value: true });
+  };
+
   return (
-    <Tabs value={selectedDraft} onChange={onTabChange}>
+    <Tabs value={selectedDraft} onChange={handleTabChange}>
       {drafts.map((draft, index) => (
         <Tab
           key={index}
           label={
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {isEditing && selectedDraft === index ? (
+              {draft.isEditing ? (
                 <TextField
-                  value={editedDraftName}
-                  onChange={e => setEditedDraftName(e.target.value)}
-                  onBlur={() => onSaveDraftName(index)}
-                  onKeyDown={e => handleKeyDown(e, index)}
+                  value={draft.editedName}
+                  onChange={(e) =>
+                    dispatch({
+                      type: 'SET_EDITED_DRAFT_NAME',
+                      value: e.target.value,
+                      index,
+                    })
+                  }
+                  onBlur={() => handleSaveDraftName(index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                   size="small"
                   autoFocus
                 />
               ) : (
                 draft.name || `Draft ${index + 1}`
               )}
-              <IconButton onClick={() => onEditDraftName(index)} color="info">
+              <IconButton
+                onClick={() => handleEditDraftName(index)}
+                color="primary"
+              >
                 <EditIcon />
               </IconButton>
-              <IconButton onClick={() => onDeleteDraft(index)} color="error">
+              <IconButton
+                onClick={() => handleDeleteDraft(index)}
+                color="error"
+              >
                 <DeleteIcon />
               </IconButton>
             </Box>
           }
         />
       ))}
-      <Tab label={<AddIcon />} onClick={onOpenAddDialog} />
+      <Tab icon={<AddIcon />} onClick={handleOpenAddDialog} />
     </Tabs>
   );
 }
