@@ -22,6 +22,7 @@ import DownloadButton from './DownloadButton';
 
 function CoverLetterForm({
   editorState,
+  setEditorState,
   selectedDraft,
   loading,
   dispatch,
@@ -39,16 +40,18 @@ function CoverLetterForm({
       const updatedDrafts = [...drafts];
       updatedDrafts[selectedDraft] = {
         ...updatedDrafts[selectedDraft],
+        // name: drafts[selectedDraft]?.name || values?.name,
         content: EditorState.createWithContent(
           convertFromRaw(data.draftContentState)
         ),
       };
+      console.log('updatedDrafts', updatedDrafts);
       dispatch({
         type: 'SET_DRAFTS',
         drafts: updatedDrafts,
         editorState: updatedDrafts[selectedDraft].content,
       });
-      dispatch({ type: 'SET_FIELD', field: 'openSnackbar', value: true });
+      dispatch({ type: 'TOGGLE_SNACKBAR' });
     } catch (error) {
       console.error('Failed to generate cover letter:', error);
     } finally {
@@ -86,13 +89,7 @@ function CoverLetterForm({
             {loading && <CircularProgress />}
             <CoverLetterEditor
               editorState={editorState}
-              setEditorState={(state) =>
-                dispatch({
-                  type: 'SET_FIELD',
-                  field: 'editorState',
-                  value: state,
-                })
-              }
+              setEditorState={setEditorState}
             />
           </Paper>
           <Paper style={{ mt: 5, padding: 16 }}>
@@ -114,7 +111,7 @@ function CoverLetterForm({
               variant="contained"
               color="primary"
               onClick={() =>
-                dispatch({ type: 'UPDATE_DRAFT', index: selectedDraft })
+                dispatch({ type: 'EDIT_DRAFT', index: selectedDraft })
               }
               sx={{ mt: 2, mb: 2, width: '33.3%' }}
               disabled={loading}

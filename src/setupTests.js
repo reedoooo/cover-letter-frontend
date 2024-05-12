@@ -7,6 +7,9 @@ beforeAll(() => {
   const localStorageMock = (function () {
     let store = {};
     return {
+      key: function (i) {
+        return Object.keys(store)[i];
+      },
       getItem: function (key) {
         return store[key] || null;
       },
@@ -18,9 +21,6 @@ beforeAll(() => {
       },
       get length() {
         return Object.keys(store).length;
-      },
-      key: function (i) {
-        return Object.keys(store)[i];
       },
       clear: function () {
         store = {};

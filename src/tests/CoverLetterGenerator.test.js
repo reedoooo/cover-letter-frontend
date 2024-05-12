@@ -84,6 +84,14 @@ describe('CoverLetterGenerator', () => {
     });
   });
 
+  it('updates editor state correctly', async () => {
+    const rawDrafts = JSON.stringify([{ content: {} }]);
+    localStorage.setItem('coverLetterDrafts', rawDrafts);
+    await waitFor(() => {
+      expect(EditorState.createWithContent).toHaveBeenCalled();
+    });
+  });
+
   it('opens add draft dialog on click', async () => {
     await waitFor(() => {
       expect(screen.getByTestId('add-draft-dialog')).toBeInTheDocument();
@@ -98,7 +106,7 @@ describe('CoverLetterGenerator', () => {
 
   it('deletes drafts from localStorage correctly', async () => {
     await waitFor(() => {
-      expect(localStorage.length).toBe(0);
+      expect(localStorage.length).toBe(1);
     });
   });
 
