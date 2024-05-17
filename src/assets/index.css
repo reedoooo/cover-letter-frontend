@@ -1,15 +1,13 @@
-/* You can learn more about CSS at https://developer.mozilla.org/en-US/docs/Web/CSS */
+/* index.css or App.css */
+@import 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf_viewer.css';
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: inherit !important;
+  -webkit-box-shadow: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inherit !important;
 }
