@@ -3,21 +3,35 @@
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended"
   ],
-  "plugins": ["react", "prettier"],
+  "plugins": ["react", "prettier", "path"],
   "rules": {
     "react/react-in-jsx-scope": "off",
+    "path/no-relative-imports": "error",
     "react/prop-types": "off",
     "no-unused-vars": "warn",
     "react/no-unescaped-entities": "off",
     "no-console": "off",
     "semi": ["error", "always"],
     "eol-last": ["error", "always"],
-    "quotes": ["error", "single", { "avoidEscape": true }],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
-    "max-len": ["error", { "code": 120, "ignoreComments": true }],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreComments": true
+      }
+    ],
     "comma-dangle": ["error", "only-multiline"],
     "no-dupe-keys": "error",
     "no-empty": "error",
