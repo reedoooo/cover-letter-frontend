@@ -57,7 +57,7 @@ const useFormSubmit = () => {
           },
         }
       );
-      const { message, resPdfUrl, resText, resHmtl, resBlock, metadata } = data;
+      const { message, resPdfUrl, resText, resHTML, resBlock, metadata } = data;
 
       const updatedDrafts = [...drafts];
       updatedDrafts[selectedDraft] = {
@@ -66,14 +66,14 @@ const useFormSubmit = () => {
         rawInputValues: values,
         pdfUrl: url,
         // SERVER RESPONSE DATA
-        content: resHmtl,
+        content: resHTML,
         pdfText: resText,
         resSuccess: true,
         resError: false,
         resMessage: message,
         resText: resText,
         resPdfUrl: resPdfUrl,
-        resHtml: resHmtl,
+        resHtml: resHTML,
         resBlock: resBlock,
         resMetadata: metadata,
       };

@@ -403,14 +403,26 @@ function CoverLetterForm({
               </Typography>
             </RCBox>
             <Suspense fallback={<DraftEditorSkeleton />}>
-              <EditorContainer theme={theme}>
+              <EditorContainer
+                theme={theme}
+                sx={{
+                  // width: '210mm',
+                  height: '297mm',
+                  // padding: theme.spacing(2),
+                  boxSizing: 'border-box',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  overflowY: 'auto',
+                  backgroundColor: 'white',
+                }}
+              >
                 {loading ? (
                   <CircularProgress sx={{ alignSelf: 'center', mt: 2 }} />
                 ) : (
                   <Typography
                     component="div"
                     dangerouslySetInnerHTML={{
-                      __html: drafts[selectedDraft]?.resHTML,
+                      __html: drafts[selectedDraft]?.resText,
                     }}
                   />
                 )}

@@ -26,7 +26,12 @@ function DraftTabs({
   };
 
   return (
-    <Tabs value={selectedDraft} onChange={onTabChange}>
+    <Tabs
+      value={selectedDraft}
+      onChange={onTabChange}
+      orientation="vertical"
+      sx={{ borderRight: 1 }}
+    >
       {drafts?.map((draft, index) => (
         <Tab
           key={index}

@@ -24,6 +24,7 @@ const RCBox = React.forwardRef(
       bgColor = 'transparent',
       color = 'dark',
       opacity = 1,
+      hasBorderRadius = false,
       borderRadius = 'none',
       shadow = 'none',
       coloredShadow = 'none',
@@ -51,11 +52,12 @@ RCBox.displayName = 'RCBox';
 
 // Typechecking props for the RCBox
 RCBox.propTypes = {
-  variant: PropTypes.oneOf(['contained', 'gradient']),
+  variant: PropTypes.oneOf(['contained', 'gradient', 'dashboard', 'none']),
   borderWidth: PropTypes.number,
   bgColor: PropTypes.string,
   color: PropTypes.string,
   opacity: PropTypes.number,
+  hasBorderRadius: PropTypes.bool,
   borderRadius: PropTypes.string,
   shadow: PropTypes.string,
   coloredShadow: PropTypes.oneOf([

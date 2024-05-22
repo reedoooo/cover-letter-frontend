@@ -7,6 +7,18 @@ const coverLetter = [
     regex: /([A-Za-z]+\s[A-Za-z]+)/,
   },
   {
+    name: 'yourAddress',
+    label: 'Address',
+    type: 'text',
+    regex: /(?:Address|Location):?\s*([^\n]+)/i,
+  },
+  {
+    name: 'cityStateZip',
+    label: 'City, State, Zip',
+    type: 'text',
+    regex: /(?:City|State|Zip):?\s*([^\n]+)/i,
+  },
+  {
     name: 'emailAddress',
     label: 'Email Address',
     type: 'email',
@@ -24,6 +36,18 @@ const coverLetter = [
     label: 'Company Name',
     type: 'text',
     regex: /(?:Company|Employer|Organization):?\s*([^\n]+)/i,
+  },
+  {
+    name: 'companyAddress',
+    label: 'Company Address',
+    type: 'text',
+    regex: /(?:Address|Location):?\s*([^\n]+)/i,
+  },
+  {
+    name: 'companyCityStateZip',
+    label: 'City, State, Zip',
+    type: 'text',
+    regex: /(?:City|State|Zip):?\s*([^\n]+)/i,
   },
   {
     name: 'employerName',

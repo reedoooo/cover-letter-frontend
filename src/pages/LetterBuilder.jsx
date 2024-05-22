@@ -10,7 +10,7 @@ function LetterBuilder() {
       <Grid
         item
         xs={12}
-        container
+        // container
         sx={{
           backgroundColor: '#1F2937',
           display: 'flex',

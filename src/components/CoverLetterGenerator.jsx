@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import {
   Box,
@@ -14,12 +14,22 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Grid,
+  Card,
+  AppBar,
+  Toolbar,
+  Tooltip,
+  Avatar,
+  Menu,
+  MenuItem,
+  Drawer,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-
+import MenuIcon from '@mui/icons-material/Menu';
 import DashboardBox from './common/DashboardBox';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import DraftTabs from './DraftTabs';
 import CoverLetterForm from './CoverLetterForm';
@@ -29,7 +39,7 @@ import useMode from 'hooks/useMode';
 import { actionTypes, useDraftsReducer } from 'hooks/useDraftReducer';
 import useDraft from 'hooks/useDraft';
 
-function CoverLetterGenerator() {
+function CoverLetterGenerator(props) {
   const [state, dispatch] = useDraftsReducer();
   const {
     drafts,
@@ -43,11 +53,24 @@ function CoverLetterGenerator() {
     editedDraftName,
     isEditing,
   } = state;
-  const [formDisabled, setFormDisabled] = useState(true);
   const { loadDraftsFromLocalStorage, saveDraftsToLocalStorage } = useDraft();
   const { navigate } = useRouter();
   const { theme } = useMode();
   // TODO: ADD UI FOR: const { handleLogout } = useAuth(isAuthenticated, dispatch);
+
+  const [formDisabled, setFormDisabled] = useState(true);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleSidebar = useCallback(
+    () => setDrawerOpen(!drawerOpen),
+    [drawerOpen]
+  ); // const [logoutClicked, setLogoutClicked] = useState(false);
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   useEffect(() => {
     loadDraftsFromLocalStorage(dispatch);
@@ -69,8 +92,8 @@ function CoverLetterGenerator() {
       resMessage: '',
       resText: '',
       resPdfUrl: '',
-      resHtml: '',
-      resBlocks: '',
+      resHTML: '',
+      resBlock: '',
     };
     dispatch({ type: actionTypes.ADD_DRAFT, draft: newDraft });
     dispatch({ type: actionTypes.SET_SELECTED_DRAFT, value: drafts?.length });
@@ -79,92 +102,263 @@ function CoverLetterGenerator() {
     setFormDisabled(false); // Enable the form after adding a new draft
   };
   return (
-    <Container maxWidth="lg">
+    <Card>
       <Paper sx={{ p: 2 }}>
         <Box sx={{ mt: 4 }}>
-          {/* ================ NAVIGATION ================ */}
-          <DashboardBox
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: theme.spacing(2),
-              width: '100%',
-            }}
-          >
-            <IconButton
-              onClick={() => navigate('/')}
-              aria-label="Back to Collections"
-              sx={{
-                marginLeft: theme.spacing(0.5),
-                border: `2px solid ${theme.palette.background.default}`,
-                '&:hover': {
-                  color: theme.palette.dark.main,
-                  backgroundColor: theme.palette.background.hover,
-                },
-              }}
-            >
-              <ArrowBackIcon color={theme.palette.text.colorPrimary} />
-            </IconButton>
-            <Typography variant="h3" sx={{ color: 'text.contrastText' }}>
-              Cover Letter Generator
-            </Typography>
-            <DraftTabs
-              drafts={drafts}
-              selectedDraft={selectedDraft}
-              isEditing={isEditing}
-              editedDraftName={editedDraftName}
-              setEditedDraftName={(name) =>
-                dispatch({
-                  type: actionTypes.SET_FIELD,
-                  field: 'editedDraftName',
-                  value: name,
-                })
-              }
-              onTabChange={(event, newValue) => {
-                dispatch({
-                  type: actionTypes.SET_SELECTED_DRAFT,
-                  value: newValue,
-                });
-              }}
-              onEditDraftName={(index) => {
-                dispatch({ type: actionTypes.TOGGLE_IS_EDITING });
-                dispatch({
-                  type: actionTypes.SET_FIELD,
-                  field: 'editedDraftName',
-                  value: drafts[index].name,
-                });
-                dispatch({
-                  type: actionTypes.SET_SELECTED_DRAFT,
-                  value: index,
-                });
-              }}
-              onSaveDraftName={(index, name) => {
-                dispatch({
-                  type: actionTypes.UPDATE_DRAFT_NAME,
-                  index,
-                  name,
-                });
-                dispatch({ type: actionTypes.TOGGLE_IS_EDITING });
-              }}
-              onDeleteDraft={(index) => {
-                dispatch({
-                  type: actionTypes.DELETE_DRAFT,
-                  index,
-                });
-                dispatch({
-                  type: actionTypes.SET_SELECTED_DRAFT,
-                  value: 0,
-                });
-              }}
-              onOpenAddDialog={() => {
-                dispatch({ type: actionTypes.TOGGLE_ADD_DRAFT_DIALOG });
-              }}
-            />
-          </DashboardBox>
-          {/* ================ NAVIGATION ================ */}
-
+          <Paper component={Grid} container>
+            <Box component={Grid} item xs={9}>
+              {/* ================ NAVIGATION ================ */}
+              <AppBar position="static">
+                <Container maxWidth="xl">
+                  <Toolbar disableGutters>
+                    {/* === NAV BACK BUTTON === */}
+                    <IconButton
+                      onClick={() => navigate('/')}
+                      aria-label="Back to Collections"
+                      sx={{
+                        marginLeft: theme.spacing(0.5),
+                        border: `2px solid ${theme.palette.background.default}`,
+                        '&:hover': {
+                          color: theme.palette.dark.main,
+                          backgroundColor: theme.palette.background.hover,
+                        },
+                      }}
+                    >
+                      <Avatar>
+                        <ArrowBackIcon
+                          color={theme.palette.text.colorPrimary}
+                        />
+                      </Avatar>
+                    </IconButton>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          marginRight: theme.spacing(1),
+                        }}
+                      >
+                        Username
+                      </Typography>
+                      <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                          <Avatar alt="User Profile" />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        sx={{ mt: '45px' }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                      >
+                        {['Profile', 'My account', 'Settings'].map(
+                          (setting) => (
+                            <MenuItem
+                              key={setting}
+                              onClick={handleCloseUserMenu}
+                            >
+                              <Typography textAlign="center">
+                                {setting}
+                              </Typography>
+                            </MenuItem>
+                          )
+                        )}
+                      </Menu>
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }}>
+                      <Tooltip title="Open menu">
+                        <IconButton onClick={toggleSidebar} sx={{ p: 0 }}>
+                          <MenuIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Toolbar>
+                </Container>
+              </AppBar>
+              <Drawer
+                variant="persistent"
+                open={drawerOpen}
+                onClose={toggleSidebar}
+                sx={{
+                  width: 300,
+                  flexShrink: 0,
+                  '& .MuiDrawer-paper': {
+                    width: 300,
+                    transition: 'width 0.3s ease-in-out',
+                    overflowX: 'hidden',
+                    '&:hover': {
+                      width: 50,
+                    },
+                  },
+                }}
+              >
+                <DashboardBox
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: theme.spacing(2),
+                    width: '100%',
+                    height: '100%',
+                  }}
+                >
+                  <DraftTabs
+                    drafts={drafts}
+                    selectedDraft={selectedDraft}
+                    isEditing={isEditing}
+                    editedDraftName={editedDraftName}
+                    setEditedDraftName={(name) =>
+                      dispatch({
+                        type: actionTypes.SET_FIELD,
+                        field: 'editedDraftName',
+                        value: name,
+                      })
+                    }
+                    onTabChange={(event, newValue) => {
+                      dispatch({
+                        type: actionTypes.SET_SELECTED_DRAFT,
+                        value: newValue,
+                      });
+                    }}
+                    onEditDraftName={(index) => {
+                      dispatch({ type: actionTypes.TOGGLE_IS_EDITING });
+                      dispatch({
+                        type: actionTypes.SET_FIELD,
+                        field: 'editedDraftName',
+                        value: drafts[index].name,
+                      });
+                      dispatch({
+                        type: actionTypes.SET_SELECTED_DRAFT,
+                        value: index,
+                      });
+                    }}
+                    onSaveDraftName={(index, name) => {
+                      dispatch({
+                        type: actionTypes.UPDATE_DRAFT_NAME,
+                        index,
+                        name,
+                      });
+                      dispatch({ type: actionTypes.TOGGLE_IS_EDITING });
+                    }}
+                    onDeleteDraft={(index) => {
+                      dispatch({
+                        type: actionTypes.DELETE_DRAFT,
+                        index,
+                      });
+                      dispatch({
+                        type: actionTypes.SET_SELECTED_DRAFT,
+                        value: 0,
+                      });
+                    }}
+                    onOpenAddDialog={() => {
+                      dispatch({ type: actionTypes.TOGGLE_ADD_DRAFT_DIALOG });
+                    }}
+                  />
+                </DashboardBox>{' '}
+              </Drawer>
+              {/* ================ COVER LETTER FORM ================ */}
+              <CoverLetterForm
+                selectedDraft={selectedDraft}
+                isAuthenticated={isAuthenticated}
+                actionTypes={actionTypes}
+                drafts={drafts}
+                loading={loading}
+                dispatch={dispatch}
+                formDisabled={formDisabled}
+              />
+            </Box>
+            {/* ================ TABS DISPLAYED FOR DRAFTS ================ */}
+            <Box component={Grid} item xs={3}>
+              <DashboardBox
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: theme.spacing(2),
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <DraftTabs
+                  drafts={drafts}
+                  selectedDraft={selectedDraft}
+                  isEditing={isEditing}
+                  editedDraftName={editedDraftName}
+                  setEditedDraftName={(name) =>
+                    dispatch({
+                      type: actionTypes.SET_FIELD,
+                      field: 'editedDraftName',
+                      value: name,
+                    })
+                  }
+                  onTabChange={(event, newValue) => {
+                    dispatch({
+                      type: actionTypes.SET_SELECTED_DRAFT,
+                      value: newValue,
+                    });
+                  }}
+                  onEditDraftName={(index) => {
+                    dispatch({ type: actionTypes.TOGGLE_IS_EDITING });
+                    dispatch({
+                      type: actionTypes.SET_FIELD,
+                      field: 'editedDraftName',
+                      value: drafts[index].name,
+                    });
+                    dispatch({
+                      type: actionTypes.SET_SELECTED_DRAFT,
+                      value: index,
+                    });
+                  }}
+                  onSaveDraftName={(index, name) => {
+                    dispatch({
+                      type: actionTypes.UPDATE_DRAFT_NAME,
+                      index,
+                      name,
+                    });
+                    dispatch({ type: actionTypes.TOGGLE_IS_EDITING });
+                  }}
+                  onDeleteDraft={(index) => {
+                    dispatch({
+                      type: actionTypes.DELETE_DRAFT,
+                      index,
+                    });
+                    dispatch({
+                      type: actionTypes.SET_SELECTED_DRAFT,
+                      value: 0,
+                    });
+                  }}
+                  onOpenAddDialog={() => {
+                    dispatch({ type: actionTypes.TOGGLE_ADD_DRAFT_DIALOG });
+                  }}
+                />
+              </DashboardBox>
+            </Box>
+          </Paper>
+          {/* ================ SNACKBAR NOTIFICATIONS ================ */}
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={6000}
+            onClose={() =>
+              dispatch({
+                type: actionTypes.SET_FIELD,
+                field: 'openSnackbar',
+                value: false,
+              })
+            }
+            message="Cover letter generated"
+          />
           {/* ================ ADD DIALOG ================ */}
           <Dialog
             open={dialogOpen}
@@ -222,55 +416,7 @@ function CoverLetterGenerator() {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* ================ ADD DIALOG ================ */}
-          {/* <AddDraftDialog
-            open={dialogOpen}
-            onClose={() => {
-              dispatch({
-                type: actionTypes.SET_FIELD,
-                field: 'dialogOpen',
-                value: false,
-              });
-            }}
-            draftName={newDraftName}
-            setDraftName={(name) =>
-              dispatch({
-                type: actionTypes.SET_FIELD,
-                field: 'newDraftName',
-                value: name,
-              })
-            }
-            onCancel={() => {
-              dispatch({
-                type: actionTypes.SET_FIELD,
-                field: 'dialogOpen',
-                value: false,
-              });
-            }}
-            onSubmit={handleAddDraft}
-          /> */}
-          {/* ================ MAIN CONTENT(LEFT) ================ */}
-          <CoverLetterForm
-            selectedDraft={selectedDraft}
-            isAuthenticated={isAuthenticated}
-            actionTypes={actionTypes}
-            drafts={drafts}
-            loading={loading}
-            dispatch={dispatch}
-            formDisabled={formDisabled}
-          />
-          <Snackbar
-            open={openSnackbar}
-            autoHideDuration={6000}
-            onClose={() =>
-              dispatch({
-                type: actionTypes.SET_FIELD,
-                field: 'openSnackbar',
-                value: false,
-              })
-            }
-            message="Cover letter generated"
-          />
+          {/* ================ AUTH DIALOG ================ */}
           <AuthDialog
             open={loginDialogOpen}
             onClose={() =>
@@ -294,7 +440,7 @@ function CoverLetterGenerator() {
           />
         </Box>
       </Paper>
-    </Container>
+    </Card>
   );
 }
 

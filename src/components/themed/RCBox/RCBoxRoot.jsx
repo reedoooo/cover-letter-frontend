@@ -19,7 +19,6 @@ export default styled(Box)(({ ownerstate }) => {
   const { linearGradient } = functions;
   const { borderRadius: radius } = borders;
   const { colored } = boxShadows;
-
   const greyColors = {
     'grey-100': grey[100],
     'grey-200': grey[200],
@@ -64,7 +63,6 @@ export default styled(Box)(({ ownerstate }) => {
     'grey-800',
     'grey-900',
   ];
-
   const validBorderRadius = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'section'];
   const validBoxShadows = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'inset'];
 
@@ -103,12 +101,22 @@ export default styled(Box)(({ ownerstate }) => {
   } else if (coloredShadow) {
     boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : 'none';
   }
-
-  return {
+  const baseVariants = ['contained', 'gradient', 'dashboard', 'none'];
+  const getBaseTheme = () => ({
     opacity,
     background: backgroundValue,
     color: colorValue,
     borderRadius: borderRadiusValue,
     boxShadow: boxShadowValue,
+  });
+  const getDashboardTheme = () => ({
+    backgroundColor: '#2d2d34',
+    borderRadius: '1rem',
+    // boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0, 0, 0, .8)',
+    flexGrow: 1,
+  });
+  return {
+    ...(baseVariants.includes(variant) && getBaseTheme()),
+    ...(variant === 'dashboard' && getDashboardTheme()),
   };
 });
