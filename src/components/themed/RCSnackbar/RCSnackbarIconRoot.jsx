@@ -1,6 +1,8 @@
 import Icon from '@mui/material/Icon';
+
 import useMode from 'hooks/useMode';
-import styled from 'styled-components';
+
+const { default: styled } = require('styled-components');
 
 export default styled(Icon)(({ ownerState }) => {
   const { theme } = useMode();

@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material';
-import { theme as settings } from 'assets/theme';
 import { useMemo } from 'react';
+
+import { theme as settings } from 'assets/theme';
 
 const useMode = () => {
   const defaultMode = 'dark';

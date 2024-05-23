@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
-import styled from 'styled-components';
+
+const { default: styled } = require('styled-components');
 
 const DashboardBox = styled(Box)(({ theme }) => ({
   backgroundColor: '#2d2d34',

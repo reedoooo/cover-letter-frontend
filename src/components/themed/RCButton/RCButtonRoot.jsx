@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 import { Button } from '@mui/material';
-import styled from 'styled-components';
+
 import useMode from 'hooks/useMode';
+
+const { default: styled } = require('styled-components');
 
 const RCButtonRoot = styled(Button)(({ ownerState }) => {
   const { theme } = useMode();

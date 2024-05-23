@@ -1,6 +1,7 @@
 import React from 'react';
-import { TextField, Grid, Typography } from '@mui/material';
+import { TextField, Grid } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
 import { StyledIconContainer } from './styled';

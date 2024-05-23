@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import {
   Box,
@@ -7,7 +7,6 @@ import {
   Container,
   Snackbar,
   Paper,
-  IconButton,
   Button,
   Dialog,
   DialogActions,
@@ -38,18 +37,17 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import DraftTabs from './DraftTabs';
-import CoverLetterForm from './CoverLetterForm';
-import AuthDialog from './AuthDialog';
-
 import useRouter from 'hooks/useRouter';
 import useMode from 'hooks/useMode';
 import { actionTypes, useDraftsReducer } from 'hooks/useDraftReducer';
 import useDraft from 'hooks/useDraft';
-
 import constants from 'config/constants';
-import RCButton from './themed/RCButton';
 import { deleteDraft } from 'api';
+
+import RCButton from './themed/RCButton';
+import AuthDialog from './AuthDialog';
+import CoverLetterForm from './CoverLetterForm';
+import DraftTabs from './DraftTabs';
 import { LeftSection, RightSection, StyledIconButton } from './styled';
 import RCTypography from './themed/RCTypography';
 import RCBox from './themed/RCBox';
@@ -506,7 +504,7 @@ function Generator(props) {
             <DialogTitle>Add a New Draft</DialogTitle>
             <DialogContent>
               <TextField
-                autoFocus
+                // ! autoFocus <-- ESLINT: autoFocus is not allowed
                 margin="dense"
                 id="name"
                 label="Draft Name"

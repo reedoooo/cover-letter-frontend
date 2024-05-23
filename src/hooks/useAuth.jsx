@@ -1,7 +1,9 @@
 import axios from 'axios';
-import constants from 'config/constants';
-import { actionTypes } from './useDraftReducer';
 import { useEffect } from 'react';
+
+import constants from 'config/constants';
+
+import { actionTypes } from './useDraftReducer';
 const { API_URL } = constants;
 
 const validateUserToken = async () => {

@@ -1,10 +1,9 @@
-import colors from '../../base/colors';
-import typography from '../../base/typography';
-import pxToRem from '../../functions/pxToRem';
+import { colors, typography } from 'assets/themes/base';
+import { pxToRem } from 'assets/themes/functions';
 
 const { text, success, secondary, transparent } = colors;
 const { size } = typography;
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   base: {
     backgroundColor: transparent.main,

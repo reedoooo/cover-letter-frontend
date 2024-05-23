@@ -1,4 +1,12 @@
 {
-  "cSpell.words": ["appbar", "Formik", "haspopup"],
-  "liveServer.settings.root": "/public",
+  "cSpell.words": [
+    "appbar",
+    "autofocus",
+    "Formik",
+    "haspopup",
+    "multilines",
+    "Roboto",
+    "toolz"
+  ],
+  "liveServer.settings.root": "/public"
 }

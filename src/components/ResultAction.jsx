@@ -18,9 +18,10 @@ import SaveIcon from '@mui/icons-material/Save';
 import DownloadIcon from '@mui/icons-material/Download'; // Import the Download icon
 
 import useMode from 'hooks/useMode';
+import { downloadHTML, downloadPDF } from 'utils/downloadUtils';
+
 import RCButton from './themed/RCButton';
 import { StyledIconContainer, StyledMenu } from './styled';
-import { downloadHTML, downloadPDF } from 'utils/downloadUtils';
 
 function ResultActions({
   draftContent,

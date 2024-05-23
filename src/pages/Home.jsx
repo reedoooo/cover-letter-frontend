@@ -1,9 +1,11 @@
 import React from 'react';
 import { Grid, Button, Typography, Box, Container, Paper } from '@mui/material';
+
 import PageLayout from 'components/common/PageLayout';
-import TypingAnimation from './TypingAnimation';
 import useMode from 'hooks/useMode';
 import useRouter from 'hooks/useRouter';
+
+import TypingAnimation from './TypingAnimation';
 
 function Home() {
   const { theme } = useMode();

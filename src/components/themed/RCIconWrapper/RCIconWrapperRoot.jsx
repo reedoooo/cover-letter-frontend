@@ -1,6 +1,8 @@
 import { Box } from '@mui/material';
+
 import useMode from 'hooks/useMode';
-import styled from 'styled-components';
+
+const { default: styled } = require('styled-components');
 
 export default styled(Box)(({ ownerstate }) => {
   const { theme } = useMode();

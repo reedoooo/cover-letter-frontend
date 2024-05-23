@@ -1,19 +1,18 @@
-import borders from '../../base/borders';
-import palette from '../../base/palette';
+import { borders, colors } from 'assets/themes/base';
 
 const { borderRadius } = borders;
-
+const { primary } = colors;
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {
     root: {
       transition: 'all 200ms ease-in-out',
-      color: palette.primary.dark,
-      background: palette.primary.lighter,
+      color: primary.dark,
+      background: primary.lighter,
     },
     rounded: {
       borderRadius: borderRadius.lg,
     },
-
     img: {
       height: 'auto',
     },

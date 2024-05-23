@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import RCButtonRoot from './RCButtonRoot';
 import { Box } from '@mui/material';
 import React from 'react';
+
+import RCButtonRoot from './RCButtonRoot';
 
 // Wrapper component for when you need a container around the button
 const ButtonContainer = ({ children, withContainer }) => (

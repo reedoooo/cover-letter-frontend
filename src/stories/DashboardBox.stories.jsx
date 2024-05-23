@@ -1,4 +1,5 @@
 import React from 'react';
+
 import DashboardBox from '../components/common/DashboardBox';
 
 export default {

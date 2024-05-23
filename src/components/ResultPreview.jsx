@@ -1,15 +1,16 @@
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Typography, CircularProgress, Paper } from '@mui/material';
 import { Document, Page, pdfjs } from 'react-pdf';
+
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { DraftEditorSkeleton } from 'utils/SkeletonComponents';
+import useMode from 'hooks/useMode';
+import { saveDraft, updateDraft } from 'api';
+
 import RCBox from './themed/RCBox';
 import { EditorContainer } from './styled';
-import useMode from 'hooks/useMode';
 import ResultActions from './ResultAction';
-import axios from 'axios';
-import { deleteDraft, saveDraft, updateDraft } from 'api';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 

@@ -2,7 +2,7 @@ import colors from '../../base/colors';
 import typography from '../../base/typography';
 import pxToRem from '../../functions/pxToRem';
 
-const { white, text, info, secondary, success, grey } = colors;
+const { text, success, grey } = colors;
 const { size } = typography;
 
 // eslint-disable-next-line import/no-anonymous-default-export

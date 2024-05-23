@@ -1,5 +1,6 @@
-import formFieldsConfigs from 'config/formFieldsConfigs';
 import * as Yup from 'yup';
+
+import formFieldsConfigs from 'config/formFieldsConfigs';
 
 const useFormikSchema = (configName) => {
   return Yup.object(

@@ -5,21 +5,18 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { Grid, Box } from '@mui/material';
-
 import { Formik } from 'formik';
+
 import useFormSubmit from 'hooks/useFormSubmit';
 import useMode from 'hooks/useMode';
 import useFormikSchema from 'hooks/useFormikSchema';
 import useFileUpload from 'hooks/useFileUpload';
-
 import formFieldsConfigs from 'config/formFieldsConfigs';
+
 import constants from '../config/constants';
-
 import { ScrollablePaper } from './styled';
-
 import FormContainerWithBackdrop from './layout/FormContainerWithBackdrop';
 import FormFields from './layout/FormFields';
-
 import CoverLetterFormLinkedInSection from './CoverLetterFormLinkedInSection';
 import CoverLetterFormResumeUpload from './CoverLetterFormResumeUpload';
 import CoverLetterFormResumeUploadPreview from './CoverLetterFormResumeUploadPreview';

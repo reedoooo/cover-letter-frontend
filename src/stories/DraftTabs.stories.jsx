@@ -1,4 +1,5 @@
 import React from 'react';
+
 import DraftTabs from '../components/DraftTabs';
 
 export default {

@@ -1,6 +1,8 @@
 import Typography from '@mui/material/Typography';
+
 import useMode from 'hooks/useMode';
-import styled from 'styled-components';
+
+const { default: styled } = require('styled-components');
 
 export default styled(Typography)(({ ownerState }) => {
   const { theme } = useMode();

@@ -1,6 +1,16 @@
-import { boxShadow, hexToRgb, linearGradient, pxToRem, rgba } from './themes';
-import { breakpoints, colors, borders, boxShadows, typography } from './themes';
-import { Transitions } from './themes';
+import {
+  boxShadow,
+  hexToRgb,
+  linearGradient,
+  pxToRem,
+  rgba,
+  breakpoints,
+  colors,
+  borders,
+  boxShadows,
+  typography,
+  Transitions,
+} from './themes';
 import components from './themes/components';
 
 export const theme = (mode) => {

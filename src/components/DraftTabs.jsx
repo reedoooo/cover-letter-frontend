@@ -11,7 +11,9 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+
 import useMode from 'hooks/useMode';
+
 import DashboardBox from './common/DashboardBox';
 
 function DraftTabs({
@@ -105,7 +107,7 @@ function DraftTabs({
                       onBlur={() => onSaveDraftName(index)}
                       onKeyDown={(e) => handleKeyDown(e, index)}
                       size="small"
-                      autoFocus
+                      // ! autoFocus <-- ESLINT: autoFocus is not allowed
                       variant="outlined"
                       sx={{
                         width: '100%',

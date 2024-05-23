@@ -2,7 +2,7 @@ import borders from '../../base/borders';
 import typography from '../../base/typography';
 import pxToRem from '../../functions/pxToRem';
 
-const { fontWeightBold, fontWeightRegular, size } = typography;
+const { fontWeightRegular, size } = typography;
 const { borderRadius } = borders;
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -1,7 +1,8 @@
 // hooks/useFileUpload.js
-import formFieldsConfigs from 'config/formFieldsConfigs';
 import { useState, useCallback } from 'react';
 import { pdfjs } from 'react-pdf';
+
+import formFieldsConfigs from 'config/formFieldsConfigs';
 
 const useFileUpload = (setFormValues) => {
   const { coverLetterConfigs } = formFieldsConfigs;

@@ -6,8 +6,9 @@ import { rgba } from 'assets/themes';
 
 const { size, fontWeightBold } = typography;
 const { borderRadius } = borders;
-const { dark, grey, success, text } = colors;
+const { dark, success, text } = colors;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {
     root: {
@@ -29,7 +30,6 @@ export default {
       color: `${success.darkest} !important`,
       transition: 'background-color 300ms ease, color 300ms ease', // smooth transition for background and color
 
-      // color: `${dark.main} !important`,
       opacity: '1 !important',
       '& .material-icons, .material-icons-round': {
         marginBottom: '0 !important',

@@ -1,6 +1,7 @@
 import Generator from 'components/Generator';
 
 const { Grid } = require('@mui/material');
+
 const { default: PageLayout } = require('components/common/PageLayout');
 
 function LetterBuilder() {

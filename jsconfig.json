@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "module": "commonjs",
-    "jsx": "react"
+    "jsx": "react",
+    "paths": {
+      "hooks/*": ["hooks/*"],
+      "components/*": ["components/*"],
+      "assets/*": ["assets/*"],
+      "utils/*": ["utils/*"],
+      "pages/*": ["pages/*"],
+      "config/*": ["config/*"],
+      "api/*": ["api/*"]
+    }
   },
   "exclude": ["node_modules", "build"],
-  "include": ["src/**/*"],
-  "paths": {
-    "*": ["*"]
-  }
+  "include": ["src"]
 }

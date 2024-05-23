@@ -1,11 +1,11 @@
 import { borders } from 'assets/themes';
+
 import colors from '../../base/colors';
 import typography from '../../base/typography';
 import pxToRem from '../../functions/pxToRem';
 
 const { transparent, light, info, success, primary, secondary, error } = colors;
-const { size, fontWeightRegular, fontWeightMedium, fontWeightBold } =
-  typography;
+const { size, fontWeightRegular } = typography;
 const { borderWidth } = borders;
 
 // eslint-disable-next-line import/no-anonymous-default-export

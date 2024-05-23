@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
-
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 
-import RCSnackbarIconRoot from 'components/RCSnackbar/RCSnackbarIconRoot';
 import RCBox from '../RCBox';
 import RCTypography from '../RCTypography';
+import RCSnackbarIconRoot from './RCSnackbarIconRoot';
 
 function RCSnackbar({
   color = 'info',

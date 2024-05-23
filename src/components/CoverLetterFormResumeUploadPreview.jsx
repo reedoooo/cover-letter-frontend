@@ -1,6 +1,7 @@
 import React from 'react';
 import { Document, Page } from 'react-pdf';
 import { Paper, Skeleton } from '@mui/material';
+
 import { PdfPreviewContainer } from './styled';
 
 const CoverLetterFormResumeUploadPreview = ({ fileUrl, theme }) =>

@@ -1,6 +1,7 @@
 import React from 'react';
-import RCWrappedIconRoot from './RCIconWrapperRoot';
 import PropTypes from 'prop-types';
+
+import RCWrappedIconRoot from './RCIconWrapperRoot';
 import RCBox from '../RCBox';
 
 // ==============================|| ICON WRAPPER ||============================== //

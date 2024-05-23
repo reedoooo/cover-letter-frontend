@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
 import useMode from 'hooks/useMode';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({

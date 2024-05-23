@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import RCTypographyRoot from './RCTypographyRoot';
 import React from 'react';
+
+import RCTypographyRoot from './RCTypographyRoot';
 
 /**
  * A reusable typography component.

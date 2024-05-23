@@ -3,24 +3,52 @@
     "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "plugin:storybook/recommended",
-    "plugin:styled-components-a11y/recommended"
+    "plugin:styled-components-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jsx-a11y/strict"
   ],
   "plugins": [
     "react",
     "prettier",
     "path",
     "styled-components-a11y",
-    "better-styled-components"
+    "better-styled-components",
+    "jsx-a11y",
+    "import"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
+    "react/require-default-props": "off",
+    "react/no-array-index-key": "off",
+    "react/no-unused-prop-types": "off",
+    "react/no-unused-state": "off",
+    "react/button-has-type": [
+      "error",
+      {
+        "button": true,
+        "submit": true,
+        "reset": true
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-no-target-blank": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/jsx-wrap-multilines": "off",
     "path/no-relative-imports": "error",
     "no-unused-vars": "warn",
     "no-console": "off",
+    "no-dupe-keys": "error",
+    "no-empty": "error",
     "semi": ["error", "always"],
     "eol-last": ["error", "always"],
     "quotes": [
@@ -41,8 +69,6 @@
       }
     ],
     "comma-dangle": ["error", "only-multiline"],
-    "no-dupe-keys": "error",
-    "no-empty": "error",
     "prettier/prettier": [
       "error",
       {
@@ -50,11 +76,44 @@
         "tabWidth": 2,
         "endOfLine": "lf"
       }
-    ]
+    ],
+    "import/no-deprecated": "warn",
+    "import/order": [
+      "warn",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "newlines-between": "always"
+      }
+    ],
+    "import/no-unresolved": "error",
+    "import/named": "error",
+    "import/namespace": "error",
+    "import/default": "error",
+    "import/export": "error",
+    "import/no-mutable-exports": "error",
+    "import/no-relative-packages": "error",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["to"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/no-autofocus": "error",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/click-events-have-key-events": "off"
   },
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
     }
   }
 }

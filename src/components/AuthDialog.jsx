@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
-  Button,
   FormControlLabel,
   Switch,
   TextField,
@@ -12,18 +10,19 @@ import {
   Card,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import formFieldsConfigs from 'config/formFieldsConfigs';
-import useAuth from 'hooks/useAuth';
-import FormFields from './layout/FormFields';
-import RCTypography from './themed/RCTypography';
-import MuiLink from '@mui/material/Link';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import MuiLink from '@mui/material/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
+
+import useMode from 'hooks/useMode';
+import formFieldsConfigs from 'config/formFieldsConfigs';
+import useAuth from 'hooks/useAuth';
+
+import RCTypography from './themed/RCTypography';
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
 import { StyledIconContainer } from './styled';
-import useMode from 'hooks/useMode';
 
 function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
   const { handleAuthSubmit } = useAuth();
