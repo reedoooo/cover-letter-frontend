@@ -1,15 +1,13 @@
-import colors from '../../base/colors';
-import boxShadows from '../../base/boxShadows';
-import borders from '../../base/borders';
+import { borders, boxShadows } from 'assets/themes/base';
 
-const { white } = colors;
 const { md } = boxShadows;
 const { borderRadius } = borders;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {
     root: {
-      backgroundColor: white.main,
+      backgroundColor: '#fff',
       boxShadow: md,
       borderRadius: borderRadius.xl,
     },

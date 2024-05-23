@@ -1,10 +1,13 @@
 import axios from 'axios';
+import constants from 'config/constants';
 
-const baseURL = `${process.env.REACT_APP_API_URL}`;
+const { API_URL } = constants;
 
-export const useApiService = axios.create({
-  baseURL,
+const useApiService = axios.create({
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+export default useApiService;

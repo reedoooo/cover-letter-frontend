@@ -1,6 +1,4 @@
-import axios from 'axios';
-import { useState, useCallback } from 'react';
-import { useApiService } from './useApiService';
+import useApiService from './useApiService';
 
 const useFormSubmit = () => {
   const formSubmitHandler = async ({
@@ -17,7 +15,6 @@ const useFormSubmit = () => {
     if (!drafts[selectedDraft]?.name) {
       return alert('Please name your draft first');
     }
-
     dispatch({ type: actionTypes.TOGGLE_LOADING });
 
     try {
@@ -66,22 +63,32 @@ const useFormSubmit = () => {
         rawInputValues: values,
         pdfUrl: url,
         // SERVER RESPONSE DATA
-        content: resHTML,
-        pdfText: resText,
+        content: {
+          name: drafts[selectedDraft]?.name || values?.name,
+          pdf: resPdfUrl,
+          text: resText,
+          html: resHTML,
+          blocks: resBlock,
+          metadata: metadata,
+        },
+        // content: resHTML,
+        // pdfText: resText,
         resSuccess: true,
         resError: false,
         resMessage: message,
-        resText: resText,
-        resPdfUrl: resPdfUrl,
-        resHtml: resHTML,
-        resBlock: resBlock,
-        resMetadata: metadata,
+        // resText: resText,
+        // resPdfUrl: resPdfUrl,
+        // resHtml: resHTML,
+        // resBlocks: resBlock,
+        // resMetadata: metadata,
       };
       localStorage.setItem(
         'selectedDraft',
         JSON.stringify(updatedDrafts[selectedDraft])
       );
+      localStorage.setItem('pdfUrl', JSON.stringify(resPdfUrl));
       dispatch({ type: actionTypes.SET_DRAFTS, drafts: updatedDrafts });
+      return updatedDrafts[selectedDraft];
     } catch (error) {
       console.error('Failed to generate cover letter:', error);
     } finally {

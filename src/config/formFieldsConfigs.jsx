@@ -10,13 +10,14 @@ const coverLetter = [
     name: 'yourAddress',
     label: 'Address',
     type: 'text',
-    regex: /(?:Address|Location):?\s*([^\n]+)/i,
+    regex: /(?:Address|Location|Addr):?\s*([\dA-Za-z.,'/-\s]+)/i,
   },
   {
     name: 'cityStateZip',
     label: 'City, State, Zip',
     type: 'text',
-    regex: /(?:City|State|Zip):?\s*([^\n]+)/i,
+    regex:
+      /(?:City|State|Zip|CSZ):?\s*([A-Za-z\s]+),\s*([A-Za-z\s]{2}),?\s*(\d{5}(?:-\d{4})?)/i,
   },
   {
     name: 'emailAddress',
@@ -41,13 +42,14 @@ const coverLetter = [
     name: 'companyAddress',
     label: 'Company Address',
     type: 'text',
-    regex: /(?:Address|Location):?\s*([^\n]+)/i,
+    regex: /(?:Address|Location|Addr):?\s*([\dA-Za-z.,'/-\s]+)/i,
   },
   {
     name: 'companyCityStateZip',
     label: 'City, State, Zip',
     type: 'text',
-    regex: /(?:City|State|Zip):?\s*([^\n]+)/i,
+    regex:
+      /(?:City|State|Zip|CSZ):?\s*([A-Za-z\s]+),\s*([A-Za-z\s]{2}),?\s*(\d{5}(?:-\d{4})?)/i,
   },
   {
     name: 'employerName',

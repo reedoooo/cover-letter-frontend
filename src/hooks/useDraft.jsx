@@ -11,8 +11,13 @@ const useDraft = () => {
       const loadedDrafts = JSON.parse(savedDrafts).map((draft) => ({
         ...draft,
         name: draft.name || 'Untitled Draft',
-        content: draft.content || '', // Raw HTML content
-        pdfUrl: draft.pdfUrl || '', // PDF URL
+        content: {
+          name: draft.name || 'Untitled Draft',
+          pdf: draft.content.pdf || '', // Raw HTML content
+          text: draft.content.text || '', // Raw HTML content
+          html: draft.content.html || '', // Raw HTML content
+          blocks: draft.content.blocks || '', // Raw HTML content
+        },
       }));
       dispatch({ type: actionTypes.SET_DRAFTS, drafts: loadedDrafts });
     }
@@ -26,8 +31,13 @@ const useDraft = () => {
   const saveDraftsToLocalStorage = (drafts) => {
     const rawDrafts = drafts?.map((draft) => ({
       ...draft,
-      content: draft.content || '', // Raw HTML content
-      pdfUrl: draft.pdfUrl || '', // PDF URL
+      content: {
+        name: draft.name || 'Untitled Draft',
+        pdf: draft.content.pdf || '', // Raw HTML content
+        text: draft.content.text || '', // Raw HTML content
+        html: draft.content.html || '', // Raw HTML content
+        blocks: draft.content.blocks || '', // Raw HTML content
+      },
     }));
     localStorage.setItem('coverLetterDrafts', JSON.stringify(rawDrafts));
   };

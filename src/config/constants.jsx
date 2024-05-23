@@ -1,9 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { Document, Page, pdfjs } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
 
 const constants = {
-  // Add your global constants here
-  // API_URL: 'https://api.example.com',
+  API_URL: process.env.REACT_APP_API_URL,
+  SERVER_URL: process.env.REACT_APP_SERVER_URL,
   PDF_WORKER_SRC: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`,
   DEFAULT_LINKEDIN_URL:
     // eslint-disable-next-line max-len

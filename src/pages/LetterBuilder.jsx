@@ -1,7 +1,6 @@
+import Generator from 'components/Generator';
+
 const { Grid } = require('@mui/material');
-const {
-  default: CoverLetterGenerator,
-} = require('components/CoverLetterGenerator');
 const { default: PageLayout } = require('components/common/PageLayout');
 
 function LetterBuilder() {
@@ -17,7 +16,7 @@ function LetterBuilder() {
           alignItems: 'center',
         }}
       >
-        <CoverLetterGenerator />
+        <Generator />
       </Grid>
     </PageLayout>
   );

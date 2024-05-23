@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useApiService } from './useApiService';
+import useApiService from './useApiService';
 
 const useApi = (endpoint, method = 'GET', req = null) => {
   const [loading, setLoading] = useState(true);

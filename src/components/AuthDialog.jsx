@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
   Button,
   FormControlLabel,
   Switch,
+  TextField,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import axios from 'axios';
 import formFieldsConfigs from 'config/formFieldsConfigs';
+import useAuth from 'hooks/useAuth';
+import FormFields from './layout/FormFields';
 
 function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
+  const { handleAuthSubmit } = useAuth();
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -21,26 +23,9 @@ function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
       email: '',
       isSignup: false,
     },
-    onSubmit: async (values) => {
-      const { username, password, email, isSignup } = values;
-      const url = isSignup ? `${apiUrl}/user/signup` : `${apiUrl}/user/login`;
-      const payload = isSignup
-        ? { username, password, email }
-        : { username, password };
-
-      try {
-        const { data } = await axios.post(url, payload);
-        if (data.token) {
-          onLoginSuccess(data.token, data.user);
-          onClose();
-          formik.resetForm();
-        }
-      } catch (error) {
-        console.error(isSignup ? 'Signup failed:' : 'Login failed:', error);
-      }
-    },
+    onSubmit: (values) =>
+      handleAuthSubmit(values, onLoginSuccess, onClose, apiUrl),
   });
-
   const renderFormFields = () => {
     return formFieldsConfigs['authConfigs'].map((field) => {
       if (field.conditional && !formik.values[field.conditional]) {
@@ -68,6 +53,13 @@ function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
       <form onSubmit={formik.handleSubmit}>
         <DialogContent>
           {renderFormFields()}
+
+          {/* <FormFields
+            configs={formFieldsConfigs.authConfigs}
+            formikProps={formik}
+            formValues={formik.values}
+            setFormValues={setFormValues}
+          /> */}
           <FormControlLabel
             control={
               <Switch
