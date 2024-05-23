@@ -4,15 +4,22 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:styled-components-a11y/recommended"
   ],
-  "plugins": ["react", "prettier", "path"],
+  "plugins": [
+    "react",
+    "prettier",
+    "path",
+    "styled-components-a11y",
+    "better-styled-components"
+  ],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "path/no-relative-imports": "error",
-    "react/prop-types": "off",
-    "no-unused-vars": "warn",
     "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "path/no-relative-imports": "error",
+    "no-unused-vars": "warn",
     "no-console": "off",
     "semi": ["error", "always"],
     "eol-last": ["error", "always"],
@@ -23,6 +30,7 @@
         "avoidEscape": true
       }
     ],
+    "better-styled-components/sort-declarations-alphabetically": "error",
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "max-len": [
