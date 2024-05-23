@@ -8,17 +8,26 @@ const CoverLetterFormSubmitButton = ({ loading, handleSubmit, theme }) => (
     variant="contained"
     color="primary"
     type="submit"
+    textSizeVariant="header"
+    textWeightVariant="bold"
+    size="large"
     sx={{ width: '100%', mt: 2 }}
     disabled={loading}
     startIcon={
-      <StyledIconContainer theme={theme}>
+      <StyledIconContainer
+        theme={theme}
+        sx={{
+          borderRadius: `${theme.spacing(2)} !important`,
+        }}
+      >
         <AddIcon color="white" />
       </StyledIconContainer>
     }
   >
-    <RCTypography variant="button" color="white">
+    Generate Cover Letter
+    {/* <RCTypography variant="button" color="white">
       Generate Cover Letter
-    </RCTypography>
+    </RCTypography> */}
   </RCButton>
 );
 

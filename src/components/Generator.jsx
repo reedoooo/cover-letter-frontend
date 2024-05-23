@@ -33,6 +33,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import DraftTabs from './DraftTabs';
 import CoverLetterForm from './CoverLetterForm';
@@ -46,7 +50,9 @@ import useDraft from 'hooks/useDraft';
 import constants from 'config/constants';
 import RCButton from './themed/RCButton';
 import { deleteDraft } from 'api';
-import { StyledIconButton } from './styled';
+import { LeftSection, RightSection, StyledIconButton } from './styled';
+import RCTypography from './themed/RCTypography';
+import RCBox from './themed/RCBox';
 
 const { API_URL } = constants;
 function Generator(props) {
@@ -141,16 +147,16 @@ function Generator(props) {
       <Paper sx={{ p: 2 }}>
         <Box sx={{ mt: 4 }}>
           <Paper component={Grid} container>
-            <Box component={Grid} item xs={draftsBarVisible ? 9 : 12}>
+            <Box component={Grid} item xs={draftsBarVisible ? 10 : 12}>
               {/* ================ NAVIGATION ================ */}
               <AppBar position="static">
                 <Container maxWidth="xl">
                   <Toolbar disableGutters>
-                    {/* === NAV BACK BUTTON === */}
-                    <Tooltip title="Back to Collections">
+                    {/* === TOOLBAR/BACK BUTTON === */}
+                    <Tooltip title="Back to Menu">
                       <StyledIconButton
                         onClick={() => navigate('/')}
-                        aria-label="Back to Collections"
+                        aria-label="Back to Menu"
                         theme={theme}
                       >
                         <Avatar>
@@ -160,8 +166,49 @@ function Generator(props) {
                         </Avatar>
                       </StyledIconButton>
                     </Tooltip>
+                    <Card
+                      sx={{
+                        overflow: 'visible',
+                        '&.MuiDialog-paper': {
+                          boxShadow: 'none',
+                          overflow: 'visible',
+                          '& .MuiDialogActions-root': {
+                            padding: 0,
+                            overflow: 'visible !important',
+                          },
+                        },
+                      }}
+                    >
+                      <RCBox
+                        // borderRadius="lg"
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          position: 'relative',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mx: theme.spacing(2),
+                          p: theme.spacing(1),
+                        }}
+                      >
+                        <RCTypography
+                          variant="h1"
+                          color="text"
+                          sx={({ breakpoints, typography: { size } }) => ({
+                            my: theme.spacing(1),
+                            py: theme.spacing(1),
+                            fontFamily: 'Roboto',
+                            [breakpoints.down('md')]: {
+                              fontSize: size['3xl'],
+                            },
+                          })}
+                        >
+                          Cover Letter Generator
+                        </RCTypography>
+                      </RCBox>
+                    </Card>
                     <Box sx={{ flexGrow: 1 }} />
-                    {/* === USER SETTINGS === */}
+                    {/* === TOOLBAR/USER SETTINGS === */}
                     <Tooltip title="User settings">
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography
@@ -185,6 +232,118 @@ function Generator(props) {
                           <Avatar alt="User Profile" />
                         </StyledIconButton>
                         <Menu
+                          sx={{
+                            mt: '45px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '100%',
+                            height: '100%',
+                            flexDirection: 'row',
+                          }}
+                          id="menu-appbar"
+                          anchorEl={anchorElUser}
+                          anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                          }}
+                          open={Boolean(anchorElUser)}
+                          onClose={() =>
+                            handleDispatch(
+                              actionTypes.SET_FIELD,
+                              'anchorElUser',
+                              null
+                            )
+                          }
+                        >
+                          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                            <LeftSection theme={theme}>
+                              <Avatar
+                                alt="User Profile"
+                                src={user?.avatarUrl}
+                                sx={{
+                                  width: 100,
+                                  height: 100,
+                                  marginBottom: theme.spacing(2),
+                                }}
+                              />
+                              <RCButton
+                                theme={theme}
+                                variant="contained"
+                                color="error"
+                                startIcon={<LogoutIcon />}
+                                onClick={() => {
+                                  handleDispatch(actionTypes.LOGOUT);
+                                  handleDispatch(
+                                    actionTypes.SET_FIELD,
+                                    'anchorElUser',
+                                    null
+                                  );
+                                }}
+                              >
+                                Logout
+                              </RCButton>
+                            </LeftSection>
+                            <RightSection theme={theme}>
+                              <MenuItem
+                                onClick={() => {
+                                  toggleDialog(
+                                    actionTypes.TOGGLE_PROFILE_DIALOG
+                                  );
+                                  handleDispatch(
+                                    actionTypes.SET_FIELD,
+                                    'anchorElUser',
+                                    null
+                                  );
+                                }}
+                              >
+                                <PersonIcon sx={{ marginRight: 1 }} />
+
+                                <Typography textAlign="center">
+                                  Profile
+                                </Typography>
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => {
+                                  toggleDialog(
+                                    actionTypes.TOGGLE_VIEW_DRAFTS_DIALOG
+                                  );
+                                  handleDispatch(
+                                    actionTypes.SET_FIELD,
+                                    'anchorElUser',
+                                    null
+                                  );
+                                }}
+                              >
+                                <EditNoteIcon sx={{ marginRight: 1 }} />
+
+                                <Typography textAlign="center">
+                                  View Drafts
+                                </Typography>
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() =>
+                                  handleDispatch(
+                                    actionTypes.SET_FIELD,
+                                    'anchorElUser',
+                                    null
+                                  )
+                                }
+                              >
+                                <SettingsIcon sx={{ marginRight: 1 }} />
+                                <Typography textAlign="center">
+                                  Settings
+                                </Typography>
+                              </MenuItem>
+                            </RightSection>
+                          </Box>
+                        </Menu>
+                        {/* <Menu
                           sx={{ mt: '45px' }}
                           id="menu-appbar"
                           anchorEl={anchorElUser}
@@ -245,10 +404,10 @@ function Generator(props) {
                           >
                             <Typography textAlign="center">Settings</Typography>
                           </MenuItem>
-                        </Menu>
+                        </Menu> */}
                       </Box>
                     </Tooltip>
-                    {/* === DRAWER === */}
+                    {/* === TOOLBAR/MENU BUTTON === */}
                     <Tooltip title="Open menu">
                       <StyledIconButton
                         onClick={() =>
@@ -279,7 +438,7 @@ function Generator(props) {
             </Box>
             {/* ================ TABS DISPLAYED FOR DRAFTS ================ */}
             {draftsBarVisible && (
-              <Box component={Grid} item xs={3}>
+              <Box component={Grid} item xs={2}>
                 <DraftTabs
                   drafts={drafts}
                   selectedDraft={selectedDraft}
@@ -336,78 +495,73 @@ function Generator(props) {
             )}
           </Paper>
         </Box>
-        {/* ================ SNACKBAR NOTIFICATIONS ================ */}
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
-          onClose={() =>
-            handleDispatch(actionTypes.SET_FIELD, 'openSnackbar', false)
-          }
-          message="Cover letter generated"
-        />
         {/* ================ ADD DIALOG ================ */}
-        <Dialog
-          open={dialogOpen}
-          onClose={() =>
-            handleDispatch(actionTypes.SET_FIELD, 'dialogOpen', false)
-          }
-        >
-          <DialogTitle>Add a New Draft</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Draft Name"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={newDraftName}
-              onChange={(e) =>
-                handleDispatch(
-                  actionTypes.SET_FIELD,
-                  'newDraftName',
-                  e.target.value
-                )
-              }
-              onKeyDown={(e) => e.key === 'Enter' && handleAddDraft()}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() =>
-                handleDispatch(actionTypes.SET_FIELD, 'dialogOpen', false)
-              }
-              startIcon={<CancelIcon />}
-              variant="outlined"
-              color="error"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleAddDraft}
-              startIcon={<AddBoxIcon />}
-              variant="outlined"
-              color="primary"
-            >
-              Add
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {dialogOpen && (
+          <Dialog
+            open={dialogOpen}
+            onClose={() =>
+              handleDispatch(actionTypes.SET_FIELD, 'dialogOpen', false)
+            }
+          >
+            <DialogTitle>Add a New Draft</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Draft Name"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={newDraftName}
+                onChange={(e) =>
+                  handleDispatch(
+                    actionTypes.SET_FIELD,
+                    'newDraftName',
+                    e.target.value
+                  )
+                }
+                onKeyDown={(e) => e.key === 'Enter' && handleAddDraft()}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() =>
+                  handleDispatch(actionTypes.SET_FIELD, 'dialogOpen', false)
+                }
+                startIcon={<CancelIcon />}
+                variant="outlined"
+                color="error"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleAddDraft}
+                startIcon={<AddBoxIcon />}
+                variant="outlined"
+                color="primary"
+              >
+                Add
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
         {/* ================ AUTH DIALOG ================ */}
-        <AuthDialog
-          open={loginDialogOpen}
-          onClose={() =>
-            handleDispatch(actionTypes.SET_FIELD, 'loginDialogOpen', false)
-          }
-          onLoginSuccess={(token, userData) => {
-            localStorage.setItem('userToken', token);
-            localStorage.setItem('user', JSON.stringify(userData));
-            handleDispatch(actionTypes.SET_FIELD, 'isAuthenticated', true);
-            toggleDialog(actionTypes.TOGGLE_LOGIN_DIALOG);
-          }}
-          apiUrl={API_URL}
-        />
+        {loginDialogOpen && (
+          <AuthDialog
+            open={loginDialogOpen}
+            onClose={() =>
+              handleDispatch(actionTypes.SET_FIELD, 'loginDialogOpen', false)
+            }
+            onLoginSuccess={(token, userData) => {
+              localStorage.setItem('userToken', token);
+              localStorage.setItem('user', JSON.stringify(userData));
+              handleDispatch(actionTypes.SET_FIELD, 'isAuthenticated', true);
+              toggleDialog(actionTypes.TOGGLE_LOGIN_DIALOG);
+            }}
+            apiUrl={API_URL}
+          />
+        )}
         {/* ================ VIEW DRAFTS DIALOG ================ */}
         {user && viewDraftsDialogOpen && (
           <Dialog
@@ -505,47 +659,58 @@ function Generator(props) {
           </Dialog>
         )}
         {/* ================ PROFILE DIALOG ================ */}
-        <Dialog
-          open={profileDialogOpen}
-          onClose={() => toggleDialog(actionTypes.TOGGLE_PROFILE_DIALOG)}
-          maxWidth="md"
-          fullWidth
-        >
-          <DialogTitle>Profile</DialogTitle>
-          <DialogContent>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextField
-                label="Username"
-                value={user?.username || ''}
-                variant="outlined"
-                fullWidth
-                disabled
-              />
-              <TextField
-                label="Email"
-                value={user?.email || ''}
-                variant="outlined"
-                fullWidth
-                disabled
-              />
-              <TextField
-                label="Full Name"
-                value={user?.fullName || ''}
-                variant="outlined"
-                fullWidth
-                disabled
-              />
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => toggleDialog(actionTypes.TOGGLE_PROFILE_DIALOG)}
-              color="primary"
-            >
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {profileDialogOpen && (
+          <Dialog
+            open={profileDialogOpen}
+            onClose={() => toggleDialog(actionTypes.TOGGLE_PROFILE_DIALOG)}
+            maxWidth="md"
+            fullWidth
+          >
+            <DialogTitle>Profile</DialogTitle>
+            <DialogContent>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <TextField
+                  label="Username"
+                  value={user?.username || ''}
+                  variant="outlined"
+                  fullWidth
+                  disabled
+                />
+                <TextField
+                  label="Email"
+                  value={user?.email || ''}
+                  variant="outlined"
+                  fullWidth
+                  disabled
+                />
+                <TextField
+                  label="Full Name"
+                  value={user?.fullName || ''}
+                  variant="outlined"
+                  fullWidth
+                  disabled
+                />
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => toggleDialog(actionTypes.TOGGLE_PROFILE_DIALOG)}
+                color="primary"
+              >
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
+        {/* ================ SNACKBAR NOTIFICATIONS ================ */}
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={() =>
+            handleDispatch(actionTypes.SET_FIELD, 'openSnackbar', false)
+          }
+          message="Cover letter generated"
+        />
       </Paper>
     </Card>
   );

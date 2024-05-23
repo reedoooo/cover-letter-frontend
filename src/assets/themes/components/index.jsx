@@ -9,12 +9,23 @@ import {
   inputFilled,
   inputLabel,
   inputOutlined,
+  switchButton,
   textField,
 } from './forms';
 import root from './buttons/root';
 import outlined from './buttons/outlined';
 import icon from './icon';
 import svgIcon from './svgIcon';
+import {
+  baseDialog,
+  dialogActions,
+  dialogContent,
+  dialogContentText,
+  dialogTitle,
+} from './dialog';
+import divider from './divider';
+import { baseMenu, menuItem } from './menu';
+import appBar from './appBar';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   // === GLOBALS AND LAYOUT ===
@@ -24,6 +35,18 @@ export default {
       ...container,
     },
   },
+  // === NAVIGATION ===
+  MuiAppBar: { ...appBar },
+  MuiMenu: { ...baseMenu },
+  MuiMenuItem: { ...menuItem },
+  // === DIVIDERS ===
+  MuiDivider: { ...divider },
+  // === DIALOGS ===
+  MuiDialog: { ...baseDialog },
+  MuiDialogTitle: { ...dialogTitle },
+  MuiDialogContent: { ...dialogContent },
+  MuiDialogContentText: { ...dialogContentText },
+  MuiDialogActions: { ...dialogActions },
   // === BUTTONS ===
   MuiButton: {
     styleOverrides: {
@@ -75,6 +98,7 @@ export default {
   MuiFormHelperText: {
     ...formHelperText,
   },
+  MuiSwitch: { ...switchButton },
   // === FORMS / INPUTS / VARIANTS ===
   MuiOutlinedInput: {
     ...inputOutlined,

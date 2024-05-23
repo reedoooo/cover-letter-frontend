@@ -1,20 +1,13 @@
-import borders from 'assets/theme/base/borders';
-import boxShadows from 'assets/theme/base/boxShadows';
+import dialogActions from './dialogActions';
+import dialogContent from './dialogContent';
+import dialogTitle from './dialogTitle';
+import dialogContentText from './dialogContentText';
+import baseDialog from './baseDialog';
 
-const { borderRadius } = borders;
-const { xxl } = boxShadows;
-
-const dialog = {
-  styleOverrides: {
-    paper: {
-      borderRadius: borderRadius.lg,
-      boxShadow: xxl,
-    },
-
-    paperFullScreen: {
-      borderRadius: 0,
-    },
-  },
+export {
+  dialogActions,
+  dialogContent,
+  dialogTitle,
+  dialogContentText,
+  baseDialog,
 };
-
-export default dialog;

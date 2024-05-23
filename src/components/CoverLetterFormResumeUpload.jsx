@@ -10,6 +10,7 @@ import {
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
+import { StyledIconContainer } from './styled';
 
 const CoverLetterFormResumeUpload = ({
   resFormat,
@@ -17,6 +18,7 @@ const CoverLetterFormResumeUpload = ({
   resText,
   setResText,
   handleFileUpload,
+  theme,
 }) => (
   <>
     <FormControl component="fieldset">
@@ -39,18 +41,39 @@ const CoverLetterFormResumeUpload = ({
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          height: '100%',
           width: '100%',
           alignItems: 'center',
           mt: 4,
+          mb: 6, // Add margin bottom to create space
         }}
       >
         <RCButton
           variant="contained"
           component="label"
           color="primary"
-          startIcon={<UploadFileIcon />}
-          sx={{ width: '100%' }}
+          textSizeVariant="button"
+          textWeightVariant="bold"
+          withContainer={false}
+          startIcon={
+            <StyledIconContainer
+              theme={theme}
+              sx={{
+                borderRadius: `${theme.spacing(2)} !important`,
+              }}
+            >
+              <UploadFileIcon />
+            </StyledIconContainer>
+          }
+          sx={{
+            p: 2,
+            width: '100%',
+            justifyContent: 'flex-start',
+            mx: '1rem',
+            '& .MuiButton-startIcon': {
+              marginLeft: 0,
+              marginRight: '1rem',
+            },
+          }}
         >
           Upload Resume
           <input

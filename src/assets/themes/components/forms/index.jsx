@@ -7,7 +7,7 @@ import textField from './textField';
 import inputFilled from './inputFilled';
 import formHelperText from './formHelperText';
 import formControl from './formControl';
-
+import switchButton from './switchButton';
 export {
   input,
   inputLabel,
@@ -18,4 +18,5 @@ export {
   inputFilled,
   formHelperText,
   formControl,
+  switchButton,
 };

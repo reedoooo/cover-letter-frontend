@@ -9,6 +9,7 @@ export default {
     root: {
       fontSize: size.md,
       color: dark.main,
+      textAlign: 'center',
     },
   },
 };

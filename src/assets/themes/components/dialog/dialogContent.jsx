@@ -1,13 +1,12 @@
-import typography from 'assets/theme/base/typography';
-import borders from 'assets/theme/base/borders';
-import colors from 'assets/theme/base/colors';
-import pxToRem from 'assets/theme/functions/pxToRem';
+import { borders, colors, typography } from 'assets/themes/base';
+import { pxToRem } from 'assets/themes/functions';
 
 const { size } = typography;
 const { text } = colors;
 const { borderWidth, borderColor } = borders;
 
-const dialogContent = {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
   styleOverrides: {
     root: {
       padding: pxToRem(16),
@@ -21,5 +20,3 @@ const dialogContent = {
     },
   },
 };
-
-export default dialogContent;

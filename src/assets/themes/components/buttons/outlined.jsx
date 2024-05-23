@@ -4,7 +4,8 @@ import typography from '../../base/typography';
 import pxToRem from '../../functions/pxToRem';
 
 const { transparent, light, info, success, primary, secondary, error } = colors;
-const { size } = typography;
+const { size, fontWeightRegular, fontWeightMedium, fontWeightBold } =
+  typography;
 const { borderWidth } = borders;
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -20,9 +21,11 @@ export default {
       opacity: 0.75,
       backgroundColor: transparent.main,
     },
-
     '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(16)} !important`,
+    },
+    '& .MuiButton-label': {
+      fontWeight: fontWeightRegular,
     },
   },
 

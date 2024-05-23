@@ -103,6 +103,22 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
     backgroundColor: alpha(theme.palette.primary.main, 0.1),
   },
 }));
+const LeftSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '200px',
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(2),
+  borderRight: `1px solid ${theme.palette.divider}`,
+}));
+
+const RightSection = styled(Box)(({ theme }) => ({
+  width: '200px',
+  display: 'flex',
+  flexDirection: 'column',
+}));
 export {
   StyledIconContainer,
   StyledIconButton,
@@ -111,4 +127,6 @@ export {
   EditorContainer,
   PdfPreviewContainer,
   FormContainer,
+  LeftSection,
+  RightSection,
 };

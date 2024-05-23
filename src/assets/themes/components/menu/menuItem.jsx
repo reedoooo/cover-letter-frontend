@@ -1,13 +1,12 @@
-import colors from 'assets/theme/base/colors';
-import borders from 'assets/theme/base/borders';
-import typography from 'assets/theme/base/typography';
-import pxToRem from 'assets/theme/functions/pxToRem';
+import { borders, colors, typography } from 'assets/themes/base';
+import { pxToRem } from 'assets/themes/functions';
 
 const { light, text, dark } = colors;
 const { borderRadius } = borders;
 const { size } = typography;
 
-const menuItem = {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
   styleOverrides: {
     root: {
       minWidth: pxToRem(160),
@@ -26,5 +25,3 @@ const menuItem = {
     },
   },
 };
-
-export default menuItem;

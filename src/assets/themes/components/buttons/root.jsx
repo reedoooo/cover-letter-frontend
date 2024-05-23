@@ -2,7 +2,7 @@ import borders from '../../base/borders';
 import typography from '../../base/typography';
 import pxToRem from '../../functions/pxToRem';
 
-const { fontWeightBold, size } = typography;
+const { fontWeightBold, fontWeightRegular, size } = typography;
 const { borderRadius } = borders;
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -10,8 +10,8 @@ export default {
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
-  fontSize: size.xs,
-  fontWeight: fontWeightBold,
+  fontSize: size.sm,
+  fontWeight: fontWeightRegular,
   borderRadius: borderRadius.lg,
   padding: `${pxToRem(6.302)} ${pxToRem(16.604)}`,
   lineHeight: 1.4,

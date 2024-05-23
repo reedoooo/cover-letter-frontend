@@ -1,9 +1,9 @@
-import colors from '../../base/colors';
-import pxToRem from '../../functions/pxToRem';
-import rgba from '../../functions/rgba';
+import { colors } from 'assets/themes/base';
+import { pxToRem, rgba } from 'assets/themes/functions';
 
 const { dark, transparent, white } = colors;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {
     root: {

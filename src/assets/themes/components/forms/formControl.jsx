@@ -39,7 +39,6 @@ export default {
       color: grey[600],
     },
   },
-
   notchedOutline: {
     borderColor: action.disabled,
     borderWidth: '2px',

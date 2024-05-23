@@ -5,6 +5,7 @@ import pxToRem from '../../functions/pxToRem';
 const { text, success, grey } = colors;
 const { size } = typography;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   base: {
     backgroundColor: grey.default,

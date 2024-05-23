@@ -1,6 +1,5 @@
 import {
   boxShadow,
-  hexToRgba,
   linearGradient,
   pxToRem,
   rgba,
@@ -18,7 +17,6 @@ import Transitions from './transitions';
 
 export {
   boxShadow,
-  hexToRgba,
   hexToRgb,
   linearGradient,
   pxToRem,
