@@ -3,11 +3,13 @@ import { TextField, Grid, Typography } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
+import { StyledIconContainer } from './styled';
 
 const CoverLetterFormLinkedInSection = ({
   linkedInUrl,
   setLinkedInUrl,
   handleLinkedInSubmit,
+  theme,
 }) => (
   <Grid container>
     <Grid item xs={12} md={6}>
@@ -15,26 +17,30 @@ const CoverLetterFormLinkedInSection = ({
         variant="contained"
         color="primary"
         onClick={handleLinkedInSubmit}
-        startIcon={<LinkedInIcon />}
-        sx={{ mt: 4, ml: 2, p: 2, width: '97.5%' }}
+        textSizeVariant="button"
+        textWeightVariant="bold"
+        startIcon={
+          <StyledIconContainer
+            theme={theme}
+            sx={{ borderRadius: `${theme.spacing(2)} !important` }}
+          >
+            <LinkedInIcon />
+          </StyledIconContainer>
+        }
+        sx={{
+          mt: 4,
+          ml: 2,
+          p: 2,
+          width: '97.5%',
+          justifyContent: 'flex-start',
+          // mx: '1rem',
+          '& .MuiButton-startIcon': {
+            marginLeft: 0,
+            marginRight: '1rem',
+          },
+        }}
       >
-        <Typography
-          variant="button"
-          color="white"
-          sx={{
-            width: '100%',
-            py: 2,
-            fontWeight: 500,
-            fontSize: '1rem',
-            textTransform: 'none',
-            letterSpacing: '0.02rem',
-            lineHeight: '1.5rem',
-            textDecoration: 'none',
-            textShadow: '0 0.05rem 0.1rem rgba(0, 0, 0, 0.15)',
-          }}
-        >
-          Submit LinkedIn URL
-        </Typography>
+        LinkedIn URL
       </RCButton>
     </Grid>
     <Grid item xs={12} md={6}>

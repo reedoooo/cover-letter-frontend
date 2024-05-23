@@ -1,11 +1,10 @@
-import pxToRem from 'assets/theme/functions/pxToRem';
+import { pxToRem } from 'assets/themes/functions';
 
-const dialogActions = {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
   styleOverrides: {
     root: {
       padding: pxToRem(16),
     },
   },
 };
-
-export default dialogActions;

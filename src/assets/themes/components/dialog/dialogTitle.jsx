@@ -1,9 +1,10 @@
-import typography from 'assets/theme/base/typography';
-import pxToRem from 'assets/theme/functions/pxToRem';
+import { typography } from 'assets/themes/base';
+import { pxToRem } from 'assets/themes/functions';
 
 const { size } = typography;
 
-const dialogTitle = {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
   styleOverrides: {
     root: {
       padding: pxToRem(16),
@@ -11,5 +12,3 @@ const dialogTitle = {
     },
   },
 };
-
-export default dialogTitle;

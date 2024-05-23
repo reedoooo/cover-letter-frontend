@@ -110,6 +110,7 @@ function CoverLetterForm({
                 resText={resText}
                 setResText={setResText}
                 handleFileUpload={handleFileUpload}
+                theme={theme}
               />
             </Grid>
             <Grid
@@ -147,6 +148,7 @@ function CoverLetterForm({
                       linkedInUrl={linkedInUrl}
                       setLinkedInUrl={setLinkedInUrl}
                       handleLinkedInSubmit={handleLinkedInSubmit}
+                      theme={theme}
                     />
                     <ScrollablePaper theme={theme}>
                       <FormFields
@@ -167,16 +169,7 @@ function CoverLetterForm({
           </Grid>
         </Grid>
         {/* ================== Preview Container ================== */}
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: 'calc(80vh - 96px)',
-          }}
-        >
+        <Grid item xs={12} md={6}>
           <ResultPreview
             loading={loading}
             generatedPdfUrl={generatedPdfUrl}

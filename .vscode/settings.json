@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["appbar", "Formik", "haspopup"]
+  "cSpell.words": ["appbar", "Formik", "haspopup"],
+  "liveServer.settings.root": "/public",
 }

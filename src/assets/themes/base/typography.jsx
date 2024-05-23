@@ -26,6 +26,7 @@ const { dark } = colors;
 // };
 const baseProperties = {
   fontFamily: 'Poppins, sans-serif',
+  fontWeightLighter: 100,
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
@@ -217,6 +218,13 @@ const typography = {
     xl: baseProperties.fontSizeXL,
     xxl: baseProperties.fontSize2XL,
     xxxl: baseProperties.fontSize3XL,
+  },
+  weight: {
+    lighter: baseProperties.fontWeightLighter,
+    light: baseProperties.fontWeightLight,
+    regular: baseProperties.fontWeightRegular,
+    medium: baseProperties.fontWeightMedium,
+    bold: baseProperties.fontWeightBold,
   },
   lineHeight: {
     xs: 1.25,
