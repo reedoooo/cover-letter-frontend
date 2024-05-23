@@ -6,6 +6,7 @@ import {
   Divider,
   MenuItem,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import HtmlIcon from '@mui/icons-material/Html';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -14,12 +15,14 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
+import DownloadIcon from '@mui/icons-material/Download'; // Import the Download icon
+
 import useMode from 'hooks/useMode';
 import RCButton from './themed/RCButton';
 import { StyledIconContainer, StyledMenu } from './styled';
 import { downloadHTML, downloadPDF } from 'utils/downloadUtils';
 
-function EditorActions({
+function ResultActions({
   draftContent,
   loading,
   handleDraftEdit,
@@ -59,81 +62,84 @@ function EditorActions({
   return (
     <Box sx={{ mt: 2 }}>
       <Grid container spacing={1}>
-        <Grid item xs={12} md={8}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={12}>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handleDraftEdit}
-                sx={{ width: '100%', mb: theme.spacing(2) }}
-                disabled={loading}
-                startIcon={<EditIcon />}
-              >
-                Rename Draft
-              </Button>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <RCButton
-                variant="outlined"
-                color="error"
-                size="large"
-                onClick={handleDraftDelete}
-                sx={{ width: '50%' }}
-                disabled={loading}
-                startIcon={<DeleteIcon />}
-              >
-                Delete Draft
-              </RCButton>
-              <RCButton
-                variant="outlined"
-                color="info"
-                size="large"
-                onClick={handleDraftSave}
-                sx={{ width: '50%' }}
-                disabled={loading}
-                startIcon={<SaveIcon />}
-              >
-                Save Draft
-              </RCButton>
-            </Grid>
-          </Grid>
+        <Grid item xs={12}>
+          <Tooltip title="Rename Draft">
+            <RCButton
+              variant="outlined"
+              color="primary"
+              onClick={handleDraftEdit}
+              sx={{ width: '100%', mb: theme.spacing(2) }}
+              disabled={loading}
+              startIcon={<EditIcon />}
+            >
+              Rename Draft
+            </RCButton>
+          </Tooltip>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Button
-            id="download-button"
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            variant="contained"
-            disableElevation
-            color="secondary"
-            label="Download"
-            sx={{
-              height: '100%',
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <Box
+        <Grid item xs={6}>
+          <Tooltip title="Delete Draft">
+            <RCButton
+              variant="outlined"
+              color="error"
+              size="large"
+              onClick={handleDraftDelete}
+              sx={{ width: '100%' }}
+              disabled={loading}
+              startIcon={<DeleteIcon />}
+            >
+              Delete Draft
+            </RCButton>
+          </Tooltip>
+        </Grid>
+        <Grid item xs={6}>
+          <Tooltip title="Save Draft">
+            <RCButton
+              variant="outlined"
+              color="info"
+              size="large"
+              onClick={handleDraftSave}
+              sx={{ width: '100%' }}
+              disabled={loading}
+              startIcon={<SaveIcon />}
+            >
+              Save Draft
+            </RCButton>
+          </Tooltip>
+        </Grid>
+        <Grid item xs={12}>
+          <Tooltip title="Download Options">
+            <Button
+              id="download-button"
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              variant="contained"
+              disableElevation
+              color="secondary"
+              startIcon={<DownloadIcon fontSize="medium" />} // Add the Download icon here
               sx={{
                 width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                flexDirection: 'row',
-                flexGrow: 1,
+                border: `2px solid ${theme.palette.secondary.main}`,
               }}
             >
-              <Typography variant="button" fontSize="1.2rem">
-                Download
-              </Typography>{' '}
-              <StyledIconContainer theme={theme}>
-                <KeyboardArrowDownIcon fontSize="3rem" />
-              </StyledIconContainer>
-            </Box>
-          </Button>
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Typography variant="button" fontSize="1.2rem">
+                  Download
+                </Typography>
+                <StyledIconContainer theme={theme}>
+                  <KeyboardArrowDownIcon fontSize="medium" />
+                </StyledIconContainer>
+              </Box>
+            </Button>
+          </Tooltip>
+
           <StyledMenu
             id="download-menu"
             anchorEl={anchorEl}
@@ -164,4 +170,4 @@ function EditorActions({
   );
 }
 
-export default EditorActions;
+export default ResultActions;

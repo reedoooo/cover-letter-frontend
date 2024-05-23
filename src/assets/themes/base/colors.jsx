@@ -65,7 +65,7 @@ const colors = {
     secondary: '#5CDB95',
     tertiary: '#5fe7bb',
     dark: '#2e7c67',
-    focus: rgba('#18b984' || 'white', 0.15),
+    focus: rgba('#18b984' || '#dbf5ee', 0.15),
     contrastText: '#dbf5ee',
   },
   secondary: {
@@ -75,17 +75,18 @@ const colors = {
     secondary: '#3C40C6',
     tertiary: '#3d3d3d',
     dark: '#293f66',
-    focus: rgba('#3a539b' || 'white', 0.15),
+    focus: rgba('#3a539b' || '#eef2f6', 0.15),
     contrastText: '#eef2f6',
   },
   text: {
     primary: '#212121',
     secondary: '#3d3d3d',
+    main: '#212121',
     tertiary: '#707070',
     contrastText: '#ffffff',
     hover: '#4a4a4a',
     colorText: '#343239',
-    colorPrimaryText: rgba('white', 0.96),
+    colorPrimaryText: rgba('#fff', 0.96),
     colorLabel: '#A4A3A6',
   },
   grey: {
@@ -110,6 +111,7 @@ const colors = {
   },
   white: {
     main: '#ffffff',
+    default: '#ffffff',
     focus: '#E8E8E8',
   },
   info: {
@@ -207,7 +209,7 @@ const colors = {
   transparent: {
     main: 'transparent',
   },
-  divider: 'white',
+  divider: '#eeeeee',
   action: {
     hover: '#424242',
     disabled: '#eeeeee',

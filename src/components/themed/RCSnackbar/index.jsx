@@ -7,8 +7,8 @@ import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 
 import RCSnackbarIconRoot from 'components/RCSnackbar/RCSnackbarIconRoot';
-import RCTypography from '../RCTYPOGRAPHY';
 import RCBox from '../RCBox';
+import RCTypography from '../RCTypography';
 
 function RCSnackbar({
   color = 'info',
@@ -63,7 +63,7 @@ function RCSnackbar({
     >
       <RCBox
         variant={bgWhite ? 'contained' : 'gradient'}
-        bgColor={bgWhite ? 'white' : color}
+        bgColor={bgWhite ? '#fff' : color}
         minWidth="21.875rem"
         maxWidth="100%"
         shadow="md"

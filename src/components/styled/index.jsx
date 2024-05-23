@@ -1,4 +1,4 @@
-const { Box, alpha, Menu, Paper } = require('@mui/material');
+const { Box, alpha, Menu, Paper, IconButton } = require('@mui/material');
 const { default: styled } = require('styled-components');
 
 const StyledIconContainer = styled(Box)(({ theme }) => ({
@@ -56,9 +56,15 @@ const StyledMenu = styled((props) => (
 
 const ScrollablePaper = styled(Paper)(({ theme }) => ({
   maxHeight: 'calc(90vh - 96px)',
-  overflowY: 'auto',
   padding: theme.spacing(2),
   marginRight: theme.spacing(2),
+  height: '297mm',
+  // padding: theme.spacing(2),
+  boxSizing: 'border-box',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+  overflowY: 'auto',
+  backgroundColor: '#fff',
 }));
 
 const EditorContainer = styled(Paper)(({ theme }) => ({
@@ -85,8 +91,21 @@ const FormContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
 }));
 
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  marginLeft: theme.spacing(0.5),
+  border: `2px solid ${theme.palette.background.default}`,
+  '&:hover': {
+    color: theme.palette.dark.main,
+    backgroundColor: theme.palette.background.hover,
+  },
+  '&:selected': {
+    color: theme.palette.primary.main,
+    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+  },
+}));
 export {
   StyledIconContainer,
+  StyledIconButton,
   StyledMenu,
   ScrollablePaper,
   EditorContainer,

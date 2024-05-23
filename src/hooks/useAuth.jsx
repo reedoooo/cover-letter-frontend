@@ -1,17 +1,17 @@
-import { useEffect } from 'react';
 import axios from 'axios';
+import constants from 'config/constants';
 import { actionTypes } from './useDraftReducer';
+import { useEffect } from 'react';
+const { API_URL } = constants;
+
 const validateUserToken = async () => {
   if (localStorage.getItem('userToken')) {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/user/validate-token`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('userToken')}`,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/user/validate-token`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        },
+      });
       if (response.status !== 200) {
         throw new Error('Token validation failed');
       }
@@ -25,7 +25,7 @@ const validateUserToken = async () => {
 const logoutUser = async () => {
   try {
     await axios.post(
-      `${process.env.REACT_APP_API_URL}/user/logout`,
+      `${API_URL}/user/logout`,
       {},
       {
         headers: {
@@ -39,6 +39,46 @@ const logoutUser = async () => {
     console.error('Logout error:', error);
   }
 };
+
+const handleAuthSubmit = async (values, onLoginSuccess, onClose, apiUrl) => {
+  const { username, password, email, isSignup } = values;
+  const url = isSignup ? `${apiUrl}/user/signup` : `${apiUrl}/user/login`;
+  const payload = isSignup
+    ? { username, password, email }
+    : { username, password };
+
+  try {
+    const { data } = await axios.post(url, payload);
+    if (data.token) {
+      onLoginSuccess(data.token, data.user);
+      // const currentDrafts = JSON.parse(
+      //   localStorage.getItem('coverLetterDrafts')
+      // );
+      // if (currentDrafts) {
+      //   const currentDraftsWithLoadedDrafts = currentDrafts?.map((draft) => {
+      //     return {
+      //       ...draft,
+      //       content: {
+      //         name: draft.name || 'Untitled Draft',
+      //         pdf: draft.content.pdf || '', // Raw HTML content
+      //         text: draft.content.text || '', // Raw HTML content
+      //         html: draft.content.html || '', // Raw HTML content
+      //         blocks: draft.content.blocks || '', // Raw HTML content
+      //       },
+      //     };
+      //   });
+      //   localStorage.setItem(
+      //     'coverLetterDrafts',
+      //     JSON.stringify(currentDraftsWithLoadedDrafts)
+      //   );
+      // }
+      onClose();
+    }
+  } catch (error) {
+    console.error(isSignup ? 'Signup failed:' : 'Login failed:', error);
+  }
+};
+
 const useAuth = (isAuthenticated, dispatch) => {
   useEffect(() => {
     const intervalId = setInterval(validateUserToken, 600000);
@@ -50,7 +90,7 @@ const useAuth = (isAuthenticated, dispatch) => {
     dispatch({ type: actionTypes.TOGGLE_AUTHENTICATION });
   };
 
-  return { handleLogout };
+  return { handleLogout, handleAuthSubmit };
 };
 
 export default useAuth;
