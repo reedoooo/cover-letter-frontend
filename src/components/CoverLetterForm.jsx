@@ -1,37 +1,40 @@
-// components/CoverLetterForm.jsx
-import React, { useEffect, useState } from 'react';
+import { Grid, Box } from '@mui/material';
+import { Formik } from 'formik';
+import React from 'react';
 import { pdfjs } from 'react-pdf';
 import 'react-quill/dist/quill.snow.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import { Grid, Box } from '@mui/material';
-import { Formik } from 'formik';
 
+import formFieldsConfigs from 'config/formFieldsConfigs';
+import useFileUpload from 'hooks/useFileUpload';
+import useFormikSchema from 'hooks/useFormikSchema';
 import useFormSubmit from 'hooks/useFormSubmit';
 import useMode from 'hooks/useMode';
-import useFormikSchema from 'hooks/useFormikSchema';
-import useFileUpload from 'hooks/useFileUpload';
-import formFieldsConfigs from 'config/formFieldsConfigs';
 import useNotification from 'hooks/useNotification';
 
 import constants from '../config/constants';
-import { ScrollablePaper } from './styled';
-import FormContainerWithBackdrop from './layout/FormContainerWithBackdrop';
-import FormFields from './layout/FormFields';
+import {
+  setFormValues,
+  setLinkedInUrl,
+  setResFormat,
+  setResText,
+  setGeneratedPdfUrl,
+} from '../store/Reducers/draftSlice';
 import CoverLetterFormLinkedInSection from './CoverLetterFormLinkedInSection';
 import CoverLetterFormResumeUpload from './CoverLetterFormResumeUpload';
 import CoverLetterFormResumeUploadPreview from './CoverLetterFormResumeUploadPreview';
 import CoverLetterFormSubmitButton from './CoverLetterFormSubmitButton';
+import FormContainerWithBackdrop from './layout/FormContainerWithBackdrop';
+import FormFields from './layout/FormFields';
 import ResultPreview from './ResultPreview';
-
-// import * as pdfjsLib from 'pdfjs-dist';
+import { ScrollablePaper } from './styled';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function CoverLetterForm({
   selectedDraftIndex,
   loading,
-  actionTypes,
   drafts,
   dispatch,
   isAuthenticated,
@@ -45,15 +48,10 @@ function CoverLetterForm({
   const { addNotification } = useNotification();
   const { file, fileUrl, fileText, handleFileUpload } = useFileUpload(
     (values) => {
-      dispatch({ type: actionTypes.SET_FORM_VALUES, formValues: values });
-    }
+      dispatch(setFormValues(values));
+    },
   );
-  useEffect(() => {
-    if (file) {
-      // Reset form values when a new file is uploaded
-      dispatch({ type: actionTypes.SET_FORM_VALUES, formValues: {} });
-    }
-  }, [file, dispatch, actionTypes]);
+
   const handleSubmit = async (values) => {
     const result = await formSubmitHandler({
       values,
@@ -66,14 +64,10 @@ function CoverLetterForm({
       drafts,
       selectedDraftIndex,
       dispatch,
-      actionTypes,
     });
 
     if (result && result.content.pdf) {
-      dispatch({
-        type: actionTypes.SET_GENERATED_PDF_URL,
-        pdfUrl: result.content.pdf,
-      });
+      dispatch(setGeneratedPdfUrl({ pdfUrl: result.content.pdf }));
     }
   };
 
@@ -81,7 +75,7 @@ function CoverLetterForm({
     e.preventDefault();
     const linkedInUrl =
       drafts[selectedDraftIndex]?.linkedInUrl || constants.DEFAULT_LINKEDIN_URL;
-    dispatch({ type: actionTypes.SET_LINKEDIN_URL, linkedInUrl });
+    dispatch(setLinkedInUrl({ linkedInUrl }));
 
     addNotification({
       color: 'info',
@@ -96,8 +90,6 @@ function CoverLetterForm({
     <FormContainerWithBackdrop
       theme={theme}
       formDisabled={formDisabled}
-      actionTypes={actionTypes}
-      dispatch={dispatch}
       drafts={drafts}
       isAuthenticated={isAuthenticated}
       initAddContentVisible={initAddContentVisible}
@@ -120,12 +112,10 @@ function CoverLetterForm({
               <CoverLetterFormResumeUpload
                 resFormat={drafts[selectedDraftIndex]?.resFormat || 'Upload'}
                 setResFormat={(resFormat) =>
-                  dispatch({ type: actionTypes.SET_RES_FORMAT, resFormat })
+                  dispatch(setResFormat({ resFormat }))
                 }
                 resText={drafts[selectedDraftIndex]?.resText || ''}
-                setResText={(resText) =>
-                  dispatch({ type: actionTypes.SET_RES_TEXT, resText })
-                }
+                setResText={(resText) => dispatch(setResText({ resText }))}
                 handleFileUpload={handleFileUpload}
                 theme={theme}
               />
@@ -165,10 +155,7 @@ function CoverLetterForm({
                         constants.DEFAULT_LINKEDIN_URL
                       }
                       setLinkedInUrl={(linkedInUrl) =>
-                        dispatch({
-                          type: actionTypes.SET_LINKEDIN_URL,
-                          linkedInUrl,
-                        })
+                        dispatch(setLinkedInUrl({ linkedInUrl }))
                       }
                       handleLinkedInSubmit={handleLinkedInSubmit}
                       theme={theme}
@@ -181,10 +168,7 @@ function CoverLetterForm({
                           drafts[selectedDraftIndex]?.formValues || {}
                         }
                         setFormValues={(values) =>
-                          dispatch({
-                            type: actionTypes.SET_FORM_VALUES,
-                            formValues: values,
-                          })
+                          dispatch(setFormValues(values))
                         }
                       />
                     </ScrollablePaper>
@@ -206,7 +190,6 @@ function CoverLetterForm({
             drafts={drafts}
             selectedDraftIndex={selectedDraftIndex}
             dispatch={dispatch}
-            actionTypes={actionTypes}
             handleDeleteDraft={handleDeleteDraft}
           />
         </Grid>

@@ -1,6 +1,12 @@
-import React from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download'; // Import the Download icon
+import EditIcon from '@mui/icons-material/Edit';
+import FilePresentIcon from '@mui/icons-material/FilePresent';
+import HtmlIcon from '@mui/icons-material/Html';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import SaveIcon from '@mui/icons-material/Save';
 import {
-  Button,
   Grid,
   Box,
   Divider,
@@ -8,20 +14,13 @@ import {
   Typography,
   Tooltip,
 } from '@mui/material';
-import HtmlIcon from '@mui/icons-material/Html';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import FilePresentIcon from '@mui/icons-material/FilePresent';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
-import DownloadIcon from '@mui/icons-material/Download'; // Import the Download icon
+import React from 'react';
 
 import useMode from 'hooks/useMode';
 import { downloadHTML, downloadPDF } from 'utils/downloadUtils';
 
-import RCButton from './themed/RCButton';
 import { StyledIconContainer, StyledMenu } from './styled';
+import RCButton from './themed/RCButton';
 
 function ResultActions({
   draftContent,
@@ -109,12 +108,12 @@ function ResultActions({
         </Grid>
         <Grid item xs={12}>
           <Tooltip title="Download Options">
-            <Button
+            <RCButton
               id="download-button"
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
-              variant="contained"
+              variant="outlined"
               disableElevation
               color="secondary"
               startIcon={<DownloadIcon fontSize="medium" />} // Add the Download icon here
@@ -138,7 +137,7 @@ function ResultActions({
                   <KeyboardArrowDownIcon fontSize="medium" />
                 </StyledIconContainer>
               </Box>
-            </Button>
+            </RCButton>
           </Tooltip>
 
           <StyledMenu

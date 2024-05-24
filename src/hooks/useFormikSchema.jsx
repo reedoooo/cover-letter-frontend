@@ -9,8 +9,8 @@ const useFormikSchema = (configName) => {
         ...schema,
         [field.name]: Yup.string().required(`${field.label} is required`),
       }),
-      {}
-    )
+      {},
+    ),
   );
 };
 

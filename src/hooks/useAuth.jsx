@@ -33,7 +33,7 @@ const logoutUser = async (dispatch) => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('userToken')}`,
         },
-      }
+      },
     );
     localStorage.clear();
     alert('Your session has expired. Please log in again.');
@@ -58,7 +58,7 @@ const handleAuthSubmit = async (values, onLoginSuccess, onClose, apiUrl) => {
     if (data.token) {
       onLoginSuccess(data.token, data.user);
       const currentDrafts = JSON.parse(
-        localStorage.getItem('coverLetterDrafts')
+        localStorage.getItem('coverLetterDrafts'),
       );
       if (currentDrafts) {
         const loadedDrafts = data?.user?.coverLetters;
@@ -68,7 +68,7 @@ const handleAuthSubmit = async (values, onLoginSuccess, onClose, apiUrl) => {
         ];
         localStorage.setItem(
           'coverLetterDrafts',
-          JSON.stringify(currentDraftsWithLoadedDrafts)
+          JSON.stringify(currentDraftsWithLoadedDrafts),
         );
       }
       onClose();

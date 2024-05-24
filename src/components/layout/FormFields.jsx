@@ -17,6 +17,9 @@ export const FormField = ({
     <TextField
       id={field.name}
       label={field.label}
+      InputLabelProps={{
+        shrink: fieldDirty ? true : false,
+      }}
       name={field.name}
       variant="outlined"
       fullWidth

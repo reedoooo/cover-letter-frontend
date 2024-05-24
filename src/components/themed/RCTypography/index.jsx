@@ -30,7 +30,7 @@ const RCTypography = React.forwardRef(
       children,
       ...rest
     },
-    ref
+    ref,
   ) => {
     // TODO: Add darkMode support using the hook below.
     // ! const [controller] = useMaterialUIController();
@@ -52,7 +52,7 @@ const RCTypography = React.forwardRef(
         {children}
       </RCTypographyRoot>
     );
-  }
+  },
 );
 
 RCTypography.displayName = 'RCTypography';

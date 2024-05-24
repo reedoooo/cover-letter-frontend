@@ -7,20 +7,23 @@
     "plugin:prettier/recommended",
     "plugin:storybook/recommended",
     "plugin:styled-components-a11y/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:import/typescript",
-    "plugin:jsx-a11y/recommended",
-    "plugin:jsx-a11y/strict"
+    "plugin:import/typescript"
   ],
   "plugins": [
     "react",
+    "react-hooks",
     "prettier",
     "path",
     "styled-components-a11y",
     "better-styled-components",
     "jsx-a11y",
-    "import"
+    "import",
+    "storybook",
+    "unused-imports"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
@@ -44,8 +47,21 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/jsx-wrap-multilines": "off",
+    "prettier/prettier": ["error", { "trailingComma": "all" }],
+
     "path/no-relative-imports": "error",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
+    "no-unused-imports": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "no-console": "off",
     "no-dupe-keys": "error",
     "no-empty": "error",
@@ -69,20 +85,22 @@
       }
     ],
     "comma-dangle": ["error", "only-multiline"],
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "tabWidth": 2,
-        "endOfLine": "lf"
-      }
-    ],
     "import/no-deprecated": "warn",
     "import/order": [
-      "warn",
+      "error",
       {
-        "groups": ["builtin", "external", "internal"],
-        "newlines-between": "always"
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ],
     "import/no-unresolved": "error",

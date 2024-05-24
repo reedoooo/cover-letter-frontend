@@ -65,7 +65,7 @@ const RCButtonRoot = styled(Button)(({ ownerState }) => {
           [0, 3],
           [1, -2],
           palette[color].main,
-          0.2
+          0.2,
         )}, ${boxShadow([0, 1], [5, 0], palette[color].main, 0.15)}`
       : 'none';
 
@@ -74,7 +74,7 @@ const RCButtonRoot = styled(Button)(({ ownerState }) => {
           [0, 4],
           [23, 0],
           palette[color].main,
-          0.15
+          0.15,
         )}, ${boxShadow([0, 8], [10, -5], palette[color].main, 0.2)}`
       : 'none';
 
@@ -173,7 +173,7 @@ const RCButtonRoot = styled(Button)(({ ownerState }) => {
           [0, 3],
           [1, -2],
           palette[color].main,
-          0.2
+          0.2,
         )}, ${boxShadow([0, 1], [5, 0], palette[color].main, 0.15)}`
       : 'none';
 
@@ -182,7 +182,7 @@ const RCButtonRoot = styled(Button)(({ ownerState }) => {
           [0, 4],
           [23, 0],
           palette[color].main,
-          0.15
+          0.15,
         )}, ${boxShadow([0, 8], [10, -5], palette[color].main, 0.2)}`
       : 'none';
 
@@ -272,11 +272,11 @@ const RCButtonRoot = styled(Button)(({ ownerState }) => {
 
     const boxShadowValue = `0 0 0 4px ${rgba(
       palette[color].secondary || 'white',
-      0.4
+      0.4,
     )}`;
     const hoveredBoxShadowValue = `0 0 0 4px ${rgba(
       palette[color].secondary || 'white',
-      0.15
+      0.15,
     )}`;
 
     let colorValue = white.main;

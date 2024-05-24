@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import GoogleIcon from '@mui/icons-material/Google';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import {
   Dialog,
   DialogContent,
@@ -9,23 +12,19 @@ import {
   Grid,
   Card,
   Slide,
-  Box,
 } from '@mui/material';
-import { useFormik } from 'formik';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import MuiLink from '@mui/material/Link';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import GoogleIcon from '@mui/icons-material/Google';
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import { useFormik } from 'formik';
+import React, { useEffect } from 'react';
 
-import useMode from 'hooks/useMode';
 import formFieldsConfigs from 'config/formFieldsConfigs';
 import useAuth from 'hooks/useAuth';
+import useMode from 'hooks/useMode';
 
-import RCTypography from './themed/RCTypography';
+import { StyledIconContainer } from './styled';
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
-import { StyledIconContainer } from './styled';
+import RCTypography from './themed/RCTypography';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });

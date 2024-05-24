@@ -1,6 +1,6 @@
-import colors from 'assets/themes/base/colors';
 import borders from 'assets/themes/base/borders';
 import boxShadows from 'assets/themes/base/boxShadows';
+import colors from 'assets/themes/base/colors';
 import pxToRem from 'assets/themes/functions/pxToRem';
 
 const { grey, white } = colors;

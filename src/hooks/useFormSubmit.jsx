@@ -52,7 +52,7 @@ const useFormSubmit = () => {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-        }
+        },
       );
       const { message, resPdfUrl, resText, resHTML, resBlock, metadata } = data;
 
@@ -71,15 +71,12 @@ const useFormSubmit = () => {
           blocks: resBlock,
           metadata: metadata,
         },
-        resSuccess: true,
-        resError: false,
         resMessage: message,
       };
       localStorage.setItem(
         'selectedDraft',
-        JSON.stringify(updatedDrafts[selectedDraftIndex])
+        JSON.stringify(updatedDrafts[selectedDraftIndex]),
       );
-      localStorage.setItem('pdfUrl', JSON.stringify(resPdfUrl));
       dispatch({ type: actionTypes.SET_DRAFTS, drafts: updatedDrafts });
       return updatedDrafts[selectedDraftIndex];
     } catch (error) {

@@ -1,5 +1,5 @@
-import colors from '../../base/colors';
 import borders from '../../base/borders';
+import colors from '../../base/colors';
 import pxToRem from '../../functions/pxToRem';
 
 const { borderWidth } = borders;

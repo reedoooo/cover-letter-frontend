@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-import React, { useEffect, useRef, useState } from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import React, { useEffect, useRef, useState } from 'react';
 
 import useMode from 'hooks/useMode';
 

@@ -1,9 +1,9 @@
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useEffect, useState } from 'react';
 
+import { FormContainer } from 'components/styled';
 import RCBox from 'components/themed/RCBox';
 import RCTypography from 'components/themed/RCTypography';
-import { FormContainer } from 'components/styled';
 
 const {
   Box,
@@ -63,7 +63,7 @@ const FormContainerWithBackdrop = ({
   };
 
   return (
-    <FormContainer theme={theme} maxwidth="lg">
+    <FormContainer theme={theme} maxwidth="md">
       <Box sx={{ position: 'relative' }}>
         <Backdrop
           sx={{
@@ -78,14 +78,11 @@ const FormContainerWithBackdrop = ({
             height: '100%',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            mx: 'auto',
+            // mx: 'auto',
             px: 'auto',
             paddingTop: '10vh', // Adjust padding to move content to the top quarter
-            // alignItems: 'flex-start',
           }}
           open={formDisabled}
-
-          // open={isLocked}
         >
           {' '}
           <Slide
@@ -104,8 +101,8 @@ const FormContainerWithBackdrop = ({
                 >
                   <Grid
                     item
-                    xs={12}
-                    lg={8}
+                    xs={8}
+                    // lg={8}
                     component={Paper}
                     sx={{
                       p: 2,
@@ -113,8 +110,8 @@ const FormContainerWithBackdrop = ({
                     }}
                   >
                     <Card>
-                      <RCBox p={2}>
-                        <Grid container spacing={3}>
+                      <RCBox p={2} alignItems="center">
+                        <Grid container spacing={3} alignItems="center">
                           <Grid item xs={12} alignItems="center">
                             <RCBox
                               p={2}
@@ -215,7 +212,9 @@ const FormContainerWithBackdrop = ({
             </Box>
           </Slide>
         </Backdrop>
-        {children}
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <Box>{children}</Box>
+        </Slide>
       </Box>
     </FormContainer>
   );

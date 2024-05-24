@@ -68,7 +68,7 @@ const useFileUpload = (setFormValues) => {
       setFormValues(newValues);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setFormValues]
+    [setFormValues],
   );
 
   return { file, fileUrl, fileText, handleFileUpload };

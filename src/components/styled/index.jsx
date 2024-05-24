@@ -1,4 +1,15 @@
-const { Box, alpha, Menu, Paper, IconButton } = require('@mui/material');
+const {
+  Box,
+  alpha,
+  Menu,
+  Paper,
+  IconButton,
+  DialogTitle,
+  TableHead,
+  TableCell,
+  Link,
+  Avatar,
+} = require('@mui/material');
 const { default: styled } = require('styled-components');
 
 const StyledIconContainer = styled(Box)(({ theme }) => ({
@@ -119,6 +130,33 @@ const RightSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
 }));
+const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
+  textAlign: 'center',
+  padding: theme.spacing(2),
+}));
+
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[200],
+}));
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+}));
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  color: theme.palette.primary.dark,
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+}));
 export {
   StyledIconContainer,
   StyledIconButton,
@@ -129,4 +167,9 @@ export {
   FormContainer,
   LeftSection,
   RightSection,
+  StyledDialogTitle,
+  StyledTableHead,
+  StyledTableCell,
+  StyledLink,
+  StyledAvatar,
 };

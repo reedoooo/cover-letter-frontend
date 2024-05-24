@@ -12,7 +12,7 @@ const useNotification = () => {
 
   const removeNotification = useCallback((id) => {
     setNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification.id !== id)
+      prevNotifications.filter((notification) => notification.id !== id),
     );
   }, []);
 

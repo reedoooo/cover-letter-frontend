@@ -12,7 +12,7 @@ const Transitions = React.forwardRef(
       direction = 'up',
       ...others
     },
-    ref
+    ref,
   ) => {
     let positionSX = {
       transformOrigin: '0 0 0',
@@ -96,7 +96,7 @@ const Transitions = React.forwardRef(
         )}
       </Box>
     );
-  }
+  },
 );
 
 Transitions.displayName = 'Transitions';

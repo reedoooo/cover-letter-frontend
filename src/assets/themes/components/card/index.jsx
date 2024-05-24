@@ -1,5 +1,5 @@
-import root from './root';
+import baseCard from './baseCard';
 import cardContent from './cardContent';
 import cardMedia from './cardMedia';
 
-export { root, cardContent, cardMedia };
+export { baseCard, cardContent, cardMedia };

@@ -1,16 +1,16 @@
+import { CircularProgress, Paper, Box } from '@mui/material';
 import React, { useState, Suspense } from 'react';
-import { Typography, CircularProgress, Paper, Card, Box } from '@mui/material';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import { DraftEditorSkeleton } from 'utils/SkeletonComponents';
-import useMode from 'hooks/useMode';
 import { saveDraft, updateDraft } from 'api';
+import useMode from 'hooks/useMode';
+import { DraftEditorSkeleton } from 'utils/SkeletonComponents';
 
-import RCBox from './themed/RCBox';
-import { EditorContainer } from './styled';
 import ResultActions from './ResultAction';
+import { EditorContainer } from './styled';
+import RCBox from './themed/RCBox';
 import RCTypography from './themed/RCTypography';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -31,7 +31,7 @@ const ResultPreview = ({
   };
   const user = JSON.parse(localStorage.getItem('user'));
   const selectedDraftFromStorage = JSON.parse(
-    localStorage.getItem('selectedDraft')
+    localStorage.getItem('selectedDraft'),
   );
   const userId = user?._id;
   const handleSaveDraft = async (content, contentName) => {
@@ -111,7 +111,7 @@ const ResultPreview = ({
           handleUpdateDraft(
             drafts[selectedDraftIndex]?._id,
             drafts[selectedDraftIndex]?.content,
-            drafts[selectedDraftIndex]?.title
+            drafts[selectedDraftIndex]?.title,
           )
         }
         handleDraftDelete={() =>
@@ -120,7 +120,7 @@ const ResultPreview = ({
         handleDraftSave={() =>
           handleSaveDraft(
             drafts[selectedDraftIndex]?.content,
-            drafts[selectedDraftIndex]?.title
+            drafts[selectedDraftIndex]?.title,
           )
         }
       />

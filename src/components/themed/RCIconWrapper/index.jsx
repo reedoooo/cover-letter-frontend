@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import RCWrappedIconRoot from './RCIconWrapperRoot';
 import RCBox from '../RCBox';
+import RCWrappedIconRoot from './RCIconWrapperRoot';
 
 // ==============================|| ICON WRAPPER ||============================== //
 
@@ -35,7 +35,7 @@ const RCIconWrapper = React.forwardRef(
         </RCWrappedIconRoot>
       </RCBox>
     );
-  }
+  },
 );
 
 RCIconWrapper.displayName = 'RCIconWrapper';

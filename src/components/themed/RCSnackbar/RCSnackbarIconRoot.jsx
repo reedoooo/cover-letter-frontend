@@ -23,7 +23,7 @@ export default styled(Icon)(({ ownerState }) => {
   } else if (color === 'light') {
     backgroundImageValue = linearGradient(
       gradients.dark.main,
-      gradients.dark.state
+      gradients.dark.state,
     );
   }
 

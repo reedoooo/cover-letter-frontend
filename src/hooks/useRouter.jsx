@@ -9,7 +9,7 @@ const useRouter = () => {
       console.log('Navigating to:', dest);
       navigate(dest);
     },
-    [navigate]
+    [navigate],
   );
 
   return { navigate: handleNavigate };

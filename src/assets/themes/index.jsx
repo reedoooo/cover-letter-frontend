@@ -1,11 +1,4 @@
 import {
-  boxShadow,
-  linearGradient,
-  pxToRem,
-  rgba,
-  hexToRgb,
-} from './functions';
-import {
   breakpoints,
   colors,
   borders,
@@ -13,6 +6,13 @@ import {
   typography,
   globals,
 } from './base';
+import {
+  boxShadow,
+  linearGradient,
+  pxToRem,
+  rgba,
+  hexToRgb,
+} from './functions';
 import Transitions from './transitions';
 
 export {

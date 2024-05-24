@@ -1,5 +1,17 @@
 import { globals } from '..';
+import appBar from './appBar';
+import outlined from './buttons/outlined';
+import root from './buttons/root';
+import { baseCard, cardContent, cardMedia } from './card';
 import container from './container';
+import {
+  baseDialog,
+  dialogActions,
+  dialogContent,
+  dialogContentText,
+  dialogTitle,
+} from './dialog';
+import divider from './divider';
 import {
   formControl,
   formHelperText,
@@ -12,20 +24,10 @@ import {
   switchButton,
   textField,
 } from './forms';
-import root from './buttons/root';
-import outlined from './buttons/outlined';
 import icon from './icon';
-import svgIcon from './svgIcon';
-import {
-  baseDialog,
-  dialogActions,
-  dialogContent,
-  dialogContentText,
-  dialogTitle,
-} from './dialog';
-import divider from './divider';
 import { baseMenu, menuItem } from './menu';
-import appBar from './appBar';
+import svgIcon from './svgIcon';
+import { tableCell, tableContainer, tableHead } from './table';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   // === GLOBALS AND LAYOUT ===
@@ -47,6 +49,14 @@ export default {
   MuiDialogContent: { ...dialogContent },
   MuiDialogContentText: { ...dialogContentText },
   MuiDialogActions: { ...dialogActions },
+  // === CARD ===
+  MuiCard: { ...baseCard },
+  MuiCardMedia: { ...cardMedia },
+  MuiCardContent: { ...cardContent },
+  // === TABLE ===
+  MuiTableContainer: { ...tableContainer },
+  MuiTableHead: { ...tableHead },
+  MuiTableCell: { ...tableCell },
   // === BUTTONS ===
   MuiButton: {
     styleOverrides: {

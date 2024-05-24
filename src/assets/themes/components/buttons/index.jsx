@@ -1,8 +1,8 @@
-import root from './root';
 import contained from './contained';
-import outlined from './outlined';
-import buttonText from './text';
 import holo from './holo';
+import outlined from './outlined';
+import root from './root';
+import buttonText from './text';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

@@ -1,4 +1,7 @@
-import React from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Tab,
@@ -8,10 +11,7 @@ import {
   Typography,
   Divider,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import React from 'react';
 
 import useMode from 'hooks/useMode';
 
@@ -38,6 +38,16 @@ function DraftTabs({
       onSaveDraftName(index, event.target.value);
     }
   };
+  const getUniqueDrafts = (drafts) => {
+    const seen = new Set();
+    return drafts.filter((draft) => {
+      const duplicate = seen.has(draft.title);
+      seen.add(draft.title);
+      return !duplicate;
+    });
+  };
+
+  const uniqueDrafts = getUniqueDrafts(drafts);
 
   return (
     <DashboardBox
@@ -88,7 +98,7 @@ function DraftTabs({
             margin: 0, // Remove margin
           }}
         >
-          {drafts?.map((draft, index) => (
+          {uniqueDrafts?.map((draft, index) => (
             <Tab
               key={index}
               component={Box}

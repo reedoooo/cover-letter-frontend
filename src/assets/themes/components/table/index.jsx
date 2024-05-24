@@ -1,5 +1,5 @@
 import tableCell from './tableCell';
-import tableHead from './tableHead';
 import tableContainer from './tableContainer';
+import tableHead from './tableHead';
 
 export { tableCell, tableHead, tableContainer };

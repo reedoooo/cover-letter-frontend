@@ -1,8 +1,8 @@
-import typography from 'assets/themes/base/typography';
+import { rgba } from 'assets/themes';
 import borders from 'assets/themes/base/borders';
 import colors from 'assets/themes/base/colors';
+import typography from 'assets/themes/base/typography';
 import pxToRem from 'assets/themes/functions/pxToRem';
-import { rgba } from 'assets/themes';
 
 const { size, fontWeightBold } = typography;
 const { borderRadius } = borders;

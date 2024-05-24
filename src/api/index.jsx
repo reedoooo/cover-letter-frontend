@@ -1,5 +1,5 @@
-import useApiService from 'hooks/useApiService';
 import constants from 'config/constants';
+import useApiService from 'hooks/useApiService';
 
 const { API_URL } = constants;
 

@@ -7,7 +7,7 @@ const traverse = require('@babel/traverse').default;
 const extractComponentName = (fileContent) => {
   const ast = babelParser.parse(fileContent, {
     sourceType: 'module',
-    plugins: ['jsx', 'classProperties'],
+    plugins: ['jsx', 'classProperties']
   });
 
   let componentName = null;
@@ -22,7 +22,7 @@ const extractComponentName = (fileContent) => {
       ) {
         componentName = node.declaration.id.name;
       }
-    },
+    }
   });
 
   return componentName;

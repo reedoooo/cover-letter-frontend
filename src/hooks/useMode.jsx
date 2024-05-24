@@ -7,7 +7,7 @@ const useMode = () => {
   const defaultMode = 'dark';
   const theme = useMemo(
     () => createTheme(settings(defaultMode)),
-    [defaultMode]
+    [defaultMode],
   );
 
   return { theme };

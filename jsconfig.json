@@ -10,7 +10,9 @@
       "utils/*": ["utils/*"],
       "pages/*": ["pages/*"],
       "config/*": ["config/*"],
-      "api/*": ["api/*"]
+      "api/*": ["api/*"],
+      "store/*": ["store/*"],
+      "types/*": ["types/*"]
     }
   },
   "exclude": ["node_modules", "build"],

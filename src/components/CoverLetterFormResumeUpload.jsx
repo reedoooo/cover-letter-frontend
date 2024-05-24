@@ -1,4 +1,4 @@
-import React from 'react';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import {
   TextField,
   FormControl,
@@ -7,11 +7,11 @@ import {
   FormControlLabel,
   Radio,
 } from '@mui/material';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+import React from 'react';
 
+import { StyledIconContainer } from './styled';
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
-import { StyledIconContainer } from './styled';
 
 const CoverLetterFormResumeUpload = ({
   resFormat,

@@ -1,6 +1,6 @@
 // utils/downloadUtils.js
-import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 export const downloadHTML = (htmlContent, fileName) => {
   const blob = new Blob([htmlContent], { type: 'text/html' });

@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import RCButtonRoot from './RCButtonRoot';
@@ -49,7 +49,7 @@ const RCButton = React.forwardRef(
       withContainer = false,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const darkMode = false; // TODO: Add darkMode support using the hook below.
     const ButtonContent = (
@@ -82,7 +82,7 @@ const RCButton = React.forwardRef(
       );
     }
     return ButtonContent;
-  }
+  },
 );
 
 RCButton.displayName = 'RCButton';

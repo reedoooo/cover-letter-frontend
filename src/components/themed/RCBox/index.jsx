@@ -33,7 +33,7 @@ const RCBox = React.forwardRef(
       coloredShadow = 'none',
       ...rest
     },
-    ref
+    ref,
   ) => (
     <RCBoxRoot
       {...rest}
@@ -48,7 +48,7 @@ const RCBox = React.forwardRef(
         coloredShadow,
       }}
     />
-  )
+  ),
 );
 
 RCBox.displayName = 'RCBox';

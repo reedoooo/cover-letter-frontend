@@ -1,9 +1,12 @@
 {
-  "singleQuote": true,
-  "trailingComma": "es5",
+  "printWidth": 80,
   "tabWidth": 2,
   "semi": true,
-  "printWidth": 80,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
   "rules": {
     "quotes": ["error", "single"],
     "no-unused-vars": ["error"],
@@ -12,7 +15,6 @@
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
-    "comma-dangle": ["error", "only-multiline"],
     "no-dupe-keys": "error",
     "no-empty": "error"
   }

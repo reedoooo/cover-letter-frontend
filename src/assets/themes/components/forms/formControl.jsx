@@ -2,8 +2,8 @@ import { alpha } from '@mui/material/styles';
 
 import { pxToRem } from 'assets/themes';
 
-import colors from '../../base/colors';
 import borders from '../../base/borders';
+import colors from '../../base/colors';
 import typography from '../../base/typography';
 
 const {
@@ -33,6 +33,17 @@ export default {
         borderColor: error.main, // Border color when focused (changed to match context)
         borderWidth: '3px', // Border width when focused
         boxShadow: `${alpha(error.main, 0.25)} 0 0 0 0.25rem !important`, // override inline-style
+      },
+      '& .MuiInputLabel-outlined': {
+        color: grey[400],
+        fontSize: size.sm,
+        '&.Mui-focused': {
+          color: grey[500],
+          fontWeight: 'bold',
+        },
+        '&.MuiInputLabel-shrink': {
+          transform: 'translate(14px, -6px) scale(0.75)', // Adjust label position when input is focused
+        },
       },
     },
   },
