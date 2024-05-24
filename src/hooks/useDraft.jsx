@@ -6,17 +6,23 @@ const useDraft = () => {
    * @param {function} dispatch - The dispatch function from the Redux store.
    */
   const loadDraftsFromLocalStorage = (dispatch) => {
-    const savedDrafts = localStorage.getItem('coverLetterDrafts');
+    const savedDrafts = JSON.parse(localStorage.getItem('coverLetterDrafts'));
+    const draftsLoadedFromUser =
+      JSON.parse(localStorage.getItem('user')).coverLetters || [];
     if (savedDrafts) {
-      const loadedDrafts = JSON.parse(savedDrafts).map((draft) => ({
+      const allDrafts = Array.from(
+        new Set([...draftsLoadedFromUser, ...savedDrafts])
+      );
+      const loadedDrafts = allDrafts.map((draft) => ({
         ...draft,
-        name: draft.name || 'Untitled Draft',
+        title: draft.content.name || draft.title || 'Untitled Draft',
         content: {
-          name: draft.name || 'Untitled Draft',
+          name: draft.content.name || draft.title || 'Untitled Draft',
           pdf: draft.content.pdf || '', // Raw HTML content
           text: draft.content.text || '', // Raw HTML content
           html: draft.content.html || '', // Raw HTML content
-          blocks: draft.content.blocks || '', // Raw HTML content
+          blocks: draft.content.blocks || [], // Raw HTML content
+          metadata: draft.content.metadata || {}, // Raw HTML content
         },
       }));
       dispatch({ type: actionTypes.SET_DRAFTS, drafts: loadedDrafts });
@@ -31,12 +37,14 @@ const useDraft = () => {
   const saveDraftsToLocalStorage = (drafts) => {
     const rawDrafts = drafts?.map((draft) => ({
       ...draft,
+      title: draft.content.name || draft.title || 'Untitled Draft',
       content: {
-        name: draft.name || 'Untitled Draft',
+        name: draft.content.name || draft.title || 'Untitled Draft',
         pdf: draft.content.pdf || '', // Raw HTML content
         text: draft.content.text || '', // Raw HTML content
         html: draft.content.html || '', // Raw HTML content
-        blocks: draft.content.blocks || '', // Raw HTML content
+        blocks: draft.content.blocks || [], // Raw HTML content
+        metadata: draft.content.metadata || {}, // Raw HTML content
       },
     }));
     localStorage.setItem('coverLetterDrafts', JSON.stringify(rawDrafts));

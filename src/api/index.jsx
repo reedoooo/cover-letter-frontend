@@ -3,20 +3,23 @@ import constants from 'config/constants';
 
 const { API_URL } = constants;
 
-export const saveDraft = async (draft, contentName, userId) => {
-  const content = {
-    name: draft.name,
-    pdf: draft.pdfUrl,
-    text: draft.text,
-    html: draft.html,
-    blocks: draft.blocks,
-    metadata: draft.metadata,
+export const saveDraft = async (draftData, contentName, userId) => {
+  const data = {
+    name: draftData.title,
+    pdf: draftData.pdf,
+    text: draftData.text,
+    html: draftData.html,
+    blocks: draftData.blocks,
+    metadata: draftData.metadata,
+  };
+  const draft = {
+    title: contentName,
+    content: data,
   };
 
   try {
     const response = await useApiService.post('/cover-letter/save-draft', {
-      content,
-      contentName,
+      draft,
       userId,
     });
     console.log('Draft saved successfully:', response.data);

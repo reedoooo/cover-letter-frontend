@@ -8,11 +8,11 @@ const useFormSubmit = () => {
     url,
     linkedInUrl,
     drafts,
-    selectedDraft,
+    selectedDraftIndex,
     dispatch,
     actionTypes,
   }) => {
-    if (!drafts[selectedDraft]?.name) {
+    if (!drafts[selectedDraftIndex]?.title) {
       return alert('Please name your draft first');
     }
     dispatch({ type: actionTypes.TOGGLE_LOADING });
@@ -21,15 +21,15 @@ const useFormSubmit = () => {
       const formData = new FormData();
       const keys = Object.keys(values);
 
-      const rawInputValues = keys.map((key) => {
+      const formValues = keys.map((key) => {
         return {
           key,
           value: values[key],
         };
       });
-      console.log(`[RAW INPUT VALUES IS TYPE]: ${typeof rawInputValues}`);
-      console.log(`[RAW INPUT VALUES]: ${JSON.stringify(rawInputValues)}`);
-      formData.append('rawInputValues', JSON.stringify(rawInputValues));
+      console.log(`[RAW INPUT VALUES IS TYPE]: ${typeof formValues}`);
+      console.log(`[RAW INPUT VALUES]: ${JSON.stringify(formValues)}`);
+      formData.append('formValues', JSON.stringify(formValues));
       if (file) {
         console.log(`[FILE IS TYPE]: ${typeof file}`);
         formData.append('pdfFile', file);
@@ -57,38 +57,31 @@ const useFormSubmit = () => {
       const { message, resPdfUrl, resText, resHTML, resBlock, metadata } = data;
 
       const updatedDrafts = [...drafts];
-      updatedDrafts[selectedDraft] = {
-        ...updatedDrafts[selectedDraft],
-        name: drafts[selectedDraft]?.name || values?.name,
-        rawInputValues: values,
+      updatedDrafts[selectedDraftIndex] = {
+        ...updatedDrafts[selectedDraftIndex],
+        name: drafts[selectedDraftIndex]?.title || values?.title,
+        formValues: values,
         pdfUrl: url,
         // SERVER RESPONSE DATA
         content: {
-          name: drafts[selectedDraft]?.name || values?.name,
+          name: drafts[selectedDraftIndex]?.title || values?.title,
           pdf: resPdfUrl,
           text: resText,
           html: resHTML,
           blocks: resBlock,
           metadata: metadata,
         },
-        // content: resHTML,
-        // pdfText: resText,
         resSuccess: true,
         resError: false,
         resMessage: message,
-        // resText: resText,
-        // resPdfUrl: resPdfUrl,
-        // resHtml: resHTML,
-        // resBlocks: resBlock,
-        // resMetadata: metadata,
       };
       localStorage.setItem(
         'selectedDraft',
-        JSON.stringify(updatedDrafts[selectedDraft])
+        JSON.stringify(updatedDrafts[selectedDraftIndex])
       );
       localStorage.setItem('pdfUrl', JSON.stringify(resPdfUrl));
       dispatch({ type: actionTypes.SET_DRAFTS, drafts: updatedDrafts });
-      return updatedDrafts[selectedDraft];
+      return updatedDrafts[selectedDraftIndex];
     } catch (error) {
       console.error('Failed to generate cover letter:', error);
     } finally {
@@ -99,66 +92,3 @@ const useFormSubmit = () => {
 };
 
 export default useFormSubmit;
-// const newDraft = {
-//   // SET DATA FOR SERVER REQUEST
-//   name: drafts[selectedDraft]?.name,
-//   linkedInUrl: linkedInUrl,
-//   pdfFile: '', // Raw HTML content
-//   pdfText: '', //
-//   pdfUrl: '', // PDF URL
-//   rawInputValues: {}, // Raw input values
-//   // FIELDS FOR SERVER RESPONSE
-//   resSuccess: false,
-//   resError: false,
-//   resMessage: '',
-//   resText: '',
-//   resPdfUrl: '',
-//   resHtml: '',
-// };
-
-//       if (file) {
-//         formData.append('pdfFile', file);
-//       }
-//       if (text) {
-//         formData.append('pdfText', text);
-//       } else if (url) {
-//         formData.append('pdfUrl', url);
-//       }
-//       console.log(
-//         `[CHECKING DATA BEFORE SENDING TO API]: ${formData.get('pdfFile')}`
-//       );
-//       console.log(
-//         `[CHECKING DATA BEFORE SENDING TO API]: ${formData.get('pdfText')}`
-//       );
-//       console.log(
-//         `[CHECKING DATA BEFORE SENDING TO API]: ${formData.get('name')}`
-//       );
-//       const { data } = await axios.post(
-//         `${process.env.REACT_APP_API_URL}/cover-letter/generate-cover-letter`,
-//         formData,
-//         {
-//           headers: {
-//             'Content-Type': 'multipart/form-data',
-//           },
-//         }
-//       );
-
-//       const updatedDrafts = [...drafts];
-//       updatedDrafts[selectedDraft] = {
-//         ...updatedDrafts[selectedDraft],
-//         name: drafts[selectedDraft]?.name || values?.name,
-//         content: data.coverLetterHtml, // Raw HTML content
-//         pdfUrl: data.pdfUrl, // PDF URL
-//         rawInputValues: values, // Raw input values
-//       };
-
-//       dispatch({ type: actionTypes.SET_DRAFTS, drafts: updatedDrafts });
-//     } catch (error) {
-//       console.error('Failed to generate cover letter:', error);
-//     } finally {
-//       setLoading(false);
-//       dispatch({ type: actionTypes.TOGGLE_LOADING });
-//     }
-//   },
-//   [dispatch, actionTypes, drafts, selectedDraft]
-// );

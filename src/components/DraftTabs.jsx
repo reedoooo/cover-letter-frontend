@@ -11,14 +11,16 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import useMode from 'hooks/useMode';
 
 import DashboardBox from './common/DashboardBox';
+import RCBox from './themed/RCBox';
 
 function DraftTabs({
   drafts,
-  selectedDraft,
+  selectedDraftIndex,
   isEditing,
   editedDraftName,
   onTabChange,
@@ -29,6 +31,7 @@ function DraftTabs({
   setEditedDraftName,
 }) {
   const { theme } = useMode();
+  const [hovered, setHovered] = React.useState(false);
 
   const handleKeyDown = (event, index) => {
     if (event.key === 'Enter') {
@@ -46,15 +49,22 @@ function DraftTabs({
         height: '100%',
       }}
     >
-      <Box sx={{ width: '100%', mb: 2 }}>
+      <RCBox sx={{ width: '100%', my: 2 }}>
         <Typography
-          variant="h6"
+          variant="h4"
           sx={{ mb: 1, textAlign: 'center', color: theme.palette.primary.main }}
         >
           Drafts
         </Typography>
-        <Divider />
-      </Box>
+        <Divider
+          theme={theme}
+          sx={{
+            width: '100%',
+            height: '2px',
+            backgroundColor: theme.palette.primary.main,
+          }}
+        />
+      </RCBox>
       <Box
         sx={{
           display: 'flex',
@@ -66,7 +76,7 @@ function DraftTabs({
         }}
       >
         <Tabs
-          value={selectedDraft}
+          value={selectedDraftIndex}
           onChange={onTabChange}
           orientation="vertical"
           sx={{
@@ -81,6 +91,7 @@ function DraftTabs({
           {drafts?.map((draft, index) => (
             <Tab
               key={index}
+              component={Box}
               sx={{
                 color: 'text.contrastText',
                 borderBottom: `1px solid ${theme.palette.text.contrastText}`,
@@ -97,10 +108,19 @@ function DraftTabs({
                     alignItems: 'center',
                     gap: 1,
                     width: '100%',
+                    height: '100%',
+                    padding: theme.spacing(0.5),
+                    borderRadius: 1,
+                    fontWeight: 500,
                     justifyContent: 'space-between',
+                    '&:hover': {
+                      color: theme.palette.primary.light,
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      transition: 'background-color 0.3s ease-in-out',
+                    },
                   }}
                 >
-                  {isEditing && selectedDraft === index ? (
+                  {isEditing && selectedDraftIndex === index ? (
                     <TextField
                       value={editedDraftName}
                       onChange={(e) => setEditedDraftName(e.target.value)}
@@ -123,10 +143,13 @@ function DraftTabs({
                         '&:active': {
                           backgroundColor: 'rgba(255, 255, 255, 0.1)',
                         },
+                        '&:disabled': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        },
                       }}
                     />
                   ) : (
-                    draft?.name || `Draft ${index + 1}`
+                    draft?.title || `Draft ${index + 1}`
                   )}
                   <Box>
                     <IconButton
@@ -147,17 +170,22 @@ function DraftTabs({
             />
           ))}
           <Tab
+            component={Box}
             label={
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
+                  p: theme.spacing(1),
                   width: '100%',
                   justifyContent: 'space-between',
+                  cursor: 'pointer',
+                  position: 'relative',
                 }}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
               >
-                {' '}
                 <Typography
                   variant="body1"
                   sx={{
@@ -168,10 +196,25 @@ function DraftTabs({
                     width: '100%',
                     height: '100%',
                     padding: theme.spacing(1),
+                    opacity: hovered ? 0 : 1,
+                    transition: 'opacity 0.3s ease-in-out',
                   }}
                 >
                   Add New Draft
                 </Typography>
+                {hovered && (
+                  <ArrowForwardIcon
+                    sx={{
+                      position: 'absolute',
+                      left: '10%',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      opacity: 1,
+                      transition: 'opacity 0.3s ease-in-out',
+                      color: theme.palette.primary.contrastText,
+                    }}
+                  />
+                )}
                 <IconButton
                   onClick={onOpenAddDialog}
                   sx={{
@@ -191,7 +234,7 @@ function DraftTabs({
               </Box>
             }
             sx={{
-              color: 'text.contrastText',
+              color: theme.palette.text.contrastText,
               borderBottom: `1px solid ${theme.palette.text.contrastText}`,
               justifyContent: 'flex-start',
               textAlign: 'left',

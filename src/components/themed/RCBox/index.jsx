@@ -8,13 +8,15 @@ import RCBoxRoot from './RCBoxRoot';
  *
  * @component
  * @param {Object} props - The component props.
- * @param {string} [props.variant='contained'] - The box variant.
- * @param {string} [props.bgColor='transparent'] - The background color of the box.
- * @param {string} [props.color='dark'] - The text color of the box.
- * @param {number} [props.opacity=1] - The opacity of the box.
- * @param {string} [props.borderRadius='none'] - The border radius of the box.
- * @param {string} [props.shadow='none'] - The box shadow.
- * @param {string} [props.coloredShadow='none'] - The colored shadow of the box.
+ * @param {string} [props.variant='contained'] - Options: none, contained, outlined, text, button.
+ * @param {string} [props.bgColor='transparent'] - Options: transparent, primary, secondary
+ * @param {string} [props.color='dark'] - Options: primary, secondary, dark
+ * @param {number} [props.opacity=1] - Options: 0 - 1
+ * @param {boolean} [props.hasBorderRadius=false] - Whether to apply a border radius to the box.
+ * @param {string} [props.borderRadius='none'] - Options: none, sm, md, lg, xl, full.
+ * @param {string} [props.shadow='none'] - Options: none, sm, md, lg, xl, full.
+ * @param {string} [props.coloredShadow='none'] - Options: none, sm, md, lg, xl, full.
+ * @param {boolean} [props.hasShadow=false] - Whether to apply a shadow to the box.
  * @param {React.Ref} ref - The ref object for the component.
  * @returns {React.Element} The rendered RCBox component.
  */
@@ -53,7 +55,15 @@ RCBox.displayName = 'RCBox';
 
 // Typechecking props for the RCBox
 RCBox.propTypes = {
-  variant: PropTypes.oneOf(['contained', 'gradient', 'dashboard', 'none']),
+  variant: PropTypes.oneOf([
+    'contained',
+    'gradient',
+    'dashboard',
+    'none',
+    'outlined',
+    'text',
+    'button',
+  ]),
   borderWidth: PropTypes.number,
   bgColor: PropTypes.string,
   color: PropTypes.string,

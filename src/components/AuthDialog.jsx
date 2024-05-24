@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,12 +8,15 @@ import {
   TextField,
   Grid,
   Card,
+  Slide,
+  Box,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import MuiLink from '@mui/material/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 
 import useMode from 'hooks/useMode';
 import formFieldsConfigs from 'config/formFieldsConfigs';
@@ -23,9 +26,20 @@ import RCTypography from './themed/RCTypography';
 import RCBox from './themed/RCBox';
 import RCButton from './themed/RCButton';
 import { StyledIconContainer } from './styled';
-
-function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
-  const { handleAuthSubmit } = useAuth();
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+function AuthDialog({
+  open,
+  onClose,
+  onLoginSuccess,
+  apiUrl,
+  isAuthenticated,
+  dispatch,
+  initAddContentVisible,
+  actionTypes,
+}) {
+  const { handleAuthSubmit } = useAuth(isAuthenticated, dispatch);
   const { theme } = useMode();
   const formik = useFormik({
     initialValues: {
@@ -37,6 +51,11 @@ function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
     onSubmit: (values) =>
       handleAuthSubmit(values, onLoginSuccess, onClose, apiUrl),
   });
+  useEffect(() => {
+    if (open) {
+      window.scrollTo(0, 0);
+    }
+  }, [open]);
   const renderFormFields = () => {
     return formFieldsConfigs['authConfigs'].map((field) => {
       if (field.conditional && !formik.values[field.conditional]) {
@@ -57,11 +76,22 @@ function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
       );
     });
   };
+  const handleContinueAsGuest = () => {
+    dispatch({
+      type: actionTypes.TOGGLE_INIT_ADD_CONTENT_VISIBLE,
+      payload: true,
+    });
+    dispatch({
+      type: actionTypes.TOGGLE_DIALOG_STATE,
+      dialog: 'authDialogOpen',
+    });
+  };
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
+      TransitionComponent={Transition}
       maxWidth="sm"
       fullWidth
       PaperProps={{
@@ -87,9 +117,9 @@ function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
       >
         <RCBox
           variant="gradient"
-          bgColor="info"
+          bgColor="primary"
           borderRadius="lg"
-          coloredShadow="info"
+          coloredShadow="primary"
           mx={2}
           mt={-5}
           p={2}
@@ -205,13 +235,67 @@ function AuthDialog({ open, onClose, onLoginSuccess, apiUrl }) {
                 }
               />
             </DialogContent>
-            <DialogActions>
-              <RCButton type="submit" variant="outlined" color="success">
-                {formik.values.isSignup ? 'Sign Up' : 'Login'}
-              </RCButton>
-              <RCButton onClick={onClose} variant="outlined" color="error">
-                Cancel
-              </RCButton>
+            <DialogActions
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                // alignItems: 'flex-end',
+              }}
+            >
+              <RCBox p={2}>
+                <RCButton
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  textSizeVariant="header"
+                  textWeightVariant="bold"
+                  onClick={handleContinueAsGuest}
+                  fullWidth
+                  startIcon={
+                    <StyledIconContainer
+                      theme={theme}
+                      sx={{
+                        borderRadius: `${theme.spacing(2)} !important`,
+                      }}
+                    >
+                      <PeopleAltRoundedIcon color="white" />
+                    </StyledIconContainer>
+                  }
+                  sx={{ width: '100%', fontWeight: 'medium' }}
+                >
+                  Continue as Guest
+                </RCButton>
+              </RCBox>
+              <RCBox p={2} justifyContent="space-around">
+                <RCButton
+                  type="submit"
+                  variant="outlined"
+                  color="success"
+                  size="large"
+                  textSizeVariant="header"
+                  textWeightVariant="bold"
+                  sx={{
+                    mx: theme.spacing(1),
+                  }}
+                >
+                  {formik.values.isSignup ? 'Sign Up' : 'Login'}
+                </RCButton>
+                <RCButton
+                  onClick={onClose}
+                  variant="outlined"
+                  color="error"
+                  size="large"
+                  textSizeVariant="header"
+                  textWeightVariant="bold"
+                  sx={{
+                    mx: theme.spacing(1),
+                  }}
+                >
+                  Cancel
+                </RCButton>
+              </RCBox>
             </DialogActions>
           </RCBox>
         </RCBox>

@@ -53,6 +53,10 @@ export default styled(Typography)(({ ownerState }) => {
     colorValue = 'inherit';
   } else if (darkMode && color === 'dark') colorValue = white.main;
 
+  if (color === 'textPrimary') colorValue = palette.text.primary;
+  if (color === 'textSecondary') colorValue = palette.text.secondary;
+  if (color === 'textTertiary') colorValue = palette.text.tertiary;
+
   return {
     opacity,
     textTransform,

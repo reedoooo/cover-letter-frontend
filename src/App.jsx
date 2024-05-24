@@ -8,9 +8,9 @@ import {
 } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import useMode from './hooks/useMode';
-import Home from './pages/Home';
-import LetterBuilder from './pages/LetterBuilder';
+import useMode from 'hooks/useMode';
+import Home from 'pages/Home';
+import LetterBuilder from 'pages/LetterBuilder';
 
 function App() {
   const { theme } = useMode();
