@@ -9,6 +9,7 @@
     "depcheckrc",
     "doesn",
     "Formik",
+    "Fshape",
     "haspopup",
     "jspdf",
     "multilines",
@@ -21,7 +22,8 @@
     "Roboto",
     "scrollbars",
     "svgr",
-    "toolz"
+    "toolz",
+    "Zshape"
   ],
   "liveServer.settings.root": "/public",
   "editor.codeActionsOnSave": {

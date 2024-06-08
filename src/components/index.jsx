@@ -46,7 +46,6 @@ export { default as NotificationSystem } from './NotificationSystem.jsx';
 export { default as ResultAction } from './ResultAction.jsx';
 export { default as ResultPreview } from './ResultPreview.jsx';
 export { default as MiniCalendar } from './themedV2/calendar/MiniCalendar.jsx';
-export { default as MarkdownEditor } from './MarkdownEditor.jsx';
 
 // ARCHITECTURAL COMPONENTS
 export { default as DashboardBox } from './common/DashboardBox.jsx';
@@ -85,7 +84,7 @@ export { default as ItemContent } from './themedV2/menu/ItemContent.jsx';
 // export { default as Separator } from './themedV2/separator/Separator.jsx';
 export { default as Mastercard } from './themedV2/card/Mastercard.jsx';
 export { default as Member } from './themedV2/card/Member.jsx';
-export * from './themedV2/scrollbar/Scrollbar.jsx';
+// export * from '../layouts/navigation/shared/scrollbar/Scrollbar.jsx';
 export * from './themedV2/icons/Icons.jsx';
 
 // Export all components

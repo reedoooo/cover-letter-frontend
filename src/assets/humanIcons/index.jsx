@@ -39,7 +39,7 @@ import WorkspaceIcon from '@mui/icons-material/WorkspacePremium';
 import WorkIcon from '@mui/icons-material/Work';
 import ChatIcon from '@mui/icons-material/Chat';
 import UpgradeIcon from '@mui/icons-material/Upgrade'; // Importing UpgradeIcon
-
+import CancelIcon from '@mui/icons-material/Cancel';
 // SOCIAL
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -122,6 +122,7 @@ export {
   WorkIcon,
   ChatIcon,
   PersonAddIcon,
+  CancelIcon,
   // Social
   FacebookIcon,
   GitHubIcon,
@@ -196,7 +197,7 @@ const reedThaHumansIconLibrary = {
   WorkIcon,
   ChatIcon,
   UpgradeIcon,
-
+  CancelIcon,
   // Social
   FacebookIcon,
   GitHubIcon,

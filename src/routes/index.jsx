@@ -18,30 +18,6 @@ import {
 } from 'assets/humanIcons';
 import { Loadable } from 'layouts/navigation/shared/loadable';
 
-// const {
-//   BarChartIcon,
-//   EmojiEmotionsIcon,
-//   HomeIcon,
-//   LayersIcon,
-//   LoginIcon,
-//   PageviewIcon,
-//   PersonAddIcon,
-//   TextFieldsIcon,
-//   ArticleIcon,
-//   CodeIcon,
-//   ColorLensIcon,
-//   NoteAddIcon,
-//   WorkIcon,
-//   AssignmentIcon,
-//   WorkspaceIcon,
-//   TableChartIcon,
-//   PersonIcon,
-//   LockIcon,
-//   ErrorIcon,
-//   DashboardIcon,
-//   ChatIcon,
-// } = reedThaHumansIconLibrary;
-
 const Test = Loadable(lazy(() => import('views/test')));
 
 /* ***Layouts**** */
@@ -85,6 +61,7 @@ const routes = [
   {
     id: uniqueId('router-base-'),
     path: '/',
+    layout: 'blank',
     element: <BlankLayout />,
     children: [
       {
@@ -117,6 +94,7 @@ const routes = [
   {
     id: uniqueId('router-test-'),
     path: 'test',
+    layout: 'test',
     element: <BlankLayout />,
     children: [
       {
@@ -130,6 +108,7 @@ const routes = [
   {
     id: uniqueId('router-admin-'),
     path: 'admin',
+    layout: 'admin',
     element: <AdminLayout />,
     children: [
       {
@@ -166,6 +145,7 @@ const routes = [
       {
         id: uniqueId('router-templates-'),
         path: 'templates',
+        layout: 'templates',
         element: <BlankLayout />,
         children: [
           {
@@ -265,6 +245,7 @@ const routes = [
   {
     id: uniqueId('router-auth-'),
     path: 'auth',
+    layout: 'auth',
     element: <AuthLayout />,
     children: [
       {

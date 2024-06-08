@@ -21,15 +21,16 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import { CheckCircleIcon } from 'assets/humanIcons';
+import { CheckCircleIcon, CancelIcon } from 'assets/humanIcons';
 import { Card } from 'components/index';
 import Menu from 'components/themedV2/menu/MainMenu';
 import useMode from 'hooks/useMode';
-// const { CheckCircleIcon } = icons;
 
 const JobStatusTracker = ({ tableData }) => {
   const columns = useMemo(() => tableData.columns, [tableData.columns]);
   const data = useMemo(() => tableData.data, [tableData.data]);
+  console.log('columns:', columns);
+  console.log('data:', data);
   const tableInstance = useTable(
     { columns, data },
     useGlobalFilter,
@@ -50,13 +51,14 @@ const JobStatusTracker = ({ tableData }) => {
   const textColor = colorModeValues('secondaryGray.900', 'white');
   const borderColor = colorModeValues('gray.200', 'whiteAlpha.100');
 
-  const renderCellData = cell => {
+  const renderCellData = (cell, index) => {
     const { Header } = cell.column;
     const value = cell.value;
+
     if (Header === 'COMPANY NAME') {
       return (
         <Box display="flex" alignItems="center" flexGrow={1}>
-          <Checkbox defaultChecked={value[1]} color="primary" />
+          <Checkbox checked={value[1]} color="primary" />
           <Typography color={textColor} fontWeight="700">
             {value[0]}
           </Typography>
@@ -65,7 +67,7 @@ const JobStatusTracker = ({ tableData }) => {
     } else if (Header === 'APPLICATION DATA') {
       return (
         <Box display="flex" flexDirection="column" flexGrow={1}>
-          {value.map((data, idx) => (
+          {value?.map((data, idx) => (
             <Box
               key={idx}
               display="flex"
@@ -92,8 +94,13 @@ const JobStatusTracker = ({ tableData }) => {
               fontWeight: '700',
             }}
           >
-            {value}
+            {value[0]}
           </Typography>
+          {value[1] ? (
+            <CheckCircleIcon color="primary" style={{ marginLeft: 8 }} />
+          ) : (
+            <CancelIcon color="error" style={{ marginLeft: 8 }} />
+          )}
         </Box>
       );
     } else if (Header === 'PROGRESS') {
@@ -113,9 +120,9 @@ const JobStatusTracker = ({ tableData }) => {
       const statusColor =
         value === 'Approved'
           ? 'green'
-          : value === 'Disable'
+          : value === 'Rejected'
             ? 'red'
-            : value === 'Error'
+            : value === 'Pending'
               ? 'orange'
               : 'gray';
       return (
@@ -188,6 +195,7 @@ const JobStatusTracker = ({ tableData }) => {
                         width: `${100 / headerGroups[0].headers.length}%`,
                       }}
                     >
+                      {/* {cell.render('Cell')} */}
                       {renderCellData(cell)}
                     </TableCell>
                   ))}

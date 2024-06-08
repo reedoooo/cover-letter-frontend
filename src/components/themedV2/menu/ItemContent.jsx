@@ -1,8 +1,9 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import { UpgradeIcon } from 'assets/humanIcons';
+import useMode from 'hooks/useMode';
 
 export const ItemContent = props => {
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColor = theme.palette.mode === 'light' ? 'navy.700' : 'white';
   return (
     <>

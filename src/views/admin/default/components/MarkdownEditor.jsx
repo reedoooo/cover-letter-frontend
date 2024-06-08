@@ -5,7 +5,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
-import '../styles/_textEditor.scss';
+import 'styles/_textEditor.scss';
 
 export const CodeBlock = ({
   height,

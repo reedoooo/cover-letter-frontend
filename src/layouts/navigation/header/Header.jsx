@@ -4,9 +4,13 @@ import { MenuIcon, NotificationsActiveIcon } from 'assets/humanIcons';
 import { AppBarStyled, ToolbarStyled } from 'components/styled';
 // const { NotificationsActiveIcon, MenuIcon } = reedThaHumansIconLibrary;
 // components
+import useMode from 'hooks/useMode';
+import AdminNavbar from '../navbar/NavbarAdmin';
+import HeaderLinks from '../navbar/NavbarLinksAdmin';
 import Profile from './Profile';
 
 const Header = props => {
+  const { theme } = useMode();
   return (
     <AppBarStyled position="sticky" color="default">
       <ToolbarStyled>
@@ -21,7 +25,7 @@ const Header = props => {
             },
           }}
         >
-          <MenuIcon width="20" height="20" />
+          <MenuIcon width="20" height="20" color="inherit" />
         </IconButton>
         <IconButton
           size="large"
@@ -30,25 +34,32 @@ const Header = props => {
           aria-haspopup="true"
           sx={{
             ...(props.anchorEl2 && {
-              color: 'primary.main',
+              color: theme.palette.secondary.main,
             }),
           }}
         >
           <Badge variant="dot" color="primary">
-            <NotificationsActiveIcon size="21" stroke="1.5" />
+            <NotificationsActiveIcon
+              size="21"
+              stroke="1.5"
+              sx={{
+                color: theme.palette.primary.main,
+              }}
+            />
           </Badge>
         </IconButton>
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             target="_blank"
             href="https://adminmart.com/product/modernize-react-mui-dashboard-template/"
           >
             Upgrade to Pro
-          </Button>
+          </Button> */}
           <Profile />
+          <HeaderLinks />
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

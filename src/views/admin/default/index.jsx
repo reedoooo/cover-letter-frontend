@@ -1,15 +1,15 @@
-import { Box, Card, Grid, Icon, Paper } from '@mui/material';
+import { Box, Grid, Icon, Paper } from '@mui/material';
 
 import { AddIcon } from 'assets/humanIcons';
-import {
-  IconBox,
-  MarkdownEditor,
-  MiniStatistics,
-  PaperCard,
-} from 'components/index';
+import { IconBox, MiniStatistics, PaperCard } from 'components/index';
 import { careerTrackerTable, miniStatisticsData } from 'config/data';
 import useMode from 'hooks/useMode';
-import { DashboardCalendar, JobStatusTracker, Tasks } from './components';
+import {
+  DashboardCalendar,
+  JobStatusTracker,
+  MarkdownEditor,
+  TaskTracker,
+} from './components';
 
 // ==============================|| DASHBOARD ||============================== //
 
@@ -27,6 +27,8 @@ const MainDashboard = () => {
 
   return (
     <Box paddingTop={{ xs: '130px', md: '80px', xl: '80px' }}>
+      {/* <----- Mini Statistics Section -----> */}
+
       <Grid container spacing={2} mb={2}>
         {Object.values(miniStatisticsData).map((stat, index) => (
           <Grid item xs={12} md={6} lg={4} xl={2} key={index}>
@@ -56,33 +58,46 @@ const MainDashboard = () => {
           </Grid>
         ))}
       </Grid>
+      {/* <----- Job Status Tracker Section -----> */}
+
       <Grid container mb={2} spacing={2}>
         <PaperCard component={Grid} item xs={12} theme={theme}>
           <JobStatusTracker tableData={careerTrackerTable} />
         </PaperCard>
+        {/* Placeholder for AI generated Text Editor Header */}
         <Grid item xs={12} md={6}>
           <Box sx={{ height: '100%' }}>
             {/* Input the AI generated Text Editor HEADER HERE */}
           </Box>
         </Grid>
-        <Grid item xs={12}>
-          <Card>
-            <Box
-              component={Paper}
-              sx={{
-                width: '100%',
-                height: '100%',
-                maxHeight: '450px',
-              }}
-            >
-              <MarkdownEditor
-                initialValue="Start writing your markdown..."
-                onChange={handleMarkdownChange}
-              />
-            </Box>
-          </Card>
-        </Grid>
-        <Tasks sx={{ height: '100%' }} />
+      </Grid>
+      {/* <----- AI Generated Text Editor Section -----> */}
+
+      <Grid container mb={2} spacing={2}>
+        <PaperCard component={Grid} item xs={12} theme={theme}>
+          <Box
+            component={Paper}
+            sx={{
+              width: '100%',
+              height: '100%',
+              maxHeight: '450px',
+            }}
+          >
+            <MarkdownEditor
+              initialValue="Start writing your markdown..."
+              onChange={handleMarkdownChange}
+            />
+          </Box>
+        </PaperCard>
+      </Grid>
+      {/* <----- Task Tracker Section -----> */}
+
+      <Grid container mb={2} spacing={2}>
+        <TaskTracker sx={{ height: '100%' }} />
+      </Grid>
+      {/* <----- Dashboard Calendar Section -----> */}
+
+      <Grid container mb={2} spacing={2}>
         <Box sx={{ height: '100%' }}>
           <DashboardCalendar />
         </Box>

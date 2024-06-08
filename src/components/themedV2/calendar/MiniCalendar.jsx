@@ -5,7 +5,7 @@ import { Calendar as DashboardCalendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import 'react-quill/dist/quill.snow.css';
-import Card from '../card/Card';
+import { Card } from '../card/Card';
 
 export const MiniCalendar = props => {
   const { selectRange, ...rest } = props;

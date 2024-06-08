@@ -10,6 +10,7 @@ const MuiModeBasedStyles = {
       dark: '#2e7c67',
       focus: rgba('#18b984' || '#dbf5ee', 0.15),
       contrastText: '#dbf5ee',
+      gradient: 'linear-gradient(180deg, #18b984, #5CDB95)',
     },
     dark: {
       lighter: '#94e2cd',
@@ -20,6 +21,7 @@ const MuiModeBasedStyles = {
       dark: '#2e7c67',
       focus: rgba('#18b984' || '#dbf5ee', 0.15),
       contrastText: '#dbf5ee',
+      gradient: 'linear-gradient(180deg, #18b984, #5CDB95)',
     },
   },
   secondary: {
@@ -32,6 +34,7 @@ const MuiModeBasedStyles = {
       dark: '#293f66',
       focus: rgba('#3a539b' || '#eef2f6', 0.15),
       contrastText: '#eef2f6',
+      gradient: 'linear-gradient(180deg, #3a539b, #3C40C6)',
     },
     dark: {
       lighter: '#70a1ff',
@@ -42,6 +45,7 @@ const MuiModeBasedStyles = {
       dark: '#293f66',
       focus: rgba('#3a539b' || '#eef2f6', 0.15),
       contrastText: '#eef2f6',
+      gradient: 'linear-gradient(180deg, #3a539b, #3C40C6)',
     },
   },
   text: {
@@ -55,6 +59,7 @@ const MuiModeBasedStyles = {
       colorText: '#343239',
       colorPrimaryText: rgba('#fff', 0.96),
       colorLabel: '#A4A3A6',
+      gradient: 'linear-gradient(180deg, #212121, #3d3d3d)',
     },
     dark: {
       primary: '#212121',
@@ -66,6 +71,7 @@ const MuiModeBasedStyles = {
       colorText: '#343239',
       colorPrimaryText: rgba('#fff', 0.96),
       colorLabel: '#A4A3A6',
+      gradient: 'linear-gradient(180deg, #212121, #3d3d3d)',
     },
   },
   background: {
@@ -76,6 +82,7 @@ const MuiModeBasedStyles = {
       hover: '#e0e0e0',
       focus: '#B2BAC2',
       set: '#6F7E8C',
+      gradient: 'linear-gradient(180deg, #f0f2f5, #ffffff)',
     },
     dark: {
       default: '#f0f2f5',
@@ -84,6 +91,7 @@ const MuiModeBasedStyles = {
       hover: '#e0e0e0',
       focus: '#B2BAC2',
       set: '#6F7E8C',
+      gradient: 'linear-gradient(180deg, #f0f2f5, #ffffff)',
     },
   },
   border: {
@@ -94,6 +102,7 @@ const MuiModeBasedStyles = {
       hover: '#e0e0e0',
       focus: '#B2BAC2',
       set: '#6F7E8C',
+      gradient: 'linear-gradient(180deg, #e0e0e0, #ffffff)',
     },
     dark: {
       default: '#e0e0e0',
@@ -102,6 +111,7 @@ const MuiModeBasedStyles = {
       hover: '#e0e0e0',
       focus: '#B2BAC2',
       set: '#6F7E8C',
+      gradient: 'linear-gradient(180deg, #e0e0e0, #ffffff)',
     },
   },
   divider: {
@@ -264,35 +274,41 @@ export const colors = {
     main: '#1C1C1C',
     light: '#212121',
     focus: '#26242C',
+    gradient: 'linear-gradient(180deg, #1C1C1C, #26242C)',
   },
   white: {
     main: '#ffffff',
     default: '#ffffff',
     focus: '#E8E8E8',
+    gradient: 'linear-gradient(180deg, #ffffff, #EBEFF4)',
   },
   info: {
     light: '#90caf9',
     focus: '#64b5f6',
     main: '#49a3f1',
     dark: '#1A73E8',
+    gradient: 'linear-gradient(180deg, #49a3f1, #1A73E8)',
   },
   success: {
     light: '#b9f6ca',
     focus: '#69f0ae',
     main: '#00c853',
     dark: '#00b551',
+    gradient: 'linear-gradient(180deg, #00c853, #00994d)',
   },
   warning: {
     light: '#fff8e1',
     focus: '#ffecb3',
     main: '#ffe57f',
     dark: '#ffc107',
+    gradient: 'linear-gradient(180deg, #ffe57f, #ffc107)',
   },
   error: {
     light: '#ef9a9a',
     focus: '#e57373',
     main: '#f44336',
     dark: '#c62828',
+    gradient: 'linear-gradient(180deg, #f44336, #c62828)',
   },
   dark: {
     main: '#344767',
@@ -304,6 +320,8 @@ export const colors = {
     textTitle: '#dbf5ee',
     textPrimary: '#b7ebde',
     textSecondary: '#94e2cd',
+    gradient: 'linear-gradient(180deg, #344767, #2c3c58)',
+
     // textTitle: '#d7dcec',
     // textPrimary: '#bdc8f0',
     // textSecondary: '#8492c4',
@@ -319,6 +337,8 @@ export const colors = {
     textTitle: '#212121',
     textPrimary: '#212121',
     textSecondary: '#3d3d3d',
+    gradient: 'linear-gradient(180deg, #ffffff, #EBEFF4)',
+
     // textTertiary: '#707070',
     // textQuaternary: '#A4A3A6',
     // textQuinary: '#697586',

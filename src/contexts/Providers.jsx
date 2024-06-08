@@ -1,15 +1,16 @@
-import StyledEngineProvider from '@mui/material/StyledEngineProvider';
+// import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import React from 'react';
-import { ColorModeProvider } from 'contexts/ColorModeProvider';
+// import { ColorModeProvider } from 'contexts/ColorModeProvider';
 import { SidebarProvider } from 'contexts/SidebarProvider';
 import { StoreProvider } from 'contexts/StoreProvider';
+import ContextErrorBoundary from 'utils/ContextErrorBoundary';
 
 // List of providers to be used in the ProviderWrapper
 const providers = [
-  ColorModeProvider,
+  // ColorModeProvider,
   SidebarProvider,
   StoreProvider,
-  StyledEngineProvider,
+  // StyledEngineProvider,
 ];
 // Function to wrap children with all providers
 const ProviderWrapper = ({ children }) => {
@@ -19,7 +20,11 @@ const ProviderWrapper = ({ children }) => {
   );
 };
 export const Providers = ({ children }) => {
-  return <ProviderWrapper>{children}</ProviderWrapper>;
+  return (
+    <ContextErrorBoundary>
+      <ProviderWrapper>{children}</ProviderWrapper>
+    </ContextErrorBoundary>
+  );
 };
 
 export default Providers;

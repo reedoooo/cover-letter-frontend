@@ -17,8 +17,6 @@
     "eslint-plugin-styled-components-a11y",
     "eslint-webpack-plugin",
     "husky",
-    "lint-staged",
-    "prettier",
     "storybook",
     "vite",
     "vite-plugin-react",

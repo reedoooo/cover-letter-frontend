@@ -74,8 +74,10 @@ const Conversion = props => {
     </Card>
   );
 };
-export default function Tasks() {
+export function Tasks() {
   <Box paddingTop={{ xs: '130px', md: '80px', xl: '80px' }}>
     <Conversion />
   </Box>;
 }
+
+export default Tasks;

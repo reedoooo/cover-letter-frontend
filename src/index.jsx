@@ -12,15 +12,13 @@ import ErrorFallback from 'utils/ErrorFallback';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Providers>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <CssBaseline />
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </ErrorBoundary>
+    {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
+    {/* <Providers>
+        <CssBaseline />
+        <BrowserRouter> */}
+    <App />
+    {/* </BrowserRouter>
       </Providers>
-    </ErrorBoundary>
+    </ErrorBoundary> */}
   </React.StrictMode>
 );

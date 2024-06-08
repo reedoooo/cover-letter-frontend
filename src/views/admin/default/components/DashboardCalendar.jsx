@@ -1,11 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  TextField,
-} from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import React from 'react';
 import PaperCard from 'components/common/PaperCard';
 import 'react-quill/dist/quill.snow.css';
@@ -33,7 +26,7 @@ const CalendarComponent = props => {
       </PaperCard>
       <CardContent>
         <Box display="flex" alignItems="center" mb="30px">
-          <MiniCalendar h="100%" minW="100%" selectRange={false} />
+          <MiniCalendar height="100%" minWidth="100%" selectRange={false} />
         </Box>
       </CardContent>
     </Card>
