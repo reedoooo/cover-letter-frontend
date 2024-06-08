@@ -10,12 +10,12 @@ import { Router } from '../routes';
 const App = () => {
   const appRoutes = useRoutes(Router);
   return (
-    <Providers>
-      <CssBaseline />
-      <BrowserRouter>
-        <ErrorBoundary>{appRoutes}</ErrorBoundary>
-      </BrowserRouter>
-    </Providers>
+    <ErrorBoundary>
+      <Providers>
+        <CssBaseline />
+        <BrowserRouter>{appRoutes}</BrowserRouter>
+      </Providers>
+    </ErrorBoundary>
   );
 };
 
