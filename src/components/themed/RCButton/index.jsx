@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
+import useColorMode from 'hooks/useColorMode';
 
 import RCButtonRoot from './RCButtonRoot';
 
@@ -49,9 +50,10 @@ const RCButton = React.forwardRef(
       withContainer = false,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const darkMode = false; // TODO: Add darkMode support using the hook below.
+    const { theme } = useColorMode();
     const ButtonContent = (
       <RCButtonRoot
         {...rest}
@@ -59,6 +61,7 @@ const RCButton = React.forwardRef(
         color="primary.main"
         variant={variant === 'gradient' ? 'contained' : variant}
         size={size}
+        theme={theme}
         ownerState={{
           color,
           variant,
@@ -73,7 +76,6 @@ const RCButton = React.forwardRef(
         {children}
       </RCButtonRoot>
     );
-
     if (withContainer) {
       return (
         <ButtonContainer withContainer={withContainer}>
@@ -82,7 +84,7 @@ const RCButton = React.forwardRef(
       );
     }
     return ButtonContent;
-  },
+  }
 );
 
 RCButton.displayName = 'RCButton';

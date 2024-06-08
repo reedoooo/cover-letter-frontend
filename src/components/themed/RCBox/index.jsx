@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import RCBoxRoot from './RCBoxRoot';
-
 /**
  * A customizable box component.
  *
@@ -33,12 +32,12 @@ const RCBox = React.forwardRef(
       coloredShadow = 'none',
       ...rest
     },
-    ref,
+    ref
   ) => (
     <RCBoxRoot
       {...rest}
       ref={ref}
-      ownerstate={{
+      ownerState={{
         variant,
         bgColor,
         color,
@@ -48,11 +47,9 @@ const RCBox = React.forwardRef(
         coloredShadow,
       }}
     />
-  ),
+  )
 );
-
 RCBox.displayName = 'RCBox';
-
 // Typechecking props for the RCBox
 RCBox.propTypes = {
   variant: PropTypes.oneOf([
@@ -80,7 +77,6 @@ RCBox.propTypes = {
     'error',
     'light',
     'dark',
-    'none',
   ]),
 };
 

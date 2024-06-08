@@ -1,5 +1,6 @@
-import borders from '../../base/borders';
-import pxToRem from '../../functions/pxToRem';
+import { borders, boxShadows, colors, typography } from 'assets/themes/base';
+import { rgba, pxToRem } from 'assets/themes/functions';
+
 const { borderRadius } = borders;
 
 // eslint-disable-next-line import/no-anonymous-default-export

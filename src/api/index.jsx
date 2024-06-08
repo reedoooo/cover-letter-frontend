@@ -18,7 +18,7 @@ export const saveDraft = async (draftData, contentName, userId) => {
   };
 
   try {
-    const response = await useApiService.post('/cover-letter/save-draft', {
+    const response = await useApiService.post('/cover-letter/save', {
       draft,
       userId,
     });
@@ -30,14 +30,24 @@ export const saveDraft = async (draftData, contentName, userId) => {
 };
 
 export const updateDraft = async (draftId, content, contentName, userId) => {
-  const endpoint = `${API_URL}/cover-letter/${draftId}`;
+  const endpoint = `${API_URL}/cover-letter/update/${draftId}`;
   const req = { content, contentName, userId };
-  const response = await useApiService.put(endpoint, req);
-  return response.data;
+
+  try {
+    const response = await useApiService.put(endpoint, req);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating draft:', error);
+  }
 };
 
-export const deleteDraft = async (draftId) => {
-  const endpoint = `${API_URL}/cover-letter/${draftId}`;
-  const response = await useApiService.delete(endpoint);
-  return response.data;
+export const deleteDraft = async draftId => {
+  const endpoint = `${API_URL}/cover-letter/delete/${draftId}`;
+
+  try {
+    const response = await useApiService.delete(endpoint);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting draft:', error);
+  }
 };

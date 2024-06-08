@@ -1,10 +1,8 @@
 import { Box } from '@mui/material';
-
+import { styled as styledDefault } from 'styled-components';
 import useMode from 'hooks/useMode';
 
-const { default: styled } = require('styled-components');
-
-export default styled(Box)(({ ownerstate }) => {
+const StyledBox = styledDefault(Box)(({ ownerState }) => {
   const { theme } = useMode();
   const { palette, functions, borders, boxShadows } = theme;
   const {
@@ -15,8 +13,7 @@ export default styled(Box)(({ ownerstate }) => {
     borderRadius,
     shadow,
     coloredShadow,
-  } = ownerstate;
-
+  } = ownerState;
   const { gradients, grey, white } = palette;
   const { linearGradient } = functions;
   const { borderRadius: radius } = borders;
@@ -46,14 +43,6 @@ export default styled(Box)(({ ownerstate }) => {
     'transparent',
     'white',
     'black',
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'error',
-    'light',
-    'dark',
     'text',
     'grey-100',
     'grey-200',
@@ -69,12 +58,11 @@ export default styled(Box)(({ ownerstate }) => {
   const validBoxShadows = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'inset'];
 
   let backgroundValue = bgColor;
-
   if (variant === 'gradient') {
-    backgroundValue = validGradients.find((el) => el === bgColor)
+    backgroundValue = validGradients.find(el => el === bgColor)
       ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
       : white.main;
-  } else if (validColors.find((el) => el === bgColor)) {
+  } else if (validColors.find(el => el === bgColor)) {
     backgroundValue = palette[bgColor]
       ? palette[bgColor].main
       : greyColors[bgColor];
@@ -83,29 +71,24 @@ export default styled(Box)(({ ownerstate }) => {
   }
 
   let colorValue = color;
-
-  if (validColors.find((el) => el === color)) {
+  if (validColors.find(el => el === color)) {
     colorValue = palette[color] ? palette[color].main : greyColors[color];
   }
 
-  // borderRadius value
   let borderRadiusValue = borderRadius;
-
-  if (validBorderRadius.find((el) => el === borderRadius)) {
+  if (validBorderRadius.find(el => el === borderRadius)) {
     borderRadiusValue = radius[borderRadius];
   }
 
-  // boxShadow value
   let boxShadowValue = 'none';
-
-  if (validBoxShadows.find((el) => el === shadow)) {
+  if (validBoxShadows.find(el => el === shadow)) {
     boxShadowValue = boxShadows[shadow];
   } else if (coloredShadow) {
     boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : 'none';
   }
+
   const baseVariants = ['contained', 'gradient', 'dashboard', 'none'];
   const getBaseTheme = () => ({
-    opacity,
     background: backgroundValue,
     color: colorValue,
     borderRadius: borderRadiusValue,
@@ -114,11 +97,13 @@ export default styled(Box)(({ ownerstate }) => {
   const getDashboardTheme = () => ({
     backgroundColor: '#2d2d34',
     borderRadius: '1rem',
-    // boxShadow: '0.15rem 0.2rem 0.15rem 0.1rem rgba(0, 0, 0, .8)',
     flexGrow: 1,
   });
+
   return {
     ...(baseVariants.includes(variant) && getBaseTheme()),
     ...(variant === 'dashboard' && getDashboardTheme()),
   };
 });
+
+export default StyledBox;

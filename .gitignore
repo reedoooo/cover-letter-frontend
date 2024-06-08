@@ -7,8 +7,11 @@
 package-lock.json
 
 
-# configs
+# guides and docs
 /dev
+
+# scripts
+/scripts
 
 # environment
 .env
@@ -18,6 +21,10 @@ package-lock.json
 
 # production
 /build
+/dist
+
+# development
+/cleanup
 
 # misc
 .DS_Store

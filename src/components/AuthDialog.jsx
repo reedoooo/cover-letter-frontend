@@ -1,45 +1,43 @@
-import FacebookIcon from '@mui/icons-material/Facebook';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import GoogleIcon from '@mui/icons-material/Google';
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import {
+  Alert,
+  Card,
   Dialog,
-  DialogContent,
   DialogActions,
+  DialogContent,
   FormControlLabel,
+  Grid,
+  Link as MuiLink,
+  Slide,
   Switch,
   TextField,
-  Grid,
-  Card,
-  Slide,
 } from '@mui/material';
-import MuiLink from '@mui/material/Link';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  FacebookIcon,
+  GitHubIcon,
+  GoogleIcon,
+  PeopleAltRoundedIcon,
+} from 'assets/humanIcons';
+import { StyledIconContainer } from 'components/styled';
+import { RCBox, RCButton, RCTypography } from 'components/themed';
 import formFieldsConfigs from 'config/formFieldsConfigs';
 import useAuth from 'hooks/useAuth';
 import useMode from 'hooks/useMode';
+import { toggleDialogState } from 'store/Reducers/navigationSlice.jsx';
 
-import { StyledIconContainer } from './styled';
-import RCBox from './themed/RCBox';
-import RCButton from './themed/RCButton';
-import RCTypography from './themed/RCTypography';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-function AuthDialog({
-  open,
-  onClose,
-  onLoginSuccess,
-  apiUrl,
-  isAuthenticated,
-  dispatch,
-  initAddContentVisible,
-  actionTypes,
-}) {
+
+function AuthDialog({ onLoginSuccess, apiUrl }) {
+  const dispatch = useDispatch();
+  const { dialogState, formDisabled } = useSelector(state => state.navigation);
+  const { isAuthenticated } = useSelector(state => state.user);
   const { handleAuthSubmit } = useAuth(isAuthenticated, dispatch);
   const { theme } = useMode();
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -47,20 +45,21 @@ function AuthDialog({
       email: '',
       isSignup: false,
     },
-    onSubmit: (values) =>
+    onSubmit: values =>
       handleAuthSubmit(values, onLoginSuccess, onClose, apiUrl),
   });
+
   useEffect(() => {
-    if (open) {
+    if (dialogState.authDialogOpen) {
       window.scrollTo(0, 0);
     }
-  }, [open]);
+  }, [dialogState.authDialogOpen]);
+
   const renderFormFields = () => {
-    return formFieldsConfigs['authConfigs'].map((field) => {
+    return formFieldsConfigs['authConfigs'].map(field => {
       if (field.conditional && !formik.values[field.conditional]) {
         return null;
       }
-
       return (
         <TextField
           key={field.name}
@@ -75,20 +74,24 @@ function AuthDialog({
       );
     });
   };
+
+  const initDialogToggle = () =>
+    dispatch(toggleDialogState('initAddContentVisible'));
+  const authDialogToggle = () => dispatch(toggleDialogState('authDialogOpen'));
+  const onClose = () => {
+    formDisabled
+      ? authDialogToggle()
+      : Alert('Please sign in or add a draft as a guest');
+  };
+
   const handleContinueAsGuest = () => {
-    dispatch({
-      type: actionTypes.TOGGLE_INIT_ADD_CONTENT_VISIBLE,
-      payload: true,
-    });
-    dispatch({
-      type: actionTypes.TOGGLE_DIALOG_STATE,
-      dialog: 'authDialogOpen',
-    });
+    initDialogToggle();
+    authDialogToggle();
   };
 
   return (
     <Dialog
-      open={open}
+      open={dialogState.authDialogOpen}
       onClose={onClose}
       TransitionComponent={Transition}
       maxWidth="sm"
@@ -103,7 +106,6 @@ function AuthDialog({
     >
       <Card
         sx={{
-          overflow: 'visible',
           '&.MuiDialog-paper': {
             boxShadow: 'none',
             overflow: 'visible',
@@ -212,7 +214,6 @@ function AuthDialog({
             </Grid>
           </Grid>
         </RCBox>
-        {/* <DialogTitle>{formik.values.isSignup ? 'Sign Up' : 'Login'}</DialogTitle> */}
         <RCBox pt={4} pb={3} px={3}>
           <RCBox component="form" role="form" onSubmit={formik.handleSubmit}>
             <DialogContent>
@@ -240,7 +241,6 @@ function AuthDialog({
                 flexDirection: 'row',
                 gap: 2,
                 justifyContent: 'space-between',
-                // alignItems: 'flex-end',
               }}
             >
               <RCBox p={2}>
@@ -272,26 +272,11 @@ function AuthDialog({
                   type="submit"
                   variant="outlined"
                   color="success"
-                  size="large"
-                  textSizeVariant="header"
-                  textWeightVariant="bold"
-                  sx={{
-                    mx: theme.spacing(1),
-                  }}
+                  sx={{ mx: theme.spacing(1) }}
                 >
                   {formik.values.isSignup ? 'Sign Up' : 'Login'}
                 </RCButton>
-                <RCButton
-                  onClick={onClose}
-                  variant="outlined"
-                  color="error"
-                  size="large"
-                  textSizeVariant="header"
-                  textWeightVariant="bold"
-                  sx={{
-                    mx: theme.spacing(1),
-                  }}
-                >
+                <RCButton onClick={onClose} color="error">
                   Cancel
                 </RCButton>
               </RCBox>

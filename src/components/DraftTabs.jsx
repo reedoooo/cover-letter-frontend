@@ -4,18 +4,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
+  Divider,
+  IconButton,
   Tab,
   Tabs,
-  IconButton,
   TextField,
   Typography,
-  Divider,
 } from '@mui/material';
 import React from 'react';
-
 import useMode from 'hooks/useMode';
-
 import DashboardBox from './common/DashboardBox';
+
 import RCBox from './themed/RCBox';
 
 function DraftTabs({
@@ -38,9 +37,10 @@ function DraftTabs({
       onSaveDraftName(index, event.target.value);
     }
   };
-  const getUniqueDrafts = (drafts) => {
+
+  const getUniqueDrafts = drafts => {
     const seen = new Set();
-    return drafts.filter((draft) => {
+    return drafts.filter(draft => {
       const duplicate = seen.has(draft.title);
       seen.add(draft.title);
       return !duplicate;
@@ -62,7 +62,11 @@ function DraftTabs({
       <RCBox sx={{ width: '100%', my: 2 }}>
         <Typography
           variant="h4"
-          sx={{ mb: 1, textAlign: 'center', color: theme.palette.primary.main }}
+          sx={{
+            mb: 1,
+            textAlign: 'center',
+            color: theme.palette.primary.main,
+          }}
         >
           Drafts
         </Typography>
@@ -91,7 +95,6 @@ function DraftTabs({
           orientation="vertical"
           sx={{
             borderRight: 1,
-            width: '100%',
             height: '100%',
             alignItems: 'center',
             padding: 0, // Remove padding
@@ -133,11 +136,10 @@ function DraftTabs({
                   {isEditing && selectedDraftIndex === index ? (
                     <TextField
                       value={editedDraftName}
-                      onChange={(e) => setEditedDraftName(e.target.value)}
+                      onChange={e => setEditedDraftName(e.target.value)}
                       onBlur={() => onSaveDraftName(index)}
-                      onKeyDown={(e) => handleKeyDown(e, index)}
+                      onKeyDown={e => handleKeyDown(e, index)}
                       size="small"
-                      // ! autoFocus <-- ESLINT: autoFocus is not allowed
                       variant="outlined"
                       sx={{
                         width: '100%',
@@ -200,11 +202,8 @@ function DraftTabs({
                   variant="body1"
                   sx={{
                     color: theme.palette.primary.contrastText,
-                    fontWeight: 500,
                     fontSize: 14,
                     textAlign: 'flex-start',
-                    width: '100%',
-                    height: '100%',
                     padding: theme.spacing(1),
                     opacity: hovered ? 0 : 1,
                     transition: 'opacity 0.3s ease-in-out',
@@ -233,7 +232,6 @@ function DraftTabs({
                     alignSelf: 'center',
                     borderRadius: '50%',
                     backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.primary.contrastText,
                     '&:hover': {
                       backgroundColor: theme.palette.primary.dark,
                     },

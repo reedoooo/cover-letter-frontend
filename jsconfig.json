@@ -1,20 +1,26 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "module": "commonjs",
-    "jsx": "react",
+    "baseUrl": "src",
+    "jsx": "react-jsx",
     "paths": {
-      "hooks/*": ["hooks/*"],
-      "components/*": ["components/*"],
-      "assets/*": ["assets/*"],
-      "utils/*": ["utils/*"],
-      "pages/*": ["pages/*"],
-      "config/*": ["config/*"],
+      "app/*": ["app/*"], // This will import app
       "api/*": ["api/*"],
+      "assets/*": ["assets/*"],
+      "styles/*": ["styles/*"],
+      "components/*": ["components/*"],
+      "config/*": ["config/*"],
+      "contexts/*": ["contexts/*"],
+      "hooks/*": ["hooks/*"],
+      "layouts/*": ["layouts/*"],
       "store/*": ["store/*"],
-      "types/*": ["types/*"]
-    }
+      "types/*": ["types/*"],
+      "utils/*": ["utils/*"],
+      "views/*": ["views/*"],
+      // "@/*": ["*"],
+      "@/routes/*": ["routes/*"],
+      "@/humanIcons/*": ["assets/humanIcons/*"],
+    },
   },
   "exclude": ["node_modules", "build"],
-  "include": ["src"]
+  "include": ["src"],
 }

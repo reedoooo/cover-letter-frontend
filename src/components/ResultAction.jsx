@@ -7,18 +7,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import SaveIcon from '@mui/icons-material/Save';
 import {
-  Grid,
   Box,
   Divider,
+  Grid,
   MenuItem,
-  Typography,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import React from 'react';
-
 import useMode from 'hooks/useMode';
 import { downloadHTML, downloadPDF } from 'utils/downloadUtils';
-
 import { StyledIconContainer, StyledMenu } from './styled';
 import RCButton from './themed/RCButton';
 
@@ -32,16 +30,13 @@ function ResultActions({
   const { theme } = useMode();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleDownload = (type) => {
+  const handleDownload = type => {
     const content = draftContent;
     switch (type) {
       case 'pdf':
@@ -58,7 +53,6 @@ function ResultActions({
     }
     handleClose();
   };
-
   return (
     <Box sx={{ mt: 2 }}>
       <Grid container spacing={1}>
@@ -79,12 +73,10 @@ function ResultActions({
         <Grid item xs={6}>
           <Tooltip title="Delete Draft">
             <RCButton
-              variant="outlined"
               color="error"
               size="large"
               onClick={handleDraftDelete}
               sx={{ width: '100%' }}
-              disabled={loading}
               startIcon={<DeleteIcon />}
             >
               Delete Draft
@@ -94,12 +86,8 @@ function ResultActions({
         <Grid item xs={6}>
           <Tooltip title="Save Draft">
             <RCButton
-              variant="outlined"
               color="info"
-              size="large"
               onClick={handleDraftSave}
-              sx={{ width: '100%' }}
-              disabled={loading}
               startIcon={<SaveIcon />}
             >
               Save Draft
@@ -113,7 +101,6 @@ function ResultActions({
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
-              variant="outlined"
               disableElevation
               color="secondary"
               startIcon={<DownloadIcon fontSize="medium" />} // Add the Download icon here
@@ -139,7 +126,6 @@ function ResultActions({
               </Box>
             </RCButton>
           </Tooltip>
-
           <StyledMenu
             id="download-menu"
             anchorEl={anchorEl}
@@ -159,7 +145,6 @@ function ResultActions({
               <HtmlIcon />
               HTML
             </MenuItem>
-            <Divider sx={{ my: 0.5 }} />
             <MenuItem onClick={() => handleDownload('docx')} disableRipple>
               <FilePresentIcon /> DOCX (Not Implemented)
             </MenuItem>

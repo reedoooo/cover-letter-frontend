@@ -1,12 +1,10 @@
-const { default: styled } = require('styled-components');
+import { styled as styledDefault } from 'styled-components';
 
-export default styled('span')(({ theme }) => {
+export default styledDefault('span')(({ theme }) => {
   const { palette, typography, functions } = theme;
-
   const { white } = palette;
   const { size, fontWeightMedium } = typography;
   const { pxToRem } = functions;
-
   return {
     color: white.main,
     fontSize: size.xl,

@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Skeleton } from '@mui/material';
 import React from 'react';
-
-const { default: styled } = require('styled-components');
+import styled from 'styled-components';
 
 // ==============================|| SKELETONS ||============================== //
 

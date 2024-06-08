@@ -1,11 +1,9 @@
-import borders from '../../base/borders';
-import typography from '../../base/typography';
-import pxToRem from '../../functions/pxToRem';
+import { borders, typography } from 'assets/themes/base';
+import { pxToRem } from 'assets/themes/functions';
 
 const { fontWeightRegular, size } = typography;
 const { borderRadius } = borders;
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   display: 'inline-flex',
   justifyContent: 'center',
@@ -29,7 +27,7 @@ export default {
     fontSize: '0.875rem',
   },
   '&:disabled': {
-    pointerEvent: 'none',
+    pointerEvents: 'none',
     opacity: 0.65,
   },
   '& .material-icons': {

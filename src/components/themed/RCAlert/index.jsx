@@ -5,12 +5,9 @@ import { useState } from 'react';
 import RCBox from '../RCBox';
 import RCAlertCloseIcon from './RCAlertCloseIcon';
 import RCAlertRoot from './RCAlertRoot';
-
 function RCAlert({ color = 'info', dismissible = true, children, ...rest }) {
   const [alertStatus, setAlertStatus] = useState('mount');
-
   const handleAlertStatus = () => setAlertStatus('fadeOut');
-
   // The base template for the alert
   const alertTemplate = (mount = true) => (
     <Fade in={mount} timeout={300}>
@@ -26,7 +23,6 @@ function RCAlert({ color = 'info', dismissible = true, children, ...rest }) {
       </RCAlertRoot>
     </Fade>
   );
-
   switch (true) {
     case alertStatus === 'mount':
       return alertTemplate();
@@ -37,10 +33,8 @@ function RCAlert({ color = 'info', dismissible = true, children, ...rest }) {
       alertTemplate();
       break;
   }
-
   return null;
 }
-
 // Typechecking props of the RCAlert
 RCAlert.propTypes = {
   color: PropTypes.oneOf([
@@ -56,5 +50,4 @@ RCAlert.propTypes = {
   dismissible: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
-
 export default RCAlert;

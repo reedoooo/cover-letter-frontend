@@ -1,14 +1,11 @@
-import axios from 'axios';
-
+import { create } from 'lodash';
 import constants from 'config/constants';
 
 const { API_URL } = constants;
-
-const useApiService = axios.create({
+const useApiService = create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
-
 export default useApiService;

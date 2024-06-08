@@ -2,7 +2,6 @@ import { typography } from 'assets/themes/base';
 import { pxToRem } from 'assets/themes/functions';
 
 const { size } = typography;
-
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {

@@ -1,10 +1,8 @@
-import colors from '../../base/colors';
-import typography from '../../base/typography';
+import { colors, typography } from 'assets/themes/base';
 
 const { text } = colors;
 const { size, fontFamily, lineHeight } = typography;
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   '--Icon-fontSize': 'calc(var(--FormHelperText-lineHeight) * 1em)',
   display: 'flex',

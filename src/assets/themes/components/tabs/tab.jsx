@@ -1,14 +1,10 @@
-import { rgba } from 'assets/themes';
-import borders from 'assets/themes/base/borders';
-import colors from 'assets/themes/base/colors';
-import typography from 'assets/themes/base/typography';
-import pxToRem from 'assets/themes/functions/pxToRem';
+import { borders, boxShadows, colors, typography } from 'assets/themes/base';
+import { rgba, pxToRem } from 'assets/themes/functions';
 
 const { size, fontWeightBold } = typography;
 const { borderRadius } = borders;
 const { dark, success, text } = colors;
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {
     root: {
@@ -29,14 +25,12 @@ export default {
       borderRadius: borderRadius.md,
       color: `${success.darkest} !important`,
       transition: 'background-color 300ms ease, color 300ms ease', // smooth transition for background and color
-
       opacity: '1 !important',
       '& .material-icons, .material-icons-round': {
         marginBottom: '0 !important',
         marginRight: pxToRem(4),
       },
       '& svg': {
-        marginBottom: '0 !important',
         marginRight: pxToRem(6),
       },
       '&:hover': {
@@ -47,18 +41,14 @@ export default {
         color: `${success.main} !important`,
         backgroundColor: rgba(success.main, 0.5),
       },
-      'span.MuiTab-wrapper': {
-        color: `${success.main} !important`,
-      },
-      'span.label.MuiTab-notSelected': {
-        color: `${text.main} !important`,
-        backgroundColor: `${success.main} !important`,
-        transition: 'all 500ms ease',
-      },
-
-      labelIcon: {
-        paddingTop: pxToRem(4),
-      },
+    },
+    'span.MuiTab-wrapper': {
+      color: `${text.main} !important`,
+      backgroundColor: `${success.main} !important`,
+      transition: 'all 500ms ease',
+    },
+    labelIcon: {
+      paddingTop: pxToRem(4),
     },
   },
 };

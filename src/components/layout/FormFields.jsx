@@ -1,4 +1,4 @@
-const { TextField } = require('@mui/material');
+import { TextField } from '@mui/material';
 
 export const FormField = ({
   field,
@@ -32,7 +32,7 @@ export const FormField = ({
         successCondition ? 'success' : ''
       } ${errorCondition ? 'error' : ''}`}
       onBlur={() => formikProps.setFieldTouched(field.name, true)}
-      onChange={(e) => {
+      onChange={e => {
         formikProps.handleChange(e);
         setFormValues({
           ...formValues,
@@ -42,8 +42,9 @@ export const FormField = ({
     />
   );
 };
+
 const FormFields = ({ configs, formikProps, formValues, setFormValues }) =>
-  configs.map((field) => (
+  configs.map(field => (
     <FormField
       key={field.name}
       field={field}

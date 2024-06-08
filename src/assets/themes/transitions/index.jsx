@@ -12,7 +12,7 @@ const Transitions = React.forwardRef(
       direction = 'up',
       ...others
     },
-    ref,
+    ref
   ) => {
     let positionSX = {
       transformOrigin: '0 0 0',
@@ -77,15 +77,7 @@ const Transitions = React.forwardRef(
           </Fade>
         )}
         {type === 'slide' && (
-          <Slide
-            {...others}
-            timeout={{
-              appear: 0,
-              enter: 400,
-              exit: 200,
-            }}
-            direction={direction}
-          >
+          <Slide {...others} direction={direction}>
             <Box sx={positionSX}>{children}</Box>
           </Slide>
         )}
@@ -96,23 +88,8 @@ const Transitions = React.forwardRef(
         )}
       </Box>
     );
-  },
+  }
 );
-
 Transitions.displayName = 'Transitions';
-
-// Transitions.propTypes = {
-//   children: PropTypes.node,
-//   type: PropTypes.oneOf(['grow', 'fade', 'collapse', 'slide', 'zoom']),
-//   position: PropTypes.oneOf([
-//     'top-left',
-//     'top-right',
-//     'top',
-//     'bottom-left',
-//     'bottom-right',
-//     'bottom',
-//   ]),
-//   direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
-// };
 
 export default Transitions;

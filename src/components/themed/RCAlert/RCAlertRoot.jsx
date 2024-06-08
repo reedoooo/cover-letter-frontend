@@ -1,21 +1,17 @@
 import Box from '@mui/material/Box';
+import { styled as styledDefault } from 'styled-components';
 
-const { default: styled } = require('styled-components');
-
-export default styled(Box)(({ theme, ownerState }) => {
+export default styledDefault(Box)(({ theme, ownerState }) => {
   const { palette, typography, borders, functions } = theme;
   const { color } = ownerState;
-
   const { white, gradients } = palette;
   const { fontSizeRegular, fontWeightMedium } = typography;
   const { borderRadius } = borders;
   const { pxToRem, linearGradient } = functions;
-
   // backgroundImage value
   const backgroundImageValue = gradients[color]
     ? linearGradient(gradients[color].main, gradients[color].state)
     : linearGradient(gradients.info.main, gradients.info.state);
-
   return {
     display: 'flex',
     justifyContent: 'space-between',

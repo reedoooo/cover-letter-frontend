@@ -1,20 +1,32 @@
 {
   "cSpell.words": [
+    "apexcharts",
+    "apos",
     "appbar",
     "autofocus",
+    "bgcolor",
+    "CHAKRA",
+    "depcheckrc",
+    "doesn",
     "Formik",
     "haspopup",
     "jspdf",
     "multilines",
+    "noopener",
+    "noreferrer",
+    "Pageview",
     "Parens",
+    "predeploy",
     "reduxjs",
     "Roboto",
+    "scrollbars",
+    "svgr",
     "toolz"
   ],
   "liveServer.settings.root": "/public",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.organizeImports": "always",
+    "source.organizeImports": "always"
+    // "source.fixAll.eslint": "always",
     // "source.fixAll.markdownlint": "always"
   },
   "editor.formatOnSave": true, // Prettier auto format on save

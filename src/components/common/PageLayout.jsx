@@ -18,5 +18,4 @@ const PageLayout = ({ children }) => {
     </Box>
   );
 };
-
 export default PageLayout;

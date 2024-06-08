@@ -1,11 +1,9 @@
-import colors from '../../base/colors';
-import typography from '../../base/typography';
-import pxToRem from '../../functions/pxToRem';
+import { colors, typography } from 'assets/themes/base';
+import { pxToRem } from 'assets/themes/functions';
 
 const { text, success, grey } = colors;
 const { size } = typography;
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   base: {
     backgroundColor: grey.default,
@@ -28,45 +26,38 @@ export default {
       fontSize: `${pxToRem(16)} !important`,
     },
   },
-
   small: {
     minHeight: pxToRem(32),
-    padding: `${pxToRem(6)} ${pxToRem(16)} `,
+    padding: `${pxToRem(6)} ${pxToRem(16)}`,
     fontSize: size.xs,
     '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(12)} !important`,
     },
   },
-
+  medium: {
+    minHeight: pxToRem(40),
+    padding: `${pxToRem(10)} ${pxToRem(24)}`,
+    fontSize: size.sm,
+    '& .material-icon, .material-icons-round, svg': {
+      fontSize: `${pxToRem(16)} !important`,
+    },
+  },
   large: {
     minHeight: pxToRem(47),
     padding: `${pxToRem(12)} ${pxToRem(28)}`,
-    fontSize: size.sm,
-
+    fontSize: size.lg,
     '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(22)} !important`,
     },
   },
-
   primary: {
-    backgroundColor: grey.default,
-
-    '&:hover': {
-      backgroundColor: grey.dark,
-    },
-
+    backgroundColor: grey.dark,
     '&:focus:not(:hover)': {
       backgroundColor: grey.light,
     },
   },
-
   secondary: {
     backgroundColor: grey.light,
-
-    '&:hover': {
-      backgroundColor: grey.light,
-    },
-
     '&:focus:not(:hover)': {
       backgroundColor: grey.lightest,
     },

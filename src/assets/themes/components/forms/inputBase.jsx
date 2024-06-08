@@ -1,7 +1,7 @@
-import typography from '../../base/typography';
+import { typography } from 'assets/themes/base';
 
 const { size } = typography;
-// eslint-disable-next-line import/no-anonymous-default-export
+
 export default {
   styleOverrides: {
     root: {

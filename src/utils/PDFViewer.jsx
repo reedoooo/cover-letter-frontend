@@ -1,4 +1,3 @@
-// components/PDFViewer.jsx
 import React from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
@@ -12,10 +11,10 @@ class PDFViewer extends React.Component {
     pdfData: null,
   };
 
-  onFileLoad = (event) => {
+  onFileLoad = event => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       this.setState({ pdfData: e.target.result });
     };
     reader.readAsDataURL(file);
@@ -30,18 +29,14 @@ class PDFViewer extends React.Component {
     return (
       <>
         <input type="file" accept=".pdf" onChange={this.onFileLoad} />
-
         {pdfData && (
           <Document file={pdfData} onLoadSuccess={this.onDocumentLoadSuccess}>
             <Page pageNumber={pageNumber} width={200} />
           </Document>
         )}
-
-        {pdfData && (
-          <p>
-            Page {pageNumber} of {numPages}
-          </p>
-        )}
+        <p>
+          Page {pageNumber} of {numPages}
+        </p>
       </>
     );
   }

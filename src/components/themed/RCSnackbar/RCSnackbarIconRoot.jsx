@@ -1,21 +1,16 @@
 import Icon from '@mui/material/Icon';
-
+import styledDefault from 'styled-components';
 import useMode from 'hooks/useMode';
 
-const { default: styled } = require('styled-components');
-
-export default styled(Icon)(({ ownerState }) => {
+export default styledDefault(Icon)(({ ownerState }) => {
   const { theme } = useMode();
   const { palette, functions, typography } = theme;
   const { color, bgWhite } = ownerState;
-
   const { white, transparent, gradients } = palette;
   const { pxToRem, linearGradient } = functions;
   const { size } = typography;
 
-  // backgroundImage value
   let backgroundImageValue;
-
   if (bgWhite) {
     backgroundImageValue = gradients[color]
       ? linearGradient(gradients[color].main, gradients[color].state)
@@ -23,7 +18,7 @@ export default styled(Icon)(({ ownerState }) => {
   } else if (color === 'light') {
     backgroundImageValue = linearGradient(
       gradients.dark.main,
-      gradients.dark.state,
+      gradients.dark.state
     );
   }
 

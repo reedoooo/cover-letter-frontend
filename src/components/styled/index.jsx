@@ -1,4 +1,5 @@
-const {
+/* eslint-disable no-unused-vars */
+import {
   Box,
   alpha,
   Menu,
@@ -9,8 +10,10 @@ const {
   TableCell,
   Link,
   Avatar,
-} = require('@mui/material');
-const { default: styled } = require('styled-components');
+  AppBar,
+  Toolbar,
+} from '@mui/material';
+import { styled } from 'styled-components';
 
 const StyledIconContainer = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(0.5),
@@ -27,7 +30,7 @@ const StyledIconContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledMenu = styled((props) => (
+const StyledMenu = styled(props => (
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -47,7 +50,6 @@ const StyledMenu = styled((props) => (
     minWidth: 180,
     color: theme.palette.grey[300],
     boxShadow:
-      // eslint-disable-next-line max-len
       'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
       padding: '4px 0',
@@ -67,10 +69,8 @@ const StyledMenu = styled((props) => (
 
 const ScrollablePaper = styled(Paper)(({ theme }) => ({
   maxHeight: 'calc(90vh - 96px)',
-  padding: theme.spacing(2),
   marginRight: theme.spacing(2),
   height: '297mm',
-  // padding: theme.spacing(2),
   boxSizing: 'border-box',
   border: '1px solid #ccc',
   borderRadius: '5px',
@@ -81,60 +81,46 @@ const ScrollablePaper = styled(Paper)(({ theme }) => ({
 const EditorContainer = styled(Paper)(({ theme }) => ({
   minHeight: 'calc(80vh - 96px)',
   maxHeight: 'calc(80vh - 96px)',
-  display: 'flex',
   flexDirection: 'column',
-  padding: theme.spacing(2),
 }));
 
 const PdfPreviewContainer = styled(Paper)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: theme.spacing(2),
-  marginRight: theme.spacing(2),
-  // marginLeft: theme.spacing(2),
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius,
   overflow: 'hidden',
 }));
 
 const FormContainer = styled(Paper)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(2),
+  boxShadow: theme.shadows[1],
 }));
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  marginLeft: theme.spacing(0.5),
-  border: `2px solid ${theme.palette.background.default}`,
-  '&:hover': {
-    color: theme.palette.dark.main,
-    backgroundColor: theme.palette.background.hover,
-  },
   '&:selected': {
     color: theme.palette.primary.main,
     backgroundColor: alpha(theme.palette.primary.main, 0.1),
   },
 }));
+
 const LeftSection = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
   justifyContent: 'space-between',
   width: '200px',
   backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(2),
   borderRight: `1px solid ${theme.palette.divider}`,
 }));
 
 const RightSection = styled(Box)(({ theme }) => ({
+  justifyContent: 'space-between',
   width: '200px',
-  display: 'flex',
-  flexDirection: 'column',
+  backgroundColor: theme.palette.background.paper,
+  borderLeft: `1px solid ${theme.palette.divider}`,
 }));
+
 const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.common.white,
   textAlign: 'center',
-  padding: theme.spacing(2),
 }));
 
 const StyledTableHead = styled(TableHead)(({ theme }) => ({
@@ -155,8 +141,70 @@ const StyledLink = styled(Link)(({ theme }) => ({
 }));
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
+  width: theme.spacing(10),
+  height: theme.spacing(10),
 }));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  margin: theme.spacing(2),
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  alignContent: 'flex-start',
+  textAlign: 'flex-start',
+  height: '100%',
+}));
+
+const AspectRatioBox = styled(Box)({
+  width: '60%', // Take the full width of its parent
+  maxHeight: 500, // Maximum height of 80% of the viewport height
+  maxWidth: 'calc(500px * 0.707)', // Maintain A4 aspect ratio (0.707 = 1 / √2)
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  marginTop: '1rem',
+  position: 'relative',
+  '&::before': {
+    content: '""',
+    display: 'block',
+    paddingTop: '141.4%', // Height is 141.4% of the width, maintaining A4 aspect ratio
+  },
+  '& > div': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '100%',
+    width: '100%',
+    margin: 'auto',
+  },
+});
+
+const MainWrapper = styled('div')(() => ({
+  minHeight: '100vh',
+  width: '100%',
+}));
+
+const PageWrapper = styled('div')(() => ({
+  flexGrow: 1,
+  paddingBottom: '60px',
+  zIndex: 1,
+  backgroundColor: 'transparent',
+}));
+
+const AppBarStyled = styled(AppBar)(({ theme }) => ({
+  boxShadow: 'none',
+  background: theme.palette.background.paper,
+  backdropFilter: 'blur(4px)',
+  [theme.breakpoints.up('lg')]: {
+    minHeight: '70px',
+  },
+}));
+
+const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+}));
+
 export {
   StyledIconContainer,
   StyledIconButton,
@@ -172,4 +220,11 @@ export {
   StyledTableCell,
   StyledLink,
   StyledAvatar,
+  StyledPaper,
+  AspectRatioBox,
+  // NAV
+  MainWrapper,
+  PageWrapper,
+  AppBarStyled,
+  ToolbarStyled,
 };

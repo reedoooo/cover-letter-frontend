@@ -1,20 +1,26 @@
+import { CssBaseline } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
+import { BrowserRouter } from 'react-router-dom';
+import App from 'app/App';
+import { Providers } from 'contexts/Providers';
+import ErrorFallback from 'utils/ErrorFallback';
 
-import './assets/index.css';
-import { Provider } from 'react-redux';
-
-import App from './App';
-import { store } from './store';
-import ErrorBoundary from './utils/ErrorBoundary';
-
+// =========================================================
+// [index] | This is the entry point for the application
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ErrorBoundary>{' '}
-  </React.StrictMode>,
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Providers>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <CssBaseline />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </Providers>
+    </ErrorBoundary>
+  </React.StrictMode>
 );

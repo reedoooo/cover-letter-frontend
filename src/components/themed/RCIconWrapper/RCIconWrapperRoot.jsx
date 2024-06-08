@@ -1,13 +1,11 @@
 import { Box } from '@mui/material';
-
+import styledDefault from 'styled-components';
 import useMode from 'hooks/useMode';
 
-const { default: styled } = require('styled-components');
-
-export default styled(Box)(({ ownerstate }) => {
+const StyledBox = styledDefault(Box)(({ ownerState }) => {
   const { theme } = useMode();
   const { palette, functions } = theme;
-  const { size, bgColor } = ownerstate;
+  const { size, bgColor } = ownerState;
   const { white, text } = palette;
   const { pxToRem } = functions;
   const backgroundValue = palette[bgColor] ? palette[bgColor].main : white.main;
@@ -43,12 +41,10 @@ export default styled(Box)(({ ownerstate }) => {
     colorValue = white.main;
   }
   return {
-    // !PREVIOUS STYLES
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // NEW STYLES
     width: sizeValue,
     minWidth: sizeValue,
     height: sizeValue,
@@ -56,16 +52,17 @@ export default styled(Box)(({ ownerstate }) => {
     padding: paddingValue,
     background: `${backgroundValue} !important`, // Use !important to override any later conflicting styles
     color: `${colorValue} !important`, // Use !important to override any later conflicting styles
-
     '& .material-icons': {
       marginTop: 0,
     },
-
     '&:hover, &:focus, &:active': {
       transform: 'none',
     },
   };
 });
+
+export default StyledBox;
+
 // let sizeValue = pxToRem(38);
 // if (size === 'small') {
 //   sizeValue = pxToRem(25.4);
@@ -73,11 +70,8 @@ export default styled(Box)(({ ownerstate }) => {
 //   sizeValue = pxToRem(52);
 // }
 // let paddingValue = `${pxToRem(11)} ${pxToRem(11)} ${pxToRem(10)}`;
-// if (size === 'small') {
 //   paddingValue = pxToRem(4.5);
-// } else if (size === 'large') {
 //   paddingValue = pxToRem(16);
-// }
 // let colorValue = white.main;
 // if (
 //   bgColor === 'default' ||
@@ -94,9 +88,7 @@ export default styled(Box)(({ ownerstate }) => {
 //   bgColor === 'secondary' ||
 //   bgColor === 'info' ||
 //   bgColor === 'warning'
-// ) {
 //   colorValue = white.main;
-// }
 // const iconContainerStyles = () => {
 //   let sizeValue = pxToRem(38);
 //   if (size === 'small') {
@@ -105,25 +97,19 @@ export default styled(Box)(({ ownerstate }) => {
 //     sizeValue = pxToRem(52);
 //   }
 //   let paddingValue = `${pxToRem(11)} ${pxToRem(11)} ${pxToRem(10)}`;
-//   if (size === 'small') {
 //     paddingValue = pxToRem(4.5);
-//   } else if (size === 'large') {
 //     paddingValue = pxToRem(16);
-//   }
 //   return {
 //     width: sizeValue,
 //     minWidth: sizeValue,
 //     height: sizeValue,
 //     minHeight: sizeValue,
 //     padding: paddingValue,
-
 //     '& .material-icons': {
 //       marginTop: 0,
 //     },
-
 //     '&:hover, &:focus, &:active': {
 //       transform: 'none',
-//     },
 //   };
 // };
 // const iconStyles = () => {
@@ -134,11 +120,8 @@ export default styled(Box)(({ ownerstate }) => {
 //   //   sizeValue = pxToRem(52);
 //   // }
 //   // let paddingValue = `${pxToRem(11)} ${pxToRem(11)} ${pxToRem(10)}`;
-//   // if (size === 'small') {
 //   //   paddingValue = pxToRem(4.5);
-//   // } else if (size === 'large') {
 //   //   paddingValue = pxToRem(16);
-//   // }
 //   // let colorValue = white.main;
 //   // if (
 //   //   bgColor === 'default' ||
@@ -155,9 +138,7 @@ export default styled(Box)(({ ownerstate }) => {
 //   //   bgColor === 'secondary' ||
 //   //   bgColor === 'info' ||
 //   //   bgColor === 'warning'
-//   // ) {
 //   //   colorValue = white.main;
-//   // }
 //   // return {
 //   //   // !PREVIOUS STYLES
 //   //   borderRadius: '50%',
@@ -172,48 +153,12 @@ export default styled(Box)(({ ownerstate }) => {
 //   //   padding: paddingValue,
 //   //   background: `${backgroundValue} !important`, // Use !important to override any later conflicting styles
 //   //   color: `${colorValue} !important`, // Use !important to override any later conflicting styles
-
 //   //   '& .material-icons': {
 //   //     marginTop: 0,
 //   //   },
-
 //   //   '&:hover, &:focus, &:active': {
 //   //     transform: 'none',
-//   //   },
 //   // };
-// };
-
-// const iconStyles = () => {
-//   let sizeValue = pxToRem(38);
-//   if (size === 'small') {
-//     sizeValue = pxToRem(25.4);
-//   } else if (size === 'large') {
-//     sizeValue = pxToRem(52);
-//   }
-//   let paddingValue = `${pxToRem(11)} ${pxToRem(11)} ${pxToRem(10)}`;
-
-//   if (size === 'small') {
-//     paddingValue = pxToRem(4.5);
-//   } else if (size === 'large') {
-//     paddingValue = pxToRem(16);
-//   }
-
-//   return {
-//     width: sizeValue,
-//     minWidth: sizeValue,
-//     height: sizeValue,
-//     minHeight: sizeValue,
-//     padding: paddingValue,
-
-//     '& .material-icons': {
-//       marginTop: 0,
-//     },
-
-//     '&:hover, &:focus, &:active': {
-//       transform: 'none',
-//     },
-//   };
-// };
 // return {
 // width: sizeValue,
 // minWidth: sizeValue,
@@ -239,9 +184,6 @@ export default styled(Box)(({ ownerstate }) => {
 // },
 // [theme.breakpoints.down('sm')]: {
 //   fontSize: '1.2rem',
-// },
 // [theme.breakpoints.down('xs')]: {
 //   fontSize: '1rem',
-// },
-// };
 // });

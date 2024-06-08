@@ -1,18 +1,17 @@
-import { CircularProgress, Paper, Box } from '@mui/material';
-import React, { useState, Suspense } from 'react';
+import { Box, CircularProgress, Paper } from '@mui/material';
+import React, { Suspense, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
+import { saveDraft } from 'api/index';
+import useMode from 'hooks/useMode';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import { saveDraft, updateDraft } from 'api';
-import useMode from 'hooks/useMode';
+import { updateDraft } from 'store/Reducers/draftSlice';
 import { DraftEditorSkeleton } from 'utils/SkeletonComponents';
-
 import ResultActions from './ResultAction';
 import { EditorContainer } from './styled';
 import RCBox from './themed/RCBox';
 import RCTypography from './themed/RCTypography';
-
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const ResultPreview = ({
@@ -31,7 +30,7 @@ const ResultPreview = ({
   };
   const user = JSON.parse(localStorage.getItem('user'));
   const selectedDraftFromStorage = JSON.parse(
-    localStorage.getItem('selectedDraft'),
+    localStorage.getItem('selectedDraft')
   );
   const userId = user?._id;
   const handleSaveDraft = async (content, contentName) => {
@@ -54,7 +53,6 @@ const ResultPreview = ({
       console.error('Error updating draft:', error);
     }
   };
-
   return (
     <Box
       sx={{
@@ -78,11 +76,11 @@ const ResultPreview = ({
           <RCTypography variant="h3" color="textSecondary" sx={{ mb: 2 }}>
             Preview:
           </RCTypography>
-          <RCTypography variant="h3" color="textSecondary" sx={{ mb: 2 }}>
+          <Box>
             {drafts[selectedDraftIndex]?.title ||
               selectedDraftFromStorage?.content?.name ||
               'Untitled'}
-          </RCTypography>
+          </Box>
         </Paper>
       </RCBox>
       <Suspense fallback={<DraftEditorSkeleton />}>
@@ -94,7 +92,9 @@ const ResultPreview = ({
               <Document
                 file={drafts[selectedDraftIndex]?.content?.pdf}
                 onLoadSuccess={onDocumentLoadSuccess}
-                options={{ workerSrc: pdfjs.GlobalWorkerOptions.workerSrc }}
+                options={{
+                  workerSrc: pdfjs.GlobalWorkerOptions.workerSrc,
+                }}
               >
                 {Array.from(new Array(numPages), (el, index) => (
                   <Page key={`page_${index + 1}`} pageNumber={index + 1} />
@@ -111,7 +111,7 @@ const ResultPreview = ({
           handleUpdateDraft(
             drafts[selectedDraftIndex]?._id,
             drafts[selectedDraftIndex]?.content,
-            drafts[selectedDraftIndex]?.title,
+            drafts[selectedDraftIndex]?.title
           )
         }
         handleDraftDelete={() =>
@@ -120,7 +120,7 @@ const ResultPreview = ({
         handleDraftSave={() =>
           handleSaveDraft(
             drafts[selectedDraftIndex]?.content,
-            drafts[selectedDraftIndex]?.title,
+            drafts[selectedDraftIndex]?.title
           )
         }
       />

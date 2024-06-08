@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
@@ -14,7 +15,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import RCDialogRoot from './RCDialogRoot';
-
 /**
  * A customizable dialog component.
  *
@@ -42,24 +42,21 @@ const RCDialog = React.forwardRef(
       coloredShadow = 'none',
       opacity = 0.2,
       transition = 'slide',
-
       // CONTENT PROPERTIES
       title = null,
       subtitle = null,
       content = null,
       actions = null,
       children = null,
-
       // EVENTS
       open = false,
       onClose = () => {},
       onOpen = () => {},
       onCancel = () => {},
       onConfirm = () => {},
-
       ...rest
     },
-    ref,
+    ref
   ) => (
     <RCDialogRoot
       {...rest}
@@ -124,11 +121,9 @@ const RCDialog = React.forwardRef(
         <DialogActions>{actions}</DialogActions>
       </Dialog>
     </RCDialogRoot>
-  ),
+  )
 );
-
 RCDialog.displayName = 'RCDialog';
-
 // Typechecking props for the RCDialog
 RCDialog.propTypes = {
   variant: PropTypes.oneOf(['contained', 'gradient', 'dashboard', 'none']),
@@ -150,5 +145,4 @@ RCDialog.propTypes = {
   onCancel: PropTypes.func,
   onConfirm: PropTypes.func,
 };
-
 export default RCDialog;

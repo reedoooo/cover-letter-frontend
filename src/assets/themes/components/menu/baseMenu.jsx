@@ -6,12 +6,10 @@ const { size } = typography;
 const { text, white } = colors;
 const { borderRadius } = borders;
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   defaultProps: {
     disableAutoFocusItem: true,
   },
-
   styleOverrides: {
     paper: {
       minWidth: pxToRem(160),
@@ -22,7 +20,6 @@ export default {
       textAlign: 'left',
       backgroundColor: `${white.main} !important`,
       borderRadius: borderRadius.md,
-      // border: `1px solid ${text.main}`,
     },
   },
 };

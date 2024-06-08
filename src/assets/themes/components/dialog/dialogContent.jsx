@@ -5,7 +5,6 @@ const { size } = typography;
 const { text } = colors;
 const { borderWidth, borderColor } = borders;
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   styleOverrides: {
     root: {
@@ -13,7 +12,6 @@ export default {
       fontSize: size.md,
       color: text.main,
     },
-
     dividers: {
       borderTop: `${borderWidth[1]} solid ${borderColor}`,
       borderBottom: `${borderWidth[1]} solid ${borderColor}`,

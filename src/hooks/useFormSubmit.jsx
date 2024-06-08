@@ -1,4 +1,7 @@
+import constants from 'config/constants';
 import useApiService from './useApiService';
+
+const { API_URL } = constants;
 
 const useFormSubmit = () => {
   const formSubmitHandler = async ({
@@ -15,13 +18,13 @@ const useFormSubmit = () => {
     if (!drafts[selectedDraftIndex]?.title) {
       return alert('Please name your draft first');
     }
+    console.log('API URL:', API_URL);
     dispatch({ type: actionTypes.TOGGLE_LOADING });
 
     try {
       const formData = new FormData();
       const keys = Object.keys(values);
-
-      const formValues = keys.map((key) => {
+      const formValues = keys.map(key => {
         return {
           key,
           value: values[key],
@@ -40,22 +43,22 @@ const useFormSubmit = () => {
       }
       if (url) {
         console.log(`[URL IS TYPE]: ${typeof url}`);
-        formData.append('pdfUrl', url);
+        formData.append('pdfUrl', encodeURI(url));
       }
       console.log(`[LINKEDIN URL IS TYPE]: ${typeof linkedInUrl}`);
-      formData.append('linkedInUrl', linkedInUrl);
+      formData.append('linkedInUrl', encodeURI(linkedInUrl));
 
       const { data } = await useApiService.post(
-        '/cover-letter/generate-cover-letter',
+        '/cover-letter/create',
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
-        },
+        }
       );
-      const { message, resPdfUrl, resText, resHTML, resBlock, metadata } = data;
 
+      const { message, resPdfUrl, resText, resHTML, resBlock, metadata } = data;
       const updatedDrafts = [...drafts];
       updatedDrafts[selectedDraftIndex] = {
         ...updatedDrafts[selectedDraftIndex],
@@ -75,7 +78,7 @@ const useFormSubmit = () => {
       };
       localStorage.setItem(
         'selectedDraft',
-        JSON.stringify(updatedDrafts[selectedDraftIndex]),
+        JSON.stringify(updatedDrafts[selectedDraftIndex])
       );
       dispatch({ type: actionTypes.SET_DRAFTS, drafts: updatedDrafts });
       return updatedDrafts[selectedDraftIndex];
@@ -85,6 +88,7 @@ const useFormSubmit = () => {
       dispatch({ type: actionTypes.TOGGLE_LOADING });
     }
   };
+
   return { formSubmitHandler };
 };
 

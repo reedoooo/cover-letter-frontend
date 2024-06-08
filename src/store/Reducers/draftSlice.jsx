@@ -1,4 +1,3 @@
-// draftsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -6,22 +5,8 @@ const initialState = {
   selectedDraftIndex: 0,
   newDraftName: '',
   editedDraftName: '',
-  anchorElUser: null,
-  userToken: null,
-
   loading: false,
-  isAuthenticated: false,
   isEditing: false,
-  formDisabled: true,
-  draftsBarVisible: true,
-  initAddContentVisible: false,
-
-  dialogState: {
-    viewDraftsDialogOpen: false,
-    profileDialogOpen: false,
-    addDraftDialogOpen: false,
-    authDialogOpen: false,
-  },
 };
 
 const draftsSlice = createSlice({
@@ -49,41 +34,27 @@ const draftsSlice = createSlice({
     },
     updateDraftName: (state, action) => {
       const { index, title } = action.payload;
-      state.drafts[index] = { ...state.drafts[index], title, isEditing: false };
+      state.drafts[index] = {
+        ...state.drafts[index],
+        title,
+        isEditing: false,
+      };
     },
     deleteDraft: (state, action) => {
       state.drafts = state.drafts.filter((_, idx) => idx !== action.payload);
     },
-    toggleLoading: (state) => {
+    toggleLoading: state => {
       state.loading = !state.loading;
     },
-    toggleIsEditing: (state) => {
+    toggleIsEditing: state => {
       state.isEditing = !state.isEditing;
     },
-    toggleAuthentication: (state) => {
-      state.isAuthenticated = !state.isAuthenticated;
-    },
-    toggleDraftsBar: (state) => {
-      state.draftsBarVisible = !state.draftsBarVisible;
-    },
-    toggleDialogState: (state, action) => {
-      const dialog = action.payload;
-      state.dialogState[dialog] = !state.dialogState[dialog];
-    },
-    toggleInitAddContentVisible: (state) => {
-      state.initAddContentVisible = !state.initAddContentVisible;
-    },
     saveDraft: (state, action) => {
-      state.drafts.push(action.payload);
-    },
-    updateDraft: (state, action) => {
       const { index, draft } = action.payload;
       state.drafts[index] = { ...state.drafts[index], ...draft };
     },
     removeDraft: (state, action) => {
-      state.drafts = state.drafts.filter(
-        (draft) => draft._id !== action.payload,
-      );
+      state.drafts = state.drafts.filter(draft => draft._id !== action.payload);
     },
     setLinkedInUrl: (state, action) => {
       state.drafts[state.selectedDraftIndex].linkedInUrl = action.payload;
@@ -114,10 +85,6 @@ export const {
   deleteDraft,
   toggleLoading,
   toggleIsEditing,
-  toggleAuthentication,
-  toggleDraftsBar,
-  toggleDialogState,
-  toggleInitAddContentVisible,
   saveDraft,
   updateDraft,
   removeDraft,
@@ -127,5 +94,4 @@ export const {
   setFormValues,
   setGeneratedPdfUrl,
 } = draftsSlice.actions;
-
 export default draftsSlice.reducer;

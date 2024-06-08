@@ -2,7 +2,6 @@ import Fade from '@mui/material/Fade';
 
 import { borders, colors, typography } from '../base';
 import { pxToRem } from '../functions';
-
 const { black, light } = colors;
 const { size, fontWeightRegular } = typography;
 const { borderRadius } = borders;
@@ -12,7 +11,6 @@ const tooltip = {
     arrow: true,
     TransitionComponent: Fade,
   },
-
   styleOverrides: {
     tooltip: {
       maxWidth: pxToRem(200),
@@ -25,7 +23,6 @@ const tooltip = {
       opacity: 0.7,
       padding: `${pxToRem(5)} ${pxToRem(8)} ${pxToRem(4)}`,
     },
-
     arrow: {
       color: black.main,
     },

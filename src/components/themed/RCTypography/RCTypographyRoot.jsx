@@ -1,10 +1,8 @@
 import Typography from '@mui/material/Typography';
-
+import styledDefault from 'styled-components';
 import useMode from 'hooks/useMode';
 
-const { default: styled } = require('styled-components');
-
-export default styled(Typography)(({ ownerState }) => {
+export default styledDefault(Typography)(({ ownerState }) => {
   const { theme } = useMode();
   const { palette, typography, functions } = theme;
   const {
@@ -30,7 +28,6 @@ export default styled(Typography)(({ ownerState }) => {
     bold: fontWeightBold,
   };
   const { linearGradient } = functions;
-
   const gradientStyles = () => ({
     backgroundImage:
       color !== 'inherit' &&
@@ -45,22 +42,15 @@ export default styled(Typography)(({ ownerState }) => {
     position: 'relative',
     zIndex: 1,
   });
-
   let colorValue =
     color === 'inherit' || !palette[color] ? 'inherit' : palette[color].main;
-
   if (darkMode && (color === 'inherit' || !palette[color])) {
     colorValue = 'inherit';
   } else if (darkMode && color === 'dark') colorValue = white.main;
-
   if (color === 'textPrimary') colorValue = palette.text.primary;
   if (color === 'textSecondary') colorValue = palette.text.secondary;
   if (color === 'textTertiary') colorValue = palette.text.tertiary;
-
   return {
-    opacity,
-    textTransform,
-    verticalAlign,
     textDecoration: 'none',
     color: colorValue,
     fontWeight: fontWeights[fontWeight] && fontWeights[fontWeight],

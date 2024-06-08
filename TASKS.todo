@@ -12,7 +12,8 @@
 - [ ] [1][components] Add user avatar/name interface to appBar
 - [ ] [2][components] Add menu items to user avatar interface to open data dialog
 - [ ] [3][components] Implement dataTable in dialog to display saved user Cover Letters for each job
-- [ ] [4][workflow] Add express script to automate gut comments as 
+- [ ] [4][workflow] Add express script to automate gut comments as
+- [ ] [5][components] Add profile page with components
 
 ### 1.2. Fix
 - [ ] [1][components] Fix login issue (#123)
@@ -46,4 +47,13 @@
 - [ ] [1][components]
 
 ### 3.2. Misc
-- [ ] [1][components]
+- [ ] [1][misc] Write node/openAi comment automation script
+- [ ] [2][misc] Optimize data loading with new data/content structure which includes loading, error, and data within single object
+- [ ] [3][misc] Write functions/hooks/components docs in deps file
+- [ ] [4][misc] Optimize vsCode settings
+- [ ] [5][misc] Create docs in dev for openAi prompts and refactor prompts in particular
+
+
+
+
+

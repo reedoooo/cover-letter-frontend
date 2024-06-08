@@ -3,6 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
 beforeAll(() => {
   const localStorageMock = (function () {
     let store = {};
@@ -27,6 +28,7 @@ beforeAll(() => {
       },
     };
   })();
+
   Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
   });

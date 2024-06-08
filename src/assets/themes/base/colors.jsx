@@ -1,94 +1,250 @@
-import rgba from '../functions/rgba';
-// const greenPalette = {
-//   50: '#b7ebde', // Even lighter than the lightest
-//   100: '#94e2cd', // Lightest shade
-//   200: '#70d8bd', // Lighter shade
-//   300: '#4cceac', // Light shade, also 'crystalGreen' with opacity adjusted for full hex
-//   400: '#3da58a', // Default, mid-light
-//   500: '#18b984', // Main green used in the primary color
-//   600: '#159b76', // Slightly darker and less saturated than 500
-//   700: '#12875f', // Darker and more muted green
-//   800: '#0f7348', // Dark, rich green
-//   900: '#2e7c67', // Darkest shade, used for the deepest contrast
-//   contrastText: '#dbf5ee', // Lightest contrast text
-//   main: '#18b984', // Primary main color
-//   focus: 'rgba(24, 185, 132, 0.15)', // Focus state with opacity
-//   hoverContrastText: 'white', // Text color for hover states
-// };
-// const redPalette = {
-//   50: '#f8dcdb', // Even lighter than the lightest
-//   100: '#f1b9b7', // Lightest
-//   200: '#e99592', // Lighter
-//   300: '#e2726e', // Light shade
-//   400: '#db4f4a', // Default, main used color
-//   500: '#af3f3b', // Mid-dark, more saturation
-//   600: '#832f2c', // Darker and more intense
-//   700: '#58201e', // Even darker, rich depth
-//   800: '#2c100f', // Darkest shade, for deep contrast
-//   contrastText: '#f8dcdb', // Lightest contrast text
-//   main: '#db4f4a', // Primary main color
-//   focus: 'rgba(219, 79, 74, 0.15)', // Focus state with opacity
-//   hoverContrastText: 'white', // Text color for hover states
-// };
-// const bluePalette = {
-//   50: '#e1e2fe', // Even lighter than the lightest
-//   100: '#c3c6fd', // Lightest
-//   200: '#a4a9fc', // Lighter
-//   300: '#868dfb', // Light shade
-//   400: '#6870fa', // Default, main used color
-//   500: '#535ac8', // Mid-dark, more saturation
-//   600: '#3e4396', // Darker and more intense
-//   700: '#2a2d64', // Even darker, rich depth
-//   800: '#151632', // Darkest shade, for deep contrast
-//   contrastText: '#e1e2fe', // Lightest contrast text
-//   main: '#6870fa', // Primary main color
-//   focus: 'rgba(104, 112, 250, 0.15)', // Focus state with opacity
-//   hoverContrastText: 'white', // Text color for hover states
-// };
-// const myGradients = {
-//   primary: {
-//     main: '#0172AF',
-//     state: '#74FEBD',
-//     value: 'linear-gradient(180deg, #0172AF 0%, #74FEBD 100%)',
-//   },
-//   secondary: {
-//     main: '#FF8473',
-//     state: '#FFF9d2',
-//     value: 'linear-gradient(180deg, #FF8473 0%, #FFF9d2 100%)',
-//   },
-// };
-const colors = {
+import { rgba } from '../functions';
+const MuiModeBasedStyles = {
   primary: {
-    lighter: '#94e2cd',
-    light: '#4cceac',
-    main: '#18b984',
-    secondary: '#5CDB95',
-    tertiary: '#5fe7bb',
-    dark: '#2e7c67',
-    focus: rgba('#18b984' || '#dbf5ee', 0.15),
-    contrastText: '#dbf5ee',
+    light: {
+      lighter: '#94e2cd',
+      light: '#4cceac',
+      main: '#18b984',
+      secondary: '#5CDB95',
+      tertiary: '#5fe7bb',
+      dark: '#2e7c67',
+      focus: rgba('#18b984' || '#dbf5ee', 0.15),
+      contrastText: '#dbf5ee',
+    },
+    dark: {
+      lighter: '#94e2cd',
+      light: '#4cceac',
+      main: '#18b984',
+      secondary: '#5CDB95',
+      tertiary: '#5fe7bb',
+      dark: '#2e7c67',
+      focus: rgba('#18b984' || '#dbf5ee', 0.15),
+      contrastText: '#dbf5ee',
+    },
   },
   secondary: {
-    lighter: '#70a1ff',
-    light: '#5c7cfa',
-    main: '#3a539b',
-    secondary: '#3C40C6',
-    tertiary: '#3d3d3d',
-    dark: '#293f66',
-    focus: rgba('#3a539b' || '#eef2f6', 0.15),
-    contrastText: '#eef2f6',
+    light: {
+      lighter: '#70a1ff',
+      light: '#5c7cfa',
+      main: '#3a539b',
+      secondary: '#3C40C6',
+      tertiary: '#3d3d3d',
+      dark: '#293f66',
+      focus: rgba('#3a539b' || '#eef2f6', 0.15),
+      contrastText: '#eef2f6',
+    },
+    dark: {
+      lighter: '#70a1ff',
+      light: '#5c7cfa',
+      main: '#3a539b',
+      secondary: '#3C40C6',
+      tertiary: '#3d3d3d',
+      dark: '#293f66',
+      focus: rgba('#3a539b' || '#eef2f6', 0.15),
+      contrastText: '#eef2f6',
+    },
   },
   text: {
-    primary: '#212121',
-    secondary: '#3d3d3d',
-    main: '#212121',
-    tertiary: '#707070',
-    contrastText: '#ffffff',
-    hover: '#4a4a4a',
-    colorText: '#343239',
-    colorPrimaryText: rgba('#fff', 0.96),
-    colorLabel: '#A4A3A6',
+    light: {
+      primary: '#212121',
+      secondary: '#3d3d3d',
+      main: '#212121',
+      tertiary: '#707070',
+      contrastText: '#ffffff',
+      hover: '#4a4a4a',
+      colorText: '#343239',
+      colorPrimaryText: rgba('#fff', 0.96),
+      colorLabel: '#A4A3A6',
+    },
+    dark: {
+      primary: '#212121',
+      secondary: '#3d3d3d',
+      main: '#212121',
+      tertiary: '#707070',
+      contrastText: '#ffffff',
+      hover: '#4a4a4a',
+      colorText: '#343239',
+      colorPrimaryText: rgba('#fff', 0.96),
+      colorLabel: '#A4A3A6',
+    },
   },
+  background: {
+    light: {
+      default: '#f0f2f5',
+      main: '#f0f2f5',
+      paper: '#fff',
+      hover: '#e0e0e0',
+      focus: '#B2BAC2',
+      set: '#6F7E8C',
+    },
+    dark: {
+      default: '#f0f2f5',
+      main: '#f0f2f5',
+      paper: '#fff',
+      hover: '#e0e0e0',
+      focus: '#B2BAC2',
+      set: '#6F7E8C',
+    },
+  },
+  border: {
+    light: {
+      default: '#e0e0e0',
+      main: '#e0e0e0',
+      paper: '#fff',
+      hover: '#e0e0e0',
+      focus: '#B2BAC2',
+      set: '#6F7E8C',
+    },
+    dark: {
+      default: '#e0e0e0',
+      main: '#e0e0e0',
+      paper: '#fff',
+      hover: '#e0e0e0',
+      focus: '#B2BAC2',
+      set: '#6F7E8C',
+    },
+  },
+  divider: {
+    light: '#eeeeee',
+    dark: '#eeeeee',
+  },
+  action: {
+    light: {
+      hover: '#424242',
+      disabled: '#eeeeee',
+    },
+    dark: {
+      hover: '#424242',
+      disabled: '#eeeeee',
+    },
+  },
+};
+const ChakraModeBasedStyles = {
+  brand: {
+    light: {
+      100: '#E9E3FF',
+      200: '#422AFB',
+      300: '#422AFB',
+      400: '#7551FF',
+      500: '#422AFB',
+      600: '#3311DB',
+      700: '#02044A',
+      800: '#190793',
+      900: '#11047A',
+    },
+    dark: {
+      100: '#E9E3FF',
+      200: '#422AFB',
+      300: '#422AFB',
+      400: '#7551FF',
+      500: '#422AFB',
+      600: '#3311DB',
+      700: '#02044A',
+      800: '#190793',
+      900: '#11047A',
+    },
+  },
+  brandScheme: {
+    light: {
+      200: '#7551FF',
+      300: '#7551FF',
+      900: '#02044A',
+    },
+    dark: {
+      200: '#7551FF',
+      300: '#7551FF',
+      900: '#02044A',
+    },
+  },
+  brandTabs: {
+    light: {
+      400: '#422AFB',
+    },
+    dark: {
+      400: '#422AFB',
+    },
+  },
+  secondaryGray: {
+    light: {
+      100: '#E0E5F2',
+      200: '#E1E9F8',
+      300: '#F4F7FE',
+      400: '#E9EDF7',
+      500: '#8F9BBA',
+      600: '#A3AED0',
+      700: '#707EAE',
+      800: '#707EAE',
+      900: '#1B2559',
+    },
+    dark: {
+      100: '#E0E5F2',
+      200: '#E1E9F8',
+      300: '#F4F7FE',
+      400: '#E9EDF7',
+      500: '#8F9BBA',
+      600: '#A3AED0',
+      700: '#707EAE',
+      800: '#707EAE',
+      900: '#1B2559',
+    },
+  },
+};
+export const colors = {
+  // ||==========================================||
+  // ||          [ CHAKRA_UI_COLORS ]          ||
+  // ||==========================================||
+  brand: ChakraModeBasedStyles.brand,
+  brandScheme: ChakraModeBasedStyles.brandScheme,
+  brandTabs: ChakraModeBasedStyles.brandTabs,
+  secondaryGray: ChakraModeBasedStyles.secondaryGray,
+  // ||==========================================||
+  common: {
+    black: '#000000',
+    white: '#ffffff',
+  },
+  red: {
+    100: '#FEEFEE',
+    500: '#EE5D50',
+    600: '#E31A1A',
+  },
+  blue: {
+    50: '#EFF4FB',
+    500: '#3965FF',
+  },
+  orange: {
+    100: '#FFF6DA',
+    500: '#FFB547',
+  },
+  green: {
+    100: '#E6FAF5',
+    500: '#01B574',
+  },
+  navy: {
+    50: '#d0dcfb',
+    100: '#aac0fe',
+    200: '#a3b9f8',
+    300: '#728fea',
+    400: '#3652ba',
+    500: '#1b3bbb',
+    600: '#24388a',
+    700: '#1B254B',
+    800: '#111c44',
+    900: '#0b1437',
+  },
+  gray: {
+    100: '#FAFCFE',
+  },
+  // ||==========================================||
+  // ||          [ MATERIAL_UI_COLORS ]          ||
+  // ||==========================================||
+  primary: MuiModeBasedStyles.primary,
+  secondary: MuiModeBasedStyles.secondary,
+  text: MuiModeBasedStyles.text,
+  background: MuiModeBasedStyles.background,
+  border: MuiModeBasedStyles.border,
+  divider: MuiModeBasedStyles.divider,
+  action: MuiModeBasedStyles.action,
+  // ||==========================================||
   grey: {
     50: '#f8fafc',
     100: '#eef2f6',
@@ -123,7 +279,6 @@ const colors = {
   success: {
     light: '#b9f6ca',
     focus: '#69f0ae',
-    // main: '#00e676',
     main: '#00c853',
     dark: '#00b551',
   },
@@ -154,6 +309,7 @@ const colors = {
     // textSecondary: '#8492c4',
   },
   light: {
+    default: '#ffffff',
     main: '#EBEFF4',
     focus: '#CED4DA',
     level1: '#f8fafc',
@@ -180,27 +336,26 @@ const colors = {
       main: '#49a3f1',
       state: '#1A73E8',
     },
-
     success: {
       main: '#00c853',
       state: '#00994d',
     },
-
     warning: {
       main: '#FFA726',
       state: '#FB8C00',
     },
-
     error: {
       main: '#EF5350',
       state: '#E53935',
     },
-
     light: {
       main: '#EBEFF4',
       state: '#CED4DA',
     },
-
+    white: {
+      main: '#EBEFF4',
+      state: '#CED4DA',
+    },
     dark: {
       main: '#42424a',
       state: '#191919',
@@ -209,19 +364,7 @@ const colors = {
   transparent: {
     main: 'transparent',
   },
-  divider: '#eeeeee',
-  action: {
-    hover: '#424242',
-    disabled: '#eeeeee',
-  },
   inputBorderColor: '#d2d6da',
-  background: {
-    default: '#f0f2f5',
-    paper: '#fff',
-    hover: '#e0e0e0',
-    focus: '#B2BAC2',
-    set: '#6F7E8C',
-  },
   tabs: {
     indicator: { boxShadow: '#ddd' },
   },
@@ -244,3 +387,56 @@ const colors = {
 };
 
 export default colors;
+
+// const greenPalette = {
+//   50: '#b7ebde', // Even lighter than the lightest
+//   100: '#94e2cd', // Lightest shade
+//   200: '#70d8bd', // Lighter shade
+//   300: '#4cceac', // Light shade, also 'crystalGreen' with opacity adjusted for full hex
+//   400: '#3da58a', // Default, mid-light
+//   500: '#18b984', // Main green used in the primary color
+//   600: '#159b76', // Slightly darker and less saturated than 500
+//   700: '#12875f', // Darker and more muted green
+//   800: '#0f7348', // Dark, rich green
+//   900: '#2e7c67', // Darkest shade, used for the deepest contrast
+//   contrastText: '#dbf5ee', // Lightest contrast text
+//   main: '#18b984', // Primary main color
+//   focus: 'rgba(24, 185, 132, 0.15)', // Focus state with opacity
+//   hoverContrastText: 'white', // Text color for hover states
+// };
+// const redPalette = {
+//   50: '#f8dcdb', // Even lighter than the lightest
+//   100: '#f1b9b7', // Lightest
+//   200: '#e99592', // Lighter
+//   300: '#e2726e', // Light shade
+//   400: '#db4f4a', // Default, main used color
+//   500: '#af3f3b', // Mid-dark, more saturation
+//   600: '#832f2c', // Darker and more intense
+//   700: '#58201e', // Even darker, rich depth
+//   800: '#2c100f', // Darkest shade, for deep contrast
+//   contrastText: '#f8dcdb', // Lightest contrast text
+//   main: '#db4f4a', // Primary main color
+//   focus: 'rgba(219, 79, 74, 0.15)', // Focus state with opacity
+// const bluePalette = {
+//   50: '#e1e2fe', // Even lighter than the lightest
+//   100: '#c3c6fd', // Lightest
+//   200: '#a4a9fc', // Lighter
+//   300: '#868dfb', // Light shade
+//   400: '#6870fa', // Default, main used color
+//   500: '#535ac8', // Mid-dark, more saturation
+//   600: '#3e4396', // Darker and more intense
+//   700: '#2a2d64', // Even darker, rich depth
+//   800: '#151632', // Darkest shade, for deep contrast
+//   contrastText: '#e1e2fe', // Lightest contrast text
+//   main: '#6870fa', // Primary main color
+//   focus: 'rgba(104, 112, 250, 0.15)', // Focus state with opacity
+// const myGradients = {
+//   primary: {
+//     main: '#0172AF',
+//     state: '#74FEBD',
+//     value: 'linear-gradient(180deg, #0172AF 0%, #74FEBD 100%)',
+//   },
+//   secondary: {
+//     main: '#FF8473',
+//     state: '#FFF9d2',
+//     value: 'linear-gradient(180deg, #FF8473 0%, #FFF9d2 100%)',

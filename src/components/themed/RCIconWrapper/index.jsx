@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import RCBox from '../RCBox';
 import RCWrappedIconRoot from './RCIconWrapperRoot';
-
 // ==============================|| ICON WRAPPER ||============================== //
-
 /**
  * A reusable component that wraps an icon.
  *
@@ -25,7 +22,7 @@ const RCIconWrapper = React.forwardRef(
       >
         <RCWrappedIconRoot
           ref={ref}
-          ownerstate={{
+          ownerState={{
             size,
             bgColor,
           }}
@@ -35,11 +32,9 @@ const RCIconWrapper = React.forwardRef(
         </RCWrappedIconRoot>
       </RCBox>
     );
-  },
+  }
 );
-
 RCIconWrapper.displayName = 'RCIconWrapper';
-
 RCIconWrapper.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   children: PropTypes.node.isRequired,
@@ -57,5 +52,4 @@ RCIconWrapper.propTypes = {
     'white',
   ]),
 };
-
 export default RCIconWrapper;

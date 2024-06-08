@@ -38,7 +38,7 @@ function updateImports(dirPath) {
                   return `${p1}${p2.slice(0, -3)}.jsx${p3}`;
                 }
                 return match;
-              }
+              },
             );
 
             fs.writeFile(fullPath, updatedData, 'utf8', (err) => {

@@ -1,13 +1,13 @@
-const fs = require('fs-extra');
 const path = require('path');
 const babelParser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
+const fs = require('fs-extra');
 
 // Helper function to parse a JavaScript file and extract the default export
 const extractComponentName = (fileContent) => {
   const ast = babelParser.parse(fileContent, {
     sourceType: 'module',
-    plugins: ['jsx', 'classProperties']
+    plugins: ['jsx', 'classProperties'],
   });
 
   let componentName = null;
@@ -22,7 +22,7 @@ const extractComponentName = (fileContent) => {
       ) {
         componentName = node.declaration.id.name;
       }
-    }
+    },
   });
 
   return componentName;

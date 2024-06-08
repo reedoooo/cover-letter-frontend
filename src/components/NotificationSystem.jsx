@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 // import useNotification from 'hooks/useNotification';
-
 import RCSnackbar from './themed/RCSnackbar';
 import RCTypography from './themed/RCTypography';
 
@@ -12,7 +11,7 @@ function NotificationSystem({ handleClose, notifications }) {
   const openCustomSB = () => setCustomSB(true);
   const closeCustomSB = () => setCustomSB(false);
 
-  const renderSnackbar = (notification) => (
+  const renderSnackbar = notification => (
     <RCSnackbar
       key={notification.id}
       color={notification.color}
@@ -29,7 +28,7 @@ function NotificationSystem({ handleClose, notifications }) {
   );
 
   useEffect(() => {
-    notifications.forEach((notification) => {
+    notifications.forEach(notification => {
       if (notification.customContent) {
         openCustomSB();
       } else {
@@ -37,9 +36,10 @@ function NotificationSystem({ handleClose, notifications }) {
       }
     });
   }, [notifications, handleClose]);
+
   return (
     <>
-      {notifications.map((notification) => renderSnackbar(notification))}
+      {notifications.map(notification => renderSnackbar(notification))}
       {/* {customSB ? alertContent('custom') : null} */}
     </>
   );
@@ -66,7 +66,7 @@ NotificationSystem.propTypes = {
       customContent: PropTypes.node,
       bgWhite: PropTypes.bool,
       autoHideDuration: PropTypes.number,
-    }),
+    })
   ).isRequired,
   handleClose: PropTypes.func.isRequired,
 };

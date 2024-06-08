@@ -1,69 +1,43 @@
+/* eslint-disable import/namespace */
+/* eslint-disable no-unused-vars */
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import { Box, Backdrop, Paper, Grid, Card, Avatar, Slide } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { FormContainer } from 'components/styled';
-import RCBox from 'components/themed/RCBox';
-import RCTypography from 'components/themed/RCTypography';
+import {
+  toggleDialogState,
+  toggleInitAddContentVisible,
+} from 'store/Reducers/navigationSlice';
+import { FormContainer, RCBox, RCButton, RCTypography } from '..';
 
-const {
-  Box,
-  Backdrop,
-  Paper,
-  Grid,
-  Card,
-  Avatar,
-  Slide,
-} = require('@mui/material');
-
-const { default: RCButton } = require('../themed/RCButton');
-
-const FormContainerWithBackdrop = ({
-  children,
-  theme,
-  formDisabled,
-  actionTypes,
-  dispatch,
-  isAuthenticated,
-  drafts,
-  dialogState,
-  initAddContentVisible,
-  addDraftDialogOpen,
-  viewDraftsDialogOpen,
-}) => {
-  // const [showContent, setShowContent] = useState(true);
+const FormContainerWithBackdrop = ({ children, theme }) => {
+  const dispatch = useDispatch();
+  const {
+    isAuthenticated,
+    drafts,
+    dialogState,
+    formDisabled,
+    initAddContentVisible,
+  } = useSelector(state => state.drafts);
   const [isLocked, setIsLocked] = useState(true);
 
   useEffect(() => {
-    if (isAuthenticated && drafts.length > 0) {
-      setIsLocked(false);
-    } else {
-      setIsLocked(true);
-    }
+    setIsLocked(!(isAuthenticated && drafts.length > 0));
   }, [isAuthenticated, drafts]);
 
   const handleGoToSignIn = () => {
-    dispatch({
-      type: actionTypes.TOGGLE_INIT_ADD_CONTENT_VISIBLE,
-    });
+    dispatch(toggleInitAddContentVisible());
     window.scrollTo(0, 0);
-    dispatch({
-      type: actionTypes.TOGGLE_DIALOG_STATE,
-      dialog: 'authDialogOpen',
-    });
+    dispatch(toggleDialogState('authDialogOpen'));
   };
 
   const handleCreateDraft = () => {
-    dispatch({
-      type: actionTypes.TOGGLE_INIT_ADD_CONTENT_VISIBLE,
-    });
-    dispatch({
-      type: actionTypes.TOGGLE_DIALOG_STATE,
-      dialog: 'addDraftDialogOpen',
-    });
+    dispatch(toggleDialogState('addDraftDialogOpen'));
   };
 
   return (
-    <FormContainer theme={theme} maxwidth="md">
+    <FormContainer theme={theme} maxWidth="md">
       <Box sx={{ position: 'relative' }}>
         <Backdrop
           sx={{
@@ -78,13 +52,11 @@ const FormContainerWithBackdrop = ({
             height: '100%',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            // mx: 'auto',
             px: 'auto',
             paddingTop: '10vh', // Adjust padding to move content to the top quarter
           }}
           open={formDisabled}
         >
-          {' '}
           <Slide
             direction="up"
             in={!initAddContentVisible}
@@ -102,7 +74,6 @@ const FormContainerWithBackdrop = ({
                   <Grid
                     item
                     xs={8}
-                    // lg={8}
                     component={Paper}
                     sx={{
                       p: 2,
@@ -145,10 +116,13 @@ const FormContainerWithBackdrop = ({
                                 textWeightVariant="bold"
                                 onClick={handleCreateDraft}
                                 fullWidth
-                                sx={{ width: '100%', fontWeight: 'bold' }}
+                                sx={{
+                                  width: '100%',
+                                  fontWeight: 'bold',
+                                }}
                               >
                                 Create New Cover Letter
-                              </RCButton>{' '}
+                              </RCButton>
                             </RCBox>
                           </Grid>
                           <Grid item xs={8}>
@@ -167,9 +141,9 @@ const FormContainerWithBackdrop = ({
                                 color="textTertiary"
                                 fontWeight="regular"
                               >
-                                Click the "Create New Cover Letter" button to
-                                get started, or sign in to continue with an
-                                existing cover letter.
+                                Click the Create New Cover Letter button to get
+                                started, or sign in to continue with an existing
+                                cover letter.
                               </RCTypography>
                             </RCBox>
                           </Grid>
@@ -179,15 +153,11 @@ const FormContainerWithBackdrop = ({
                   </Grid>
                 </Grid>
               </RCBox>
-              {/* </Slide>
-            <Slide direction="up" in={!showContent} mountOnEnter unmountOnExit> */}
               <RCBox mt={6} mb={3} width="50%" mx="auto">
                 <Grid container spacing={3} justifyContent="center">
                   <Grid
                     item
-                    xs={8}
-                    // lg={8}
-                    component={Paper}
+                    lg={8}
                     sx={{
                       p: theme.spacing(2),
                     }}
@@ -201,7 +171,10 @@ const FormContainerWithBackdrop = ({
                         textWeightVariant="bold"
                         onClick={handleGoToSignIn}
                         fullWidth
-                        sx={{ width: '100%', fontWeight: 'bold' }}
+                        sx={{
+                          width: '100%',
+                          fontWeight: 'bold',
+                        }}
                       >
                         Go to Sign In
                       </RCButton>

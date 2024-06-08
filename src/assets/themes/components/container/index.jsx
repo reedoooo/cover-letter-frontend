@@ -1,5 +1,6 @@
 import breakpoints from 'assets/themes/base/breakpoints';
 import pxToRem from 'assets/themes/functions/pxToRem';
+
 const {
   values: { sm, md, lg, xl, xxl },
 } = breakpoints;
@@ -19,7 +20,6 @@ const sharedClasses = {
   position: 'relative',
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
 const container = {
   [SM]: {
     '.MuiContainer-root': {

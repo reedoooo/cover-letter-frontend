@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 import useApiService from './useApiService';
 
 const useApi = (endpoint, method = 'GET', req = null) => {
@@ -35,7 +34,6 @@ const useApi = (endpoint, method = 'GET', req = null) => {
         setLoading(false);
       }
     };
-
     handleEndpoint();
   }, [endpoint, method, req]);
 

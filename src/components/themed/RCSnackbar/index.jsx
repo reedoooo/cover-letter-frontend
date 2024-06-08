@@ -19,8 +19,6 @@ function RCSnackbar({
   bgWhite = false,
   ...rest
 }) {
-  // const [controller] = useMaterialUIController();
-  // const { darkMode } = controller;
   const darkMode = false;
   let titleColor;
   let dateTimeColor;
@@ -33,7 +31,6 @@ function RCSnackbar({
   } else if (color === 'light') {
     titleColor = darkMode ? 'inherit' : 'dark';
     dateTimeColor = darkMode ? 'inherit' : 'text';
-    dividerColor = false;
   } else {
     titleColor = 'white';
     dateTimeColor = 'white';
@@ -98,47 +95,42 @@ function RCSnackbar({
               {title}
             </RCTypography>
           </RCBox>
-          <RCBox display="flex" alignItems="center" lineHeight={0}>
-            <RCTypography variant="caption" color={dateTimeColor}>
-              {dateTime}
-            </RCTypography>
-            <Icon
-              sx={{
-                color: ({ palette: { dark, white } }) =>
-                  (bgWhite && !darkMode) || color === 'light'
-                    ? dark.main
-                    : white.main,
-                fontWeight: ({ typography: { fontWeightBold } }) =>
-                  fontWeightBold,
-                cursor: 'pointer',
-                marginLeft: 2,
-                transform: 'translateY(-1px)',
-              }}
-              onClick={close}
-            >
-              close
-            </Icon>
-          </RCBox>
+          <RCTypography variant="caption" color={dateTimeColor}>
+            {dateTime}
+          </RCTypography>
+          <Icon
+            sx={{
+              color: ({ palette: { dark, white } }) =>
+                (bgWhite && !darkMode) || color === 'light'
+                  ? dark.main
+                  : white.main,
+              fontWeight: ({ typography: { fontWeightBold } }) =>
+                fontWeightBold,
+              cursor: 'pointer',
+              marginLeft: 2,
+              transform: 'translateY(-1px)',
+            }}
+            onClick={close}
+          >
+            close
+          </Icon>
         </RCBox>
         <Divider sx={{ margin: 0 }} light={dividerColor} />
-        <RCBox
-          p={1.5}
+        <RCTypography
           sx={{
             fontSize: ({ typography: { size } }) => size.sm,
             color: ({ palette: { white, text } }) => {
               let colorValue =
                 bgWhite || color === 'light' ? text.main : white.main;
-
               if (darkMode) {
                 colorValue = color === 'light' ? 'inherit' : white.main;
               }
-
               return colorValue;
             },
           }}
         >
           {content}
-        </RCBox>
+        </RCTypography>
       </RCBox>
     </Snackbar>
   );
@@ -155,11 +147,11 @@ RCSnackbar.propTypes = {
     'dark',
     'light',
   ]),
-  icon: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
-  dateTime: PropTypes.string.isRequired,
-  content: PropTypes.node.isRequired,
-  close: PropTypes.func.isRequired,
+  icon: PropTypes.node,
+  title: PropTypes.string,
+  dateTime: PropTypes.string,
+  content: PropTypes.node,
+  close: PropTypes.func,
   bgWhite: PropTypes.bool,
 };
 
