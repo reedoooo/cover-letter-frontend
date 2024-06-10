@@ -1,18 +1,14 @@
 import { Box, Divider, useTheme } from '@mui/material';
 import React from 'react';
-import { HorizonLogo } from 'components/themedV2/icons/Icons';
 import useMode from 'hooks/useMode';
+import Logo from 'layouts/navigation/shared/logo';
 
 export function SidebarBrand() {
   const { theme } = useMode();
   const logoColor = theme.palette.text.primary;
   return (
     <Box display="flex" alignItems="center" flexDirection="column">
-      <HorizonLogo
-        // height="26px"
-        // width="175px"
-        // marginY="32px"
-        // color={logoColor}
+      <Logo
         sx={{
           color: logoColor,
           my: 32,

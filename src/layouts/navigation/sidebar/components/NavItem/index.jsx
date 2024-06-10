@@ -3,18 +3,18 @@ import {
   ListItem,
   List,
   styled,
-  ListItemText,
-  useTheme,
+  Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import useMode from 'hooks/useMode';
 
 const NavItem = ({ item, level, pathDirect, onClick }) => {
   const Icon = item.icon;
-  const theme = useTheme();
+  const { theme } = useMode();
   const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
-
+  console.log('ITEM', item);
   const ListItemStyled = styled(ListItem)(() => ({
     whiteSpace: 'nowrap',
     marginBottom: '2px',
@@ -58,7 +58,13 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
         >
           {itemIcon}
         </ListItemIcon>
-        <ListItemText>{item.title}</ListItemText>
+        <Typography
+          sx={{
+            color: 'inherit',
+          }}
+        >
+          {item.title}
+        </Typography>
       </ListItemStyled>
     </List>
   );

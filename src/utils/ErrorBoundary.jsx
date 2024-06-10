@@ -2,7 +2,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Box, Button, Container, Paper, Typography } from '@mui/material';
 import React, { Component } from 'react';
-import { RCButton } from 'components/index';
+// import { RCButton } from 'components/index';
 
 class ErrorBoundary extends Component {
   constructor(props) {

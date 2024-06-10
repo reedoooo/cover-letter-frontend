@@ -51,25 +51,36 @@ const ThemeGenerator = Loadable(
   lazy(() => import('views/admin/templates/components/ThemeGenerator'))
 );
 
-// =========================================================
-// ROUTES: Router
-// =========================================================
-
 const base = `${window.location.origin}`;
 
-const routes = [
+// Function to generate 404 routes
+const generate404Routes = (basePath = '') => [
+  {
+    name: 'Error 404',
+    path: '404',
+    element: <NotFoundPage />,
+    icon: <ErrorIcon />,
+  },
+  {
+    name: 'Error 404',
+    path: '*',
+    element: <Navigate to={`${basePath}/404`} />,
+    icon: <ErrorIcon />,
+  },
+];
+
+// =========================================================
+// Base Routes
+// =========================================================
+
+const baseRoutes = [
   {
     id: uniqueId('router-base-'),
     path: '/',
-    layout: 'blank',
+    layout: '/blank',
     element: <BlankLayout />,
     children: [
-      {
-        name: 'Error 404',
-        path: '404',
-        element: <NotFoundPage />,
-        icon: <ErrorIcon />,
-      },
+      ...generate404Routes(),
       {
         name: 'Landing',
         path: '/',
@@ -78,23 +89,29 @@ const routes = [
       },
       {
         name: 'Hero Docs',
-        path: 'hero-docs',
+        path: '/hero-docs',
         exact: true,
+        state: {
+          title: 'Hero Docs',
+          description: 'Hero Docs Description',
+        },
+        // replace: true,
         element: <Landing />,
         icon: <HomeIcon />,
       },
-      {
-        name: 'Error 404',
-        path: '*',
-        element: <Navigate to="404" />,
-        icon: <ErrorIcon />,
-      },
     ],
   },
+];
+
+// =========================================================
+// Test Routes
+// =========================================================
+
+const testRoutes = [
   {
     id: uniqueId('router-test-'),
     path: 'test',
-    layout: 'test',
+    layout: '/test',
     element: <BlankLayout />,
     children: [
       {
@@ -103,20 +120,23 @@ const routes = [
         element: <Test />,
         icon: <ChatIcon />,
       },
+      ...generate404Routes('test'),
     ],
   },
+];
+
+// =========================================================
+// Admin Routes
+// =========================================================
+
+const adminRoutes = [
   {
     id: uniqueId('router-admin-'),
-    path: 'admin',
-    layout: 'admin',
+    path: '/admin',
+    layout: '/admin',
     element: <AdminLayout />,
     children: [
-      {
-        name: 'Error 404',
-        path: '404',
-        element: <NotFoundPage />,
-        icon: <ErrorIcon />,
-      },
+      ...generate404Routes('admin'),
       {
         name: 'Dashboard',
         path: '',
@@ -142,18 +162,71 @@ const routes = [
         element: <WorkSpace />,
         icon: <WorkspaceIcon />,
       },
+      // {
+      //   id: uniqueId('templates-'),
+      //   name: 'Templates Home',
+      //   path: '/templates',
+      //   element: <Templates />,
+      //   icon: <HomeIcon />,
+      // },
+      // {
+      //   id: uniqueId('templates-'),
+      //   name: 'Original Chat Ai',
+      //   path: '/templates/original-chat-ai',
+      //   element: <Chat />,
+      //   link: `${base}/templates/original-chat-ai`,
+      //   icon: <ChatIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+      //   description: 'Original Chat Ai Description',
+      //   functionalStatus: true,
+      // },
+      // {
+      //   id: uniqueId('templates-'),
+      //   name: 'Blog Post Generator',
+      //   path: '/templates/blog-post',
+      //   element: <BlogPostGenerator />,
+      //   link: `${base}/templates/blog-post`,
+      //   description: 'Blog Post Generator Description',
+      //   functionalStatus: false,
+      //   icon: <ArticleIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+      // },
+      // {
+      //   id: uniqueId('templates-'),
+      //   name: 'Code Converter',
+      //   path: '/templates/code-converter',
+      //   element: <CodeConverter />,
+      //   link: `${base}/templates/code-converter`,
+      //   description: 'Code Converter Description',
+      //   functionalStatus: false,
+      //   icon: <CodeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+      // },
+      // {
+      //   id: uniqueId('templates-'),
+      //   name: 'Theme Generator',
+      //   path: '/templates/theme-generator',
+      //   element: <ThemeGenerator />,
+      //   link: `${base}/templates/theme-generator`,
+      //   description: 'Theme Generator Description',
+      //   functionalStatus: false,
+      //   icon: (
+      //     <ColorLensIcon sx={{ width: 20, height: 20, color: 'inherit' }} />
+      //   ),
+      // },
+      // {
+      //   id: uniqueId('templates-'),
+      //   name: 'Template Generator',
+      //   path: '/templates/generate-template',
+      //   link: `${base}/templates/generate-template`,
+      //   description: 'Template Generator Description',
+      //   functionalStatus: false,
+      //   icon: <NoteAddIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+      // },
       {
-        id: uniqueId('router-templates-'),
+        id: uniqueId('router-admin-templates-'),
         path: 'templates',
         layout: 'templates',
         element: <BlankLayout />,
         children: [
-          {
-            name: 'Error 404',
-            path: '404',
-            element: <NotFoundPage />,
-            icon: <ErrorIcon />,
-          },
+          ...generate404Routes('admin/templates'),
           {
             id: uniqueId('templates-'),
             name: 'Templates Home',
@@ -216,16 +289,6 @@ const routes = [
               <NoteAddIcon sx={{ width: 20, height: 20, color: 'inherit' }} />
             ),
           },
-          {
-            id: uniqueId('templates-'),
-            name: 'Error 404',
-            path: '*',
-            link: `${base}/404`,
-            element: <Navigate to="404" />,
-            description: 'Template Generator Description',
-            functionalStatus: true,
-            icon: <ErrorIcon />,
-          },
         ],
       },
       {
@@ -234,26 +297,22 @@ const routes = [
         element: <UserProfile />,
         icon: <PersonIcon />,
       },
-      {
-        name: 'Error 404',
-        path: '*',
-        element: <Navigate to="404" />,
-        icon: <ErrorIcon />,
-      },
     ],
   },
+];
+
+// =========================================================
+// Auth Routes
+// =========================================================
+
+const authRoutes = [
   {
     id: uniqueId('router-auth-'),
-    path: 'auth',
-    layout: 'auth',
+    path: '/auth',
+    layout: '/auth',
     element: <AuthLayout />,
     children: [
-      {
-        name: 'Error 404',
-        path: '404',
-        element: <NotFoundPage />,
-        icon: <ErrorIcon />,
-      },
+      ...generate404Routes('auth'),
       {
         name: 'Sign In',
         path: '',
@@ -272,14 +331,12 @@ const routes = [
         element: <SignUpCentered />,
         icon: <PersonAddIcon />,
       },
-      {
-        name: 'Error 404',
-        path: '*',
-        element: <Navigate to="404" />,
-        icon: <ErrorIcon />,
-      },
     ],
   },
 ];
+
+// Combine all routes into a single array to be used in the router
+const routes = [...baseRoutes, ...testRoutes, ...adminRoutes, ...authRoutes];
+
 export const Router = routes;
 export default routes;

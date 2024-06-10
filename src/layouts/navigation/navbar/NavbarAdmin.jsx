@@ -3,12 +3,10 @@ import {
   Breadcrumbs,
   Link as MuiLink,
   Typography,
-  useTheme,
   useMediaQuery,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import useMode from 'hooks/useMode';
 import AdminNavbarLinks from './NavbarLinksAdmin';
 
@@ -33,44 +31,46 @@ export default function AdminNavbar(props) {
   }, []);
 
   const { secondary, message, brandText } = props;
-
-  // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
-  const mainText =
-    theme.palette.mode === 'light'
-      ? theme.palette.text.primary
-      : theme.palette.common.white;
-  const secondaryText =
-    theme.palette.mode === 'light'
-      ? theme.palette.text.secondary
-      : theme.palette.common.white;
-  const navbarBg =
-    theme.palette.mode === 'light'
-      ? 'rgba(244, 247, 254, 0.2)'
-      : 'rgba(11, 20, 55, 0.5)';
+  // const mainText = theme.palette.text.primary;
+  const mainText = '#1B254B';
+  const secondaryText = theme.palette.text.secondary;
+  const navbarBg = 'rgba(244, 247, 254, 0.2)';
   const navbarBorder = 'transparent';
-
+  let navbarPosition = 'fixed';
+  let navbarFilter = 'none';
+  let navbarBackdrop = 'blur(20px)';
+  let navbarShadow = 'none';
+  let secondaryMargin = '0px';
+  let paddingX = '15px';
+  let gap = '0px';
+  function handleClick(event) {
+    event.preventDefault();
+    console.info('You clicked a breadcrumb.');
+  }
   return (
     <Box
       sx={{
-        position: 'fixed',
-        boxShadow: 'none',
+        position: navbarPosition,
+        boxShadow: navbarShadow,
         bg: navbarBg,
         borderColor: navbarBorder,
-        backdropFilter: 'blur(20px)',
+        backdropFilter: navbarBackdrop,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        borderRadius: '16px',
+        borderRadius: '50%',
         borderWidth: '1.5px',
         borderStyle: 'solid',
         transition:
           'box-shadow 0.25s linear, background-color 0.25s linear, filter 0.25s linear, border 0.25s linear',
+        // transitionProperty: 'box-shadow, background-color, filter, border',
+        transitionDuration: '0.25s, 0.25s, 0.25s, 0s',
         alignItems: { xl: 'center' },
         display: secondary ? 'block' : 'flex',
         minHeight: '75px',
         justifyContent: { xl: 'center' },
         lineHeight: '25.6px',
         mx: 'auto',
-        mt: secondary ? '0px' : '12px',
+        mt: secondaryMargin,
         pb: '8px',
         right: { base: '12px', md: '30px' },
         px: { sm: '15px', md: '10px' },
@@ -78,7 +78,7 @@ export default function AdminNavbar(props) {
         pt: '8px',
         top: { base: '12px', md: '16px', lg: '20px' },
         width: {
-          base: 'calc(100vw - 6%)',
+          sm: 'calc(100vw - 6%)',
           md: 'calc(100vw - 8%)',
           lg: 'calc(100vw - 6%)',
           xl: 'calc(100vw - 350px)',
@@ -88,56 +88,70 @@ export default function AdminNavbar(props) {
     >
       <Box
         sx={{
+          width: '100%',
           display: 'flex',
           flexDirection: { sm: 'column', md: 'row' },
           alignItems: { xl: 'center' },
-          mb: 0,
+          // mb: 0,
         }}
       >
         <Box sx={{ mb: { sm: '8px', md: '0px' } }}>
-          <Breadcrumbs aria-label="breadcrumb">
+          <div role="presentation" onClick={handleClick}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <MuiLink
+                color={secondaryText}
+                underline="hover"
+                fontSize="small"
+                href="http://localhost:3000/admin/dashboard"
+                // href={`${process.env.PUBLIC_URL}/${matches ? 'admin/dashboard' : 'dashboard'}`}
+                sx={{
+                  textDecoration: 'none',
+                  '&:hover': { textDecoration: 'underline' },
+                }}
+              >
+                Pages
+              </MuiLink>
+              <MuiLink
+                underline="hover"
+                href="http://localhost:3000/admin/dashboard"
+                color={secondaryText}
+                fontSize="small"
+              >
+                {brandText}
+              </MuiLink>
+            </Breadcrumbs>
+            {/* Here we create navbar brand, based on route name */}
             <MuiLink
-              component={Link}
-              to="#"
-              color={secondaryText}
-              fontSize="small"
-            >
-              Pages
-            </MuiLink>
-            <MuiLink
-              component={Link}
-              to="#"
-              color={secondaryText}
-              fontSize="small"
+              color={mainText}
+              underline="hover"
+              href="http://localhost:3000/admin/dashboard"
+              sx={{
+                background: 'inherit',
+                borderRadius: 'inherit',
+                fontWeight: 'bold',
+                fontSize: '34px',
+                '&:hover': { color: mainText },
+                '&:active': {
+                  background: 'inherit',
+                  transform: 'none',
+                  borderColor: 'transparent',
+                },
+                '&:focus': {
+                  boxShadow: 'none',
+                },
+              }}
             >
               {brandText}
             </MuiLink>
-          </Breadcrumbs>
-          {/* Here we create navbar brand, based on route name */}
-          <MuiLink
-            color={mainText}
-            component={Link}
-            to="#"
-            sx={{
-              background: 'inherit',
-              borderRadius: 'inherit',
-              fontWeight: 'bold',
-              fontSize: '34px',
-              '&:hover': { color: mainText },
-              '&:active': {
-                background: 'inherit',
-                transform: 'none',
-                borderColor: 'transparent',
-              },
-              '&:focus': {
-                boxShadow: 'none',
-              },
-            }}
-          >
-            {brandText}
-          </MuiLink>
+          </div>
         </Box>
-        <Box sx={{ ml: 'auto', width: { sm: '100%', md: 'unset' } }}>
+        <Box
+          ms="auto"
+          sx={{
+            // ml: 'auto',
+            width: { sm: '100%', md: 'unset' },
+          }}
+        >
           <AdminNavbarLinks
             onOpen={props.onOpen}
             logoText={props.logoText}

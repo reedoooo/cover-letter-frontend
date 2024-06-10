@@ -2,8 +2,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
   Drawer,
-  DrawerContent,
-  DrawerOverlay,
   IconButton,
   useTheme,
   useMediaQuery,
@@ -20,7 +18,6 @@ import {
 } from '../shared/scrollbar/Scrollbar';
 import Content from './components/Content';
 
-// SidebarResponsive component
 const SidebarResponsive = ({ routes }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -45,16 +42,24 @@ const SidebarResponsive = ({ routes }) => {
         open={isOpen}
         onClose={onClose}
         ModalProps={{ keepMounted: true }}
+        sx={{ '& .MuiDrawer-paper': { width: 285, bgcolor: sidebarBg } }}
       >
-        <DrawerOverlay />
-        <DrawerContent sx={{ width: 285, maxWidth: 285, bgcolor: sidebarBg }}>
+        <Box sx={{ position: 'relative', height: '100%' }}>
           <IconButton
             onClick={onClose}
             sx={{ position: 'absolute', top: 16, right: 16 }}
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ px: 0, pb: 0, maxWidth: 285, overflow: 'hidden' }}>
+          <Box
+            sx={{
+              px: 0,
+              pb: 0,
+              maxWidth: 285,
+              overflow: 'hidden',
+              height: '100%',
+            }}
+          >
             <Scrollbars
               autoHide
               renderTrackVertical={renderTrack}
@@ -64,7 +69,7 @@ const SidebarResponsive = ({ routes }) => {
               <Content routes={routes} />
             </Scrollbars>
           </Box>
-        </DrawerContent>
+        </Box>
       </Drawer>
     </Box>
   );

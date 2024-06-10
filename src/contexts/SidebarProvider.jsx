@@ -14,10 +14,13 @@ export const SidebarProvider = ({ children }) => {
     <SidebarContext.Provider
       value={{
         isSidebarOpen,
+        setSidebarOpen,
         isMobileSidebarOpen,
-        toggleSidebar: () => setSidebarOpen(!isSidebarOpen),
+        setMobileSidebarOpen,
+        toggleSidebarOpen: () => setSidebarOpen(!isSidebarOpen),
         toggleMobileSidebar: () => setMobileSidebarOpen(true),
         onSidebarClose: () => setMobileSidebarOpen(false),
+        onMobileSidebarClose: () => setMobileSidebarOpen(false),
       }}
     >
       {children}

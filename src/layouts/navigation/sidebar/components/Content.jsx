@@ -1,13 +1,14 @@
 import { Box, Stack, useTheme } from '@mui/material';
 // Custom components
 import React from 'react';
+import useMode from 'hooks/useMode';
 import Brand from './Brand';
 import Links from './Links';
-import SidebarCard from './SidebarCard';
+// import SidebarCard from './SidebarCard';
 
 function SidebarContent(props) {
   const { routes } = props;
-  const theme = useTheme();
+  const { theme } = useMode();
   const borderRadius = theme.shape.borderRadius;
   return (
     <Box
@@ -24,9 +25,9 @@ function SidebarContent(props) {
           <Links routes={routes} />
         </Box>
       </Stack>
-      <Box mt="60px" mb="40px" borderRadius={borderRadius}>
+      {/* <Box mt="60px" mb="40px" borderRadius={borderRadius}>
         <SidebarCard routes={routes} />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

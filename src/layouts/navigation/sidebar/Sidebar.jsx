@@ -1,52 +1,57 @@
-import {
-  Box,
-  Drawer,
-  DrawerContent,
-  DrawerOverlay,
-  IconButton,
-} from '@mui/material';
+import { Box, Drawer, IconButton, useMediaQuery } from '@mui/material';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { IoMenuOutline } from 'react-icons/io5';
-import useDisclosure from 'hooks/useDisclosure';
+// import useDisclosure from 'hooks/useDisclosure';
+import useMode from 'hooks/useMode';
 import Content from './components/Content';
 
-function Sidebar({ routes }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function Sidebar(props) {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  const { theme } = useMode();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+  const btnRef = React.useRef();
+  const {
+    routes,
+    isOpen,
+    onOpen,
+    onClose,
+    isMobileOpen,
+    onMobileOpen,
+    onMobileClose,
+  } = props;
 
   return (
     <Box
-      display={{ sm: 'none', xl: 'block' }}
+      display={{ xs: 'block', xl: 'none' }}
       width="100%"
       position="fixed"
       minHeight="100%"
     >
-      <Box
-        bgcolor="background.paper"
-        transition="0.2s linear"
-        width="300px"
-        height="100vh"
-        minHeight="100%"
-        overflowX="hidden"
-        boxShadow={1}
-      >
-        <Scrollbars autoHide>
-          <Content routes={routes} />
-        </Scrollbars>
-      </Box>
       <IconButton
+        ref={btnRef}
         onClick={onOpen}
-        sx={{ display: { xl: 'none' }, position: 'fixed', top: 16, left: 16 }}
+        sx={{
+          position: 'fixed',
+          top: 16,
+          left: 16,
+          zIndex: 1300, // Ensure the button is above other elements
+        }}
       >
         <IoMenuOutline />
       </IconButton>
       <Drawer anchor="left" open={isOpen} onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
+        <Box
+          width="300px"
+          height="100vh"
+          bgcolor={theme.palette.background.paper}
+          overflow="hidden"
+        >
           <Scrollbars autoHide>
             <Content routes={routes} />
           </Scrollbars>
-        </DrawerContent>
+        </Box>
       </Drawer>
     </Box>
   );
