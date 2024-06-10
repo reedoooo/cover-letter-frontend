@@ -13,7 +13,7 @@ export default function Land() {
   };
 
   const getRoutes = routes => {
-    return routes.map((prop, key) => {
+    return routes?.map((prop, key) => {
       if (prop.layout === '/') {
         console.log(
           `LANDING PROPS: ${prop.layout} ${prop.path} ${prop.name} ${prop.component} ${prop}`

@@ -7,8 +7,9 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { SidebarContext } from 'contexts/SidebarProvider';
 import useDisclosure from 'hooks/useDisclosure';
 import useMode from 'hooks/useMode';
 import {
@@ -19,8 +20,14 @@ import {
 import Content from './components/Content';
 
 const SidebarResponsive = ({ routes }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  const {
+    isSidebarOpen,
+    isMobileSidebarOpen,
+    setMobileSidebarOpen,
+    setSidebarOpen,
+    onClose,
+  } = useContext(SidebarContext);
+  const btnRef = React.useRef(null);
   const { theme } = useMode();
   const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
   const sidebarBg =
@@ -34,12 +41,12 @@ const SidebarResponsive = ({ routes }) => {
 
   return (
     <Box display={{ xs: 'block', xl: 'none' }}>
-      <IconButton ref={btnRef} color="inherit" onClick={onOpen}>
+      <IconButton ref={btnRef} color="inherit" onClick={setSidebarOpen}>
         <MenuIcon sx={{ color: menuColor }} />
       </IconButton>
       <Drawer
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-        open={isOpen}
+        open={isSidebarOpen}
         onClose={onClose}
         ModalProps={{ keepMounted: true }}
         sx={{ '& .MuiDrawer-paper': { width: 285, bgcolor: sidebarBg } }}

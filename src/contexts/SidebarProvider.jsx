@@ -3,13 +3,20 @@ import React, { createContext, useState } from 'react';
 export const SidebarContext = createContext({
   isSidebarOpen: false,
   isMobileSidebarOpen: false,
-  onSidebarClose: () => {},
+  setSidebarOpen: () => {},
+  setMobileSidebarOpen: () => {},
+  onClose: () => {},
   toggleSidebar: () => {},
   toggleMobileSidebar: () => {},
+  toggleSidebarOpen: () => {},
 });
 export const SidebarProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const onClose = () => {
+    setSidebarOpen(false);
+    setMobileSidebarOpen(false);
+  };
   return (
     <SidebarContext.Provider
       value={{
@@ -19,8 +26,7 @@ export const SidebarProvider = ({ children }) => {
         setMobileSidebarOpen,
         toggleSidebarOpen: () => setSidebarOpen(!isSidebarOpen),
         toggleMobileSidebar: () => setMobileSidebarOpen(true),
-        onSidebarClose: () => setMobileSidebarOpen(false),
-        onMobileSidebarClose: () => setMobileSidebarOpen(false),
+        onClose,
       }}
     >
       {children}

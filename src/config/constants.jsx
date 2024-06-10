@@ -4,6 +4,7 @@ import { pdfjs } from 'react-pdf';
 
 export const constants = {
   API_URL: import.meta.env.VITE_API_URL,
+  OPENAI_API_KEY: import.meta.env.VITE_OPENAI_API_KEY,
   // SERVER_URL: import.meta.env.REACT_APP_SERVER_URL,
   PDF_WORKER_SRC: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`,
   DEFAULT_LINKEDIN_URL: encodeURI(

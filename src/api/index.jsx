@@ -2,6 +2,36 @@ import constants from 'config/constants';
 import useApiService from 'hooks/useApiService';
 
 const { API_URL } = constants;
+export const getGeneralChatResponse = async formData => {
+  try {
+    const response = await useApiService.post('/chat/create', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Failed to create cover letter:', error);
+    throw error;
+  }
+};
+export const createCoverLetter = async formData => {
+  try {
+    const response = await useApiService.post(
+      '/cover-letter/create',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to create cover letter:', error);
+    throw error;
+  }
+};
 
 export const saveDraft = async (draftData, contentName, userId) => {
   const data = {

@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRoutes } from 'react-router-dom';
 import { templateData } from 'config/data';
 import useMode from 'hooks/useMode';
 import useRouter from 'hooks/useRouter';
@@ -67,10 +67,14 @@ const StyledMenuList = styled(props => (
 
 function Test() {
   const { theme } = useMode();
+  const routes = useRoutes();
+  console.log(routes);
   const { navigate } = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuExpanded, setMenuExpanded] = useState(false);
+  const [menuData, setMenuData] = useState([...templateData]);
+  // const routes = getRoutes
   const [menuItemsVisible, setMenuItemsVisible] = useState(false);
   const getInfoRef = React.useRef(null);
   const open = Boolean(anchorEl);
@@ -105,9 +109,9 @@ function Test() {
   }, [menuExpanded]);
 
   // Split templateData into two columns
-  const half = Math.ceil(templateData.length / 2);
-  const firstColumn = templateData.slice(0, half);
-  const secondColumn = templateData.slice(half);
+  const half = Math.ceil(routes?.length / 2);
+  const firstColumn = routes?.slice(0, half);
+  const secondColumn = routes?.slice(half);
 
   return (
     <Grid

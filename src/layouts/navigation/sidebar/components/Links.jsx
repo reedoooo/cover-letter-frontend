@@ -6,44 +6,108 @@ import useMode from 'hooks/useMode';
 const SidebarLinks = ({ routes }) => {
   const { theme } = useMode();
   const location = useLocation();
+
   const activeRoute = routeName => {
     return location.pathname.includes(routeName);
   };
+
   const createLinks = routes => {
-    return routes.map((route, index) => (
-      <NavLink
-        to={route?.path}
-        key={index}
-        style={({ isActive }) => ({
-          display: 'flex',
-          alignItems: 'center',
-          padding: '10px 15px',
-          borderRadius: theme.shape.borderRadius,
-          textDecoration: 'none',
-          color: isActive
-            ? theme.palette.primary.main
-            : theme.palette.text.primary,
-          backgroundColor: isActive
-            ? theme.palette.action.selected
-            : 'transparent',
-        })}
-      >
-        {route?.icon && (
-          <Box
-            component="span"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: '10px',
-            }}
-          >
-            {route?.icon}
-          </Box>
-        )}
-        <Typography variant="body1">{route?.name}</Typography>
-      </NavLink>
-    ));
+    const routeLayouts = [...new Set(routes?.map(route => route.layout))];
+
+    return routeLayouts.map((layout, layoutIndex) => {
+      const layoutRoutes = routes.filter(
+        route =>
+          route.layout === layout &&
+          route.name &&
+          !route.name.toLowerCase().includes('error')
+      );
+
+      return (
+        <Box key={layoutIndex}>
+          {layoutRoutes.map((route, index) => (
+            <React.Fragment key={index}>
+              <NavLink
+                to={route.layout + route.path}
+                style={({ isActive }) => ({
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '10px 15px',
+                  borderRadius: theme.shape.borderRadius,
+                  textDecoration: 'none',
+                  color: isActive
+                    ? theme.palette.primary.main
+                    : theme.palette.text.primary,
+                  backgroundColor: isActive
+                    ? theme.palette.action.selected
+                    : 'transparent',
+                })}
+              >
+                {route.icon && (
+                  <Box
+                    component="span"
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: '10px',
+                    }}
+                  >
+                    {route.icon}
+                  </Box>
+                )}
+                <Typography variant="body1">{route.name}</Typography>
+              </NavLink>
+              {route.children && route.children.length > 0 && (
+                <Box pl={4}>
+                  {route.children
+                    .filter(
+                      childRoute =>
+                        childRoute.name &&
+                        !childRoute.name.toLowerCase().includes('error')
+                    )
+                    .map((childRoute, childIndex) => (
+                      <NavLink
+                        to={route.layout + childRoute.path}
+                        key={childIndex}
+                        style={({ isActive }) => ({
+                          display: 'flex',
+                          alignItems: 'center',
+                          padding: '10px 15px',
+                          borderRadius: theme.shape.borderRadius,
+                          textDecoration: 'none',
+                          color: isActive
+                            ? theme.palette.primary.main
+                            : theme.palette.text.primary,
+                          backgroundColor: isActive
+                            ? theme.palette.action.selected
+                            : 'transparent',
+                        })}
+                      >
+                        {childRoute.icon && (
+                          <Box
+                            component="span"
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              marginRight: '10px',
+                            }}
+                          >
+                            {childRoute.icon}
+                          </Box>
+                        )}
+                        <Typography variant="body2">
+                          {childRoute.name}
+                        </Typography>
+                      </NavLink>
+                    ))}
+                </Box>
+              )}
+            </React.Fragment>
+          ))}
+        </Box>
+      );
+    });
   };
 
   return <Box>{createLinks(routes)}</Box>;

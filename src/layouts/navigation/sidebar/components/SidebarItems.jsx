@@ -8,7 +8,7 @@ import NavItem from './NavItem';
 
 const SidebarItems = () => {
   const transformRoutesToMenuItems = (routes, base = '') => {
-    return routes.map(route => {
+    return routes?.map(route => {
       const menuItem = {
         id: uniqueId(),
         title: route.name,

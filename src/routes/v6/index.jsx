@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash';
 import { lazy } from 'react';
-import { Navigate, createBrowserRouter, useRouteError } from 'react-router-dom';
+import { Navigate, useRouteError } from 'react-router-dom';
 import {
   ArticleIcon,
   ChatIcon,
@@ -313,5 +313,5 @@ const authRoutes = [
 // Combine all routes into a single array to be used in the router
 const routes = [...baseRoutes, ...testRoutes, ...adminRoutes, ...authRoutes];
 
-export const Router = createBrowserRouter(routes);
+export const Router = routes;
 export default routes;

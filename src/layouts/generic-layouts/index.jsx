@@ -1,8 +1,5 @@
-import { Outlet } from 'react-router-dom';
+import { GenericLayouts } from './LayoutTypes';
 
-const BlankLayout = () => (
-  <>
-    <Outlet />
-  </>
-);
-export default BlankLayout;
+export const ActiveLayout = ({ layout }) => <>{GenericLayouts(layout)}</>;
+
+export default ActiveLayout;

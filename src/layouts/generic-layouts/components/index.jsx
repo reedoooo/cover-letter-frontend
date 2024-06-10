@@ -4,6 +4,7 @@ import React from 'react';
 // Import all components
 import Blog from './Blog';
 import Cards from './Cards';
+import ColumnRight from './ColumnRight';
 import Dashboard from './Dashboard';
 import Fshape from './Fshape';
 import Hero from './Hero';
@@ -25,4 +26,5 @@ export {
   Blog,
   ProductGrid,
   NavWithDrawer,
+  ColumnRight,
 };

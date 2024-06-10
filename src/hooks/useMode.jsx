@@ -7,17 +7,20 @@ const useMode = () => {
   const theme = getTheme(mode);
 
   const validateColor = color => {
-    if (typeof color === 'object') {
-      return true; // Assume object values are valid for now
-    }
-    const colorParts = color.split('.');
     let currentPalette = theme.palette;
-    for (const part of colorParts) {
-      if (currentPalette[part]) {
-        currentPalette = currentPalette[part];
+    if (typeof color === 'object') {
+      if (currentPalette[color]) {
+        return true;
+      }
+      return true; // Assume object values are valid for now
+    } else if (typeof color === 'string') {
+      if (currentPalette[color]) {
+        return true;
       } else {
         return false;
       }
+    } else {
+      console.log('Invalid color:', color);
     }
     return true;
   };
@@ -25,8 +28,20 @@ const useMode = () => {
   const colorModeValues = (dark, light, defaultColor = '#26242C') => {
     const validDark = validateColor(dark);
     const validLight = validateColor(light);
+    const valid = validDark || validLight;
     const returnDark = validDark ? dark : defaultColor;
     const returnLight = validLight ? light : defaultColor;
+    const color = mode === 'dark' ? returnDark : returnLight;
+    if (valid) {
+      console.log(
+        `VALID: ${valid}, ${validDark}, ${validLight}  RETURN: ${returnDark}, ${returnLight}  MODE: ${mode}  DEFAULT: ${defaultColor}  COLOR: ${color}`
+      );
+    } else if (!valid && color.startsWith('#')) {
+      console.log(`============= RETURNING HEX COLOR: ${color} =============`);
+      return color;
+    } else {
+      console.log(`============= INVALID COLOR: ${color} =============`);
+    }
     return mode === 'dark' ? returnDark : returnLight;
   };
 

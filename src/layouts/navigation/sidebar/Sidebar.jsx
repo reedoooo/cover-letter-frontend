@@ -11,7 +11,7 @@ function Sidebar(props) {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const { theme } = useMode();
   const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
-  const btnRef = React.useRef();
+  const btnRef = React.useRef(null);
   const {
     routes,
     isOpen,

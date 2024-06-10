@@ -135,11 +135,12 @@ function Landing() {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            // justifyContent: 'center',
             alignItems: 'center',
             position: 'relative',
             height: '100vh',
             maxHeight: '100vh',
+            width: '100%',
             padding: 4,
             backgroundColor: theme.palette.background.default,
           }}
@@ -207,21 +208,19 @@ function Landing() {
               animate={{
                 opacity: menuVisible ? 1 : 0,
                 height: menuExpanded ? 'auto' : 0,
-                width: menuVisible ? '250%' : 0,
+                width: menuVisible ? 'calc(50vw - 1rem)' : 0,
+                x: menuVisible ? 0 : '-100%', // Adjust the x position to start off-screen
               }}
               transition={{ duration: 0.5 }}
               sx={{ overflow: 'hidden', marginTop: 2 }}
             >
               <Paper
-                // sx={{ width: 330 }}
                 sx={{
-                  maxWidth: `calc(50vw - 60px)`,
+                  maxWidth: 'calc(50vw - 60px)',
                   maxHeight: '60vh',
                   overflowY: 'auto',
-                  // padding: 2,
                 }}
               >
-                {' '}
                 <StyledMenuList
                   component={motion.div}
                   initial="hidden"

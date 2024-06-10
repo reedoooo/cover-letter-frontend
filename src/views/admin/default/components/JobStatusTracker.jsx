@@ -140,11 +140,15 @@ const JobStatusTracker = ({ tableData }) => {
 
   return (
     <Card
-      direction="column"
-      width="100%"
-      padding="0"
-      overflowX="auto"
       mode="dark"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        // height: '100%',
+        padding: theme.spacing(4),
+        width: '100%',
+        overflowX: 'auto',
+      }}
     >
       <Box
         display="flex"

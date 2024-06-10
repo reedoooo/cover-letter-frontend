@@ -8,6 +8,7 @@ import { Router } from '../routes';
 // [App] | This code provides the app with the router and renders it
 const App = () => {
   const appRoutes = useRoutes(Router);
+  console.log('appRoutes', appRoutes);
   return (
     <Providers>
       <CssBaseline />

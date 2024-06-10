@@ -17,13 +17,17 @@ export default function Templates() {
   const base = `${location.origin}/`;
 
   return (
-    <Box paddingTop={{ xs: '130px', md: '80px', xl: '80px' }}>
-      <Grid container spacing={2} mb={2}>
+    <Grid item xs={12}>
+      <Box paddingTop={{ xs: '130px', md: '80px', xl: '80px' }}>
+        {/* <Grid container spacing={2} mb={2}>
+          <Grid item xs={12}> */}
         <TemplatesDisplay templates={templateData} />
-      </Grid>
-      <Grid container mb={2} spacing={2}>
+        {/* </Grid>{' '}
+        </Grid> */}
+        {/* <Grid container mb={2} spacing={2}>
         <Grid item xs={12}></Grid>
-      </Grid>
-    </Box>
+      </Grid> */}
+      </Box>{' '}
+    </Grid>
   );
 }

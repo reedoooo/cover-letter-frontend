@@ -40,7 +40,7 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
   return (
     <List component="li" disablePadding key={item.id}>
       <ListItemStyled
-        button
+        // button
         component={item.external ? 'a' : NavLink}
         to={!item.external ? item.href : undefined}
         href={item.external ? item.href : undefined}

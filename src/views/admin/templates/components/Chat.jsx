@@ -18,15 +18,37 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { MdAutoAwesome, MdBolt, MdEdit, MdPerson } from 'react-icons/md';
+import { getGeneralChatResponse } from 'api/index';
 import Bg from 'assets/img/auth/banner.png';
 import MessageBox from 'components/data/MessageBox';
+import constants from 'config/constants';
 import useMode from 'hooks/useMode';
+const { API_URL, OPENAI_API_KEY } = constants;
 
 export default function Chat(props) {
   const [inputOnSubmit, setInputOnSubmit] = useState('');
   const [inputCode, setInputCode] = useState('');
   const [outputCode, setOutputCode] = useState('');
+  const [message, setMessage] = useState('');
+  const [response, setResponse] = useState('');
   const [model, setModel] = useState('gpt-3.5-turbo');
+  const [apiKey, setApiKey] = useState(OPENAI_API_KEY);
+  const [modelData, setModelData] = useState({
+    apiKey: apiKey,
+    model: model,
+    inputCode: '', // i.e. 'Hello, my name is 123456789',
+    maxTokens: 100,
+    temperature: 0.5,
+    topP: 1,
+    topK: 40,
+    presencePenalty: 0,
+    frequencyPenalty: 0,
+    n: 1,
+    stream: false,
+    stop: '',
+    echo: false,
+  });
+
   const [loading, setLoading] = useState(false);
   const { colorModeValues } = useMode();
 
@@ -50,9 +72,78 @@ export default function Chat(props) {
     { color: 'whiteAlpha.600' }
   );
 
+  // const handleTranslate = async () => {
+  //   // let apiKey = localStorage.getItem('apiKey');
+  //   let apiKey = process.env.OPENAI_API_KEY;
+  //   setInputOnSubmit(inputCode);
+  //   const maxCodeLength = model === 'gpt-3.5-turbo' ? 700 : 700;
+
+  //   if (!apiKey?.includes('sk-')) {
+  //     alert('Please enter an API key.');
+  //     return;
+  //   }
+  //   if (!inputCode) {
+  //     alert('Please enter your message.');
+  //     return;
+  //   }
+  //   if (inputCode.length > maxCodeLength) {
+  //     alert(
+  //       `Please enter code less than ${maxCodeLength} characters. You are currently at ${inputCode.length} characters.`
+  //     );
+  //     return;
+  //   }
+
+  //   setOutputCode(' ');
+  //   setLoading(true);
+  //   const controller = new AbortController();
+  //   const body = {
+  //     inputCode,
+  //     model,
+  //     apiKey,
+  //   };
+
+  //   const response = await fetch('./api/chatAPI', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     signal: controller.signal,
+  //     body: JSON.stringify(body),
+  //   });
+
+  //   if (!response.ok) {
+  //     setLoading(false);
+  //     if (response) {
+  //       alert(
+  //         'Something went wrong when fetching from the API. Make sure to use a valid API key.'
+  //       );
+  //     }
+  //     return;
+  //   }
+
+  //   const data = response.body;
+  //   if (!data) {
+  //     alert('Something went wrong');
+  //     return;
+  //   }
+
+  //   const reader = data.getReader();
+  //   const decoder = new TextDecoder();
+  //   let done = false;
+
+  //   while (!done) {
+  //     setLoading(true);
+  //     const { value, done: doneReading } = await reader.read();
+  //     done = doneReading;
+  //     const chunkValue = decoder.decode(value);
+  //     setOutputCode(prevCode => prevCode + chunkValue);
+  //   }
+  //   setLoading(false);
+  // };
   const handleTranslate = async () => {
-    let apiKey = localStorage.getItem('apiKey');
+    let apiKey = process.env.OPENAI_API_KEY;
     setInputOnSubmit(inputCode);
+    setMessage(inputCode);
     const maxCodeLength = model === 'gpt-3.5-turbo' ? 700 : 700;
 
     if (!apiKey?.includes('sk-')) {
@@ -72,52 +163,26 @@ export default function Chat(props) {
 
     setOutputCode(' ');
     setLoading(true);
-    const controller = new AbortController();
-    const body = {
-      inputCode,
-      model,
-      apiKey,
-    };
 
-    const response = await fetch('./api/chatAPI', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-      body: JSON.stringify(body),
-    });
+    try {
+      const formData = new FormData();
+      formData.append('inputCode', inputCode);
+      formData.append('message', message);
+      formData.append('modelData', modelData);
+      formData.append('apiKey', apiKey);
 
-    if (!response.ok) {
+      const data = await getGeneralChatResponse(formData);
+      setOutputCode(data);
+      setResponse(data);
+    } catch (error) {
+      console.error('Error fetching chat response:', error);
+      alert(
+        'Something went wrong when fetching from the API. Make sure to use a valid API key.'
+      );
+    } finally {
       setLoading(false);
-      if (response) {
-        alert(
-          'Something went wrong when fetching from the API. Make sure to use a valid API key.'
-        );
-      }
-      return;
     }
-
-    const data = response.body;
-    if (!data) {
-      alert('Something went wrong');
-      return;
-    }
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    while (!done) {
-      setLoading(true);
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setOutputCode(prevCode => prevCode + chunkValue);
-    }
-    setLoading(false);
   };
-
   const handleChange = event => {
     setInputCode(event.target.value);
   };
@@ -193,11 +258,26 @@ export default function Chat(props) {
                   width: '39px',
                 }}
               >
+                <MdAutoAwesome
+                  style={{ width: '20px', height: '20px', color: iconColor }}
+                />
+              </Box>
+              {/* <Box
+                sx={{
+                  borderRadius: 'full',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background: bgIcon,
+                  marginRight: '10px',
+                  height: '39px',
+                  width: '39px',
+                }}
+              >
                 <Icon
                   component={MdAutoAwesome}
                   sx={{ width: '20px', height: '20px', color: iconColor }}
                 />
-              </Box>
+              </Box> */}
               GPT-3.5
             </Button>
             <Button
@@ -228,11 +308,26 @@ export default function Chat(props) {
                   width: '39px',
                 }}
               >
+                <MdBolt
+                  style={{ width: '20px', height: '20px', color: iconColor }}
+                />
+              </Box>
+              {/* <Box
+                sx={{
+                  borderRadius: 'full',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  background: bgIcon,
+                  marginRight: '10px',
+                  height: '39px',
+                  width: '39px',
+                }}
+              >
                 <Icon
                   component={MdBolt}
                   sx={{ width: '20px', height: '20px', color: iconColor }}
                 />
-              </Box>
+              </Box> */}
               GPT-4
             </Button>
           </Box>
@@ -346,10 +441,14 @@ export default function Chat(props) {
                 display: 'flex',
               }}
             >
-              <Icon
+              <MdAutoAwesome
+                style={{ width: '20px', height: '20px', color: 'white' }}
+              />
+
+              {/* <Icon
                 component={MdAutoAwesome}
                 sx={{ width: '20px', height: '20px', color: 'white' }}
-              />
+              /> */}
             </Box>
             <MessageBox output={outputCode} />
           </Box>
@@ -412,7 +511,7 @@ export default function Chat(props) {
             Submit
           </Button>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             marginTop: '20px',
             display: 'flex',
@@ -435,7 +534,7 @@ export default function Chat(props) {
               ChatGPT May 12 Version
             </Typography>
           </Link>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

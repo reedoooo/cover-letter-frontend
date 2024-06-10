@@ -57,6 +57,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import EmailIcon from '@mui/icons-material/Email';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
 
 // CONTENT
 import ArticleIcon from '@mui/icons-material/Article';
@@ -64,6 +65,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CodeIcon from '@mui/icons-material/Code';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 
 // FONT AWESOME
 import {
@@ -78,6 +80,7 @@ import {
 
 // MATERIAL DESIGN
 import { MdAddTask, MdHome } from 'react-icons/md';
+import { SvgIcon } from '@mui/material';
 
 // Named exports
 export {
@@ -144,6 +147,10 @@ export {
   BarChartIcon,
   CodeIcon,
   ColorLensIcon,
+  CodeOutlinedIcon,
+  ColorLensOutlinedIcon,
+
+  // Font Awesome
   // Font Awesome
   FaCameraRetro,
   FaCopy,
@@ -222,6 +229,8 @@ const reedThaHumansIconLibrary = {
   BarChartIcon,
   CodeIcon,
   ColorLensIcon,
+  CodeOutlinedIcon,
+  ColorLensOutlinedIcon,
 
   // Font Awesome
   FaCameraRetro,
