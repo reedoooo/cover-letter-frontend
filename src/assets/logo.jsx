@@ -1,21 +1,35 @@
+import { Box } from '@mui/material';
 import React from 'react';
+import styled from 'styled-components';
+import useMode from 'hooks/useMode';
 
-const LogoSvg = props => (
-  <svg
-    version="1.0"
-    xmlns="http://www.w3.org/2000/svg"
-    width="3000.000000pt"
-    height="3000.000000pt"
-    viewBox="0 0 3000.000000 3000.000000"
-    preserveAspectRatio="xMidYMid meet"
-  >
-    <g
-      transform="translate(0.000000,3000.000000) scale(0.100000,-0.100000)"
-      fill="#000000"
-      stroke="none"
+// Define the styled components
+const StyledSvg = styled('svg')({
+  height: '100%',
+});
+
+const StyledPath = styled('path')(({ theme }) => ({
+  fill: theme.palette?.primary?.main || '#000000',
+}));
+
+const Logo = props => {
+  const { theme } = useMode();
+  return (
+    <StyledSvg
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+      width="3000.000000pt"
+      height="3000.000000pt"
+      viewBox="0 0 3000.000000 3000.000000"
+      preserveAspectRatio="xMidYMid meet"
     >
-      <path
-        d="M0 15000 l0 -15000 15000 0 15000 0 0 15000 0 15000 -15000 0 -15000
+      <g
+        transform="translate(0.000000,3000.000000) scale(0.100000,-0.100000)"
+        fill="#000000"
+        stroke="none"
+      >
+        <StyledPath
+          d="M0 15000 l0 -15000 15000 0 15000 0 0 15000 0 15000 -15000 0 -15000
 0 0 -15000z m12275 6883 c-2 -10 -4 -19 -5 -20 -8 -9 -5 -3230 3 -3240 11 -15
 -1125 -1160 -1253 -1264 -143 -115 -355 -208 -543 -239 -95 -15 -307 -12 -395
 6 -424 86 -758 375 -894 774 -41 121 -58 233 -58 382 0 250 62 451 205 663 44
@@ -51,23 +65,32 @@ c-92 -96 -264 -192 -405 -228 -208 -53 -498 -54 -701 -2 -360 91 -619 324
 -298 -107 4 c-271 8 -432 -98 -479 -318 -11 -51 -14 -171 -14 -538 l0 -473
 -330 0 -330 0 0 945 0 945 315 0 315 0 0 -111 0 -111 63 58 c123 116 320 189
 520 193 l47 1 0 -297z"
-      />
-      <path
-        d="M19747 11532 c-81 -202 -150 -377 -154 -390 l-5 -22 306 0 c196 0
+          isPrimary
+          theme
+        />
+        <StyledPath
+          d="M19747 11532 c-81 -202 -150 -377 -154 -390 l-5 -22 306 0 c196 0
 306 4 306 10 0 8 -298 761 -304 767 -1 1 -68 -164 -149 -365z"
-      />
-      <path
-        d="M10692 11575 c-73 -20 -108 -40 -162 -91 -45 -42 -89 -120 -105 -186
+          theme
+        />
+        <StyledPath
+          d="M10692 11575 c-73 -20 -108 -40 -162 -91 -45 -42 -89 -120 -105 -186
 l-7 -28 385 0 386 0 -13 45 c-49 161 -181 263 -349 271 -53 3 -100 -1 -135
 -11z"
-      />
-      <path
-        d="M15957 11580 c-52 -13 -130 -54 -170 -90 -37 -32 -89 -123 -105 -182
+          theme
+        />
+        <StyledPath
+          d="M15957 11580 c-52 -13 -130 -54 -170 -90 -37 -32 -89 -123 -105 -182
 l-10 -38 384 0 384 0 -6 28 c-10 47 -52 126 -89 170 -23 26 -63 55 -110 78
 -63 31 -85 37 -157 40 -45 2 -100 -1 -121 -6z"
-      />
-    </g>
-  </svg>
-);
+          theme
+        />
+      </g>
+    </StyledSvg>
+  );
+};
+export { Logo };
+
+const LogoSvg = Logo;
 
 export default LogoSvg;

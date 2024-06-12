@@ -1,9 +1,9 @@
-import { Box, Link, List, ListItem, Typography, useTheme } from '@mui/material';
-import React from 'react';
+import { Box, Link, List, ListItem, Typography } from '@mui/material';
+import useMode from 'hooks/useMode';
 
 export const FooterAuth = props => {
-  const theme = useTheme();
-  const textColor = theme.palette.mode === 'light' ? '#fff' : 'white';
+  const { theme } = useMode();
+  const textColor = '#fff';
   return (
     <Box
       zIndex="3"

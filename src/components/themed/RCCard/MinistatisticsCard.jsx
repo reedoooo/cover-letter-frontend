@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, Typography, useTheme } from '@mui/material';
-import React from 'react';
+import { Box, Card, CardContent, Typography } from '@mui/material';
+import useMode from 'hooks/useMode';
 
 export default function MinistatisticsCard(props) {
   const { startContent, endContent, name, growth, value } = props;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColor = theme.palette.text.primary;
   const textColorSecondary = theme.palette.text.secondary;
   return (

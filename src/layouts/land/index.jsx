@@ -1,7 +1,8 @@
-import { Box, Container, useTheme } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useState } from 'react';
 import { Outlet, Route } from 'react-router-dom';
 import { MainWrapper, PageWrapper } from 'components/styled';
+import useMode from 'hooks/useMode';
 
 // Custom Material UI theme
 export default function Land() {
@@ -36,7 +37,7 @@ export default function Land() {
     });
   };
 
-  const theme = useTheme();
+  const { theme } = useMode();
   const authBg = theme.palette.mode === 'light' ? 'white' : 'navy.900';
   document.documentElement.dir = 'ltr';
 

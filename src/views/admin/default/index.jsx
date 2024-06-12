@@ -1,5 +1,6 @@
 import { Box, Grid, Icon, Paper } from '@mui/material';
 
+import React from 'react';
 import { AddIcon } from 'assets/humanIcons';
 import { IconBox, MiniStatistics, PaperCard } from 'components/index';
 import { careerTrackerTable, miniStatisticsData } from 'config/data';
@@ -7,7 +8,7 @@ import useMode from 'hooks/useMode';
 import {
   DashboardCalendar,
   JobStatusTracker,
-  MarkdownEditor,
+  // MarkdownEditor,
   TaskTracker,
 } from './components';
 
@@ -15,15 +16,13 @@ import {
 
 const MainDashboard = () => {
   const { theme } = useMode();
+  // const inputRef = React.useRef(null);
   const brandColor = theme.palette.secondary.main;
-  const boxBg =
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[300]
-      : theme.palette.grey[700];
+  const boxBg = theme.palette.grey[300];
 
-  const handleMarkdownChange = content => {
-    console.log('Markdown content:', content);
-  };
+  // const handleMarkdownChange = content => {
+  //   console.log('Markdown content:', content);
+  // };
 
   return (
     <Box paddingTop={{ xs: '130px', md: '80px', xl: '80px' }}>
@@ -83,10 +82,11 @@ const MainDashboard = () => {
               maxHeight: '450px',
             }}
           >
-            <MarkdownEditor
+            {/* <MarkdownEditor
+              ref={inputRef}
               initialValue="Start writing your markdown..."
               onChange={handleMarkdownChange}
-            />
+            /> */}
           </Box>
         </PaperCard>
       </Grid>

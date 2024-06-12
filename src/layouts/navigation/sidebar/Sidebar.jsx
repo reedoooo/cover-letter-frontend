@@ -1,35 +1,92 @@
 import { Box, Drawer, IconButton, useMediaQuery } from '@mui/material';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars-2';
-import { IoMenuOutline } from 'react-icons/io5';
-// import useDisclosure from 'hooks/useDisclosure';
+import React, { useEffect } from 'react';
+import Scrollbars from 'react-custom-scrollbars-2';
 import useMode from 'hooks/useMode';
+import {
+  renderThumb,
+  renderTrack,
+  renderView,
+} from '../shared/scrollbar/Scrollbar';
 import Content from './components/Content';
+import 'styles/Sidebar.css';
 
 function Sidebar(props) {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+  const { routes } = props;
   const { theme } = useMode();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
   const btnRef = React.useRef(null);
-  const {
-    routes,
-    isOpen,
-    onOpen,
-    onClose,
-    isMobileOpen,
-    onMobileOpen,
-    onMobileClose,
-  } = props;
+  const convertRoutesToMenuItems = routes => {
+    const traverseRoutes = routes => {
+      return routes.map(route => {
+        const { name, icon, children, collapse } = route;
+        const menuItem = {
+          name,
+          icon,
+        };
+
+        if (collapse && children) {
+          const childItems = traverseRoutes(children);
+          menuItem.items = childItems.map(child => ({
+            name: child.name,
+            icon: child.icon,
+            items: child.items,
+          }));
+        }
+
+        return menuItem;
+      });
+    };
+
+    return traverseRoutes(routes);
+  };
+  useEffect(() => {
+    const menuItems = convertRoutesToMenuItems(routes);
+    console.log('menuItems', menuItems);
+  }, [routes]);
 
   return (
     <Box
-      display={{ xs: 'block', xl: 'none' }}
-      width="100%"
-      position="fixed"
-      minHeight="100%"
+      sx={{
+        display: { xs: 'none', xl: 'block' },
+        width: '100%',
+        position: 'fixed',
+        minHeight: '100%',
+      }}
     >
-      <IconButton
+      <Box
+        sx={{
+          bgcolor: theme.palette.background.paper,
+          transition: '0.2s linear',
+          width: '300px',
+          height: '100vh',
+          margin: '0px',
+          minHeight: '100%',
+          overflowX: 'hidden',
+          boxShadow: theme.shadows[1],
+        }}
+      >
+        <Scrollbars
+          autoHide
+          renderTrackVertical={renderTrack}
+          renderThumbVertical={renderThumb}
+          renderView={renderView}
+        >
+          <Content routes={routes} />
+        </Scrollbars>
+      </Box>
+    </Box>
+  );
+}
+
+Sidebar.propTypes = {
+  logoText: PropTypes.string,
+  routes: PropTypes.arrayOf(PropTypes.object),
+  variant: PropTypes.string,
+};
+
+export default Sidebar;
+{
+  /* <IconButton
         ref={btnRef}
         onClick={onOpen}
         sx={{
@@ -41,7 +98,7 @@ function Sidebar(props) {
       >
         <IoMenuOutline />
       </IconButton>
-      <Drawer anchor="left" open={isOpen} onClose={onClose}>
+      <Drawer anchor="left" open={isOpen} onClose={onClose} className="sidebar">
         <Box
           width="300px"
           height="100vh"
@@ -52,17 +109,13 @@ function Sidebar(props) {
             <Content routes={routes} />
           </Scrollbars>
         </Box>
-      </Drawer>
-    </Box>
-  );
+      </Drawer> */
 }
-
-Sidebar.propTypes = {
-  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-export default Sidebar;
-
+{
+  /* </Box>
+  );
+} */
+}
 // ! ----------------------- NEW VERSION -----------------------
 // import { Box, useMediaQuery } from '@mui/material';
 // import PropTypes from 'prop-types';

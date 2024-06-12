@@ -1,19 +1,21 @@
 // App.jsx
 import { CssBaseline } from '@mui/material';
-import React from 'react';
-import { useRoutes } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { Providers } from 'contexts/Providers';
 import { Router } from '../routes';
 
 // [App] | This code provides the app with the router and renders it
 const App = () => {
-  const appRoutes = useRoutes(Router);
-  console.log('appRoutes', appRoutes);
+  if (import.meta.hot) {
+    import.meta.hot.dispose(() => Router.dispose());
+  }
   return (
-    <Providers>
-      <CssBaseline />
-      {appRoutes}
-    </Providers>
+    <div className="App">
+      <Providers>
+        <CssBaseline />
+        <RouterProvider router={Router} />
+      </Providers>
+    </div>
   );
 };
 

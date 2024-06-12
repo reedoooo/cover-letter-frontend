@@ -9,10 +9,9 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useTheme,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { MdCancel, MdCheckCircle, MdOutlineError } from 'react-icons/md';
 import {
   useGlobalFilter,
@@ -22,6 +21,7 @@ import {
 } from 'react-table';
 import { Card } from 'components/index';
 import Menu from 'components/themedV2/menu/MainMenu.jsx';
+import useMode from 'hooks/useMode';
 
 // Custom components
 
@@ -47,7 +47,7 @@ export default function ColumnsTable(props) {
     initialState,
   } = tableInstance;
   initialState.pageSize = 5;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColor =
     theme.palette.mode === 'light'
       ? theme.palette.secondaryGray[900]

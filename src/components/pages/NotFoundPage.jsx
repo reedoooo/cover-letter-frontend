@@ -1,10 +1,10 @@
 import HomeIcon from '@mui/icons-material/Home';
-import { Box, Typography, Button, useTheme } from '@mui/material';
-import React from 'react';
+import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import useMode from 'hooks/useMode';
 
 const NotFoundPage = () => {
-  const theme = useTheme();
+  const { theme } = useMode();
   const navigate = useNavigate();
 
   const handleGoHome = () => {

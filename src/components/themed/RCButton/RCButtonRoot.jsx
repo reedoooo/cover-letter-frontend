@@ -10,18 +10,18 @@ const RCButtonRoot = styledDefault(Button)(({ ownerState, theme }) => {
   const { colored } = boxShadows;
 
   const containedStyles = () => {
-    const backgroundValue = palette[color] ? palette[color].main : white.main;
+    const backgroundValue = palette[color] ? palette[color]?.main : white?.main;
     const focusedBackgroundValue = palette[color]
-      ? palette[color].focus
-      : white.focus;
+      ? palette[color]?.focus
+      : white?.focus;
     const boxShadowValue = colored[color]
       ? `${boxShadow(0, 3, palette[color].main, 0.15)}, ${boxShadow(0, 3, palette[color].main, 0.2)}, ${boxShadow(0, 1, palette[color].main, 0.15)}`
       : 'none';
     const hoveredBoxShadowValue = colored[color]
-      ? `${boxShadow(0, 14, palette[color].main, 0.4)}, ${boxShadow(4, 0.15)}, ${boxShadow(0, 8, palette[color].main, 0.2)}`
+      ? `${boxShadow(0, 14, palette[color]?.main, 0.4)}, ${boxShadow(4, 0.15)}, ${boxShadow(0, 8, palette[color].main, 0.2)}`
       : 'none';
-    let colorValue = white.main;
-    let focusedColorValue = white.main;
+    let colorValue = white?.main;
+    let focusedColorValue = white?.main;
     if (
       !darkMode &&
       (color === 'white' || color === 'light' || !palette[color])

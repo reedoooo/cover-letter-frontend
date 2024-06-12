@@ -10,8 +10,9 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useTheme,
 } from '@mui/material';
+import { Card } from 'components/index';
+import Menu from 'components/themedV2/menu/MainMenu.jsx';
 import { useMemo } from 'react';
 import {
   useGlobalFilter,
@@ -19,8 +20,7 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import { Card } from 'components/index';
-import Menu from 'components/themedV2/menu/MainMenu.jsx';
+import useMode from 'hooks/useMode';
 
 export default function CheckTable(props) {
   const { columnsData, tableData } = props;
@@ -44,7 +44,7 @@ export default function CheckTable(props) {
     initialState,
   } = tableInstance;
   initialState.pageSize = 11;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColor =
     theme.palette.mode === 'light'
       ? theme.palette.secondaryGray[900]

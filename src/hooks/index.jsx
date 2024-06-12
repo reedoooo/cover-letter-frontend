@@ -7,6 +7,7 @@ import useDraftStorage from './useDraftStorage';
 import useFileUpload from './useFileUpload';
 import useFormikSchema from './useFormikSchema';
 import useFormSubmit from './useFormSubmit';
+import useLazyLoadedComponents from './useLazyLoadedComponents';
 import useManageCookies from './useManageCookies';
 import useMode from './useMode';
 import useNavigation from './useNavigation';
@@ -28,4 +29,5 @@ export default {
   useNavigation,
   useNotification,
   useRouter,
+  useLazyLoadedComponents,
 };

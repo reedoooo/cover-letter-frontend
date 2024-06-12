@@ -5,13 +5,12 @@ import {
   CardContent,
   IconButton,
   Typography,
-  useTheme,
 } from '@mui/material';
-import React from 'react';
+import useMode from 'hooks/useMode';
 
 export const Member = props => {
   const { avatar, name, job, ...rest } = props;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColor =
     theme.palette.mode === 'dark' ? 'white' : theme.palette.grey[900];
   const bgColor = theme.palette.mode === 'dark' ? '#1B254B' : 'white';

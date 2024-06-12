@@ -1,36 +1,174 @@
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import HomeIcon from '@mui/icons-material/Home';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import { Box, Typography, Button, useTheme } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FlexBetween } from 'components/index';
-import { RCButton } from 'components/themed';
+import {
+  NavLink,
+  useNavigate,
+  useNavigation,
+  useRouteError,
+} from 'react-router-dom';
+// import { FlexBetween } from 'components/index';
+// import { RCButton } from 'components/themed';
+import { errorProps, buttonsData } from 'config/data';
 import useMode from 'hooks/useMode';
-const NotFoundPage = failedRoute => {
+
+const returnErrText = ({
+  variant,
+  color,
+  fontWeight,
+  fontSize,
+  lineHeight,
+  textAlign,
+  gutterBottom,
+  styles,
+  content,
+}) => (
+  <Typography
+    variant={variant}
+    color={color}
+    fontWeight={fontWeight}
+    sx={{
+      ...styles,
+      fontSize: fontSize,
+      lineHeight: lineHeight,
+      textAlign: textAlign,
+      gutterBottom: gutterBottom,
+    }}
+    gutterBottom={gutterBottom}
+  >
+    {content}
+  </Typography>
+);
+const renderError = ({
+  theme,
+  statusText,
+  message,
+  mainText,
+  subTextA,
+  subTextB,
+}) => {
+  return (
+    <>
+      {returnErrText({
+        variant: 'h1',
+        fontWeight: 700,
+        fontSize: '6rem',
+        gutterBottom: true,
+        content: statusText,
+      })}
+      {returnErrText({ variant: 'h4', gutterBottom: true, content: message })}
+      {returnErrText({
+        variant: 'subtitle1',
+        styles: {
+          mb: 4,
+          textAlign: 'center',
+          color: theme.palette.text.primary,
+        },
+        content: mainText,
+      })}
+      {/* <FlexBetween
+        sx={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mb: 4,
+        }}
+      >
+        {returnErrText({
+          variant: 'subtitle1',
+          styles: { textAlign: 'center', color: theme.palette.text.tertiary },
+          content: subTextA,
+        })}
+        {returnErrText({
+          variant: 'subtitle1',
+          fontWeight: 700,
+          styles: { ml: 1, color: theme.palette.error.main },
+          content: subTextB,
+        })}
+      </FlexBetween> */}
+    </>
+  );
+};
+
+const ActionButton = ({
+  startIcon,
+  variant,
+  color,
+  component,
+  to,
+  sx,
+  children,
+}) => (
+  <Button
+    startIcon={startIcon}
+    variant={variant}
+    color={color}
+    component={component}
+    to={to}
+    sx={sx}
+  >
+    {children}
+  </Button>
+);
+
+const renderButtonStack = ({ buttonsData }) => {
+  return buttonsData.map(
+    ({ startIcon, variant, color, component, to, sx, children }) => (
+      <ActionButton
+        key={children}
+        startIcon={startIcon}
+        variant={variant}
+        color={color}
+        component={component}
+        to={to}
+        sx={sx}
+      >
+        {children}
+      </ActionButton>
+    )
+  );
+};
+const NotFoundPage = props => {
   const { theme } = useMode();
+  const error = useRouteError();
+  // const navigation = useNavigation();
   const navigate = useNavigate();
-  const failedRouteText = `/${failedRoute.path}`;
-  const codeAsTLiteral = failedRouteText.replace(/\//g, '\\/');
-  // Handler to navigate back to the home page
-  const handleGoHome = () => {
-    navigate('/');
+  const clickHandlers = {
+    goHome: '/',
+    goBack: () => navigate(-1),
+    retry: () => window.location.reload(),
+    copy: () => navigator.clipboard.writeText(window.location.href),
+    refresh: () => window.location.reload(),
   };
-  // Handler to navigate back to the previous page
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-  // Handler to navigate to the route that failed
-  const handleAttempt = () => {
-    navigate(failedRoute);
-  };
-  // Handler to copy the route that failed
-  const handleCopy = () => {
-    navigator.clipboard.writeText(failedRoute);
-  };
-  // Handler to refresh the current page
-  const handleRefresh = () => {
-    window.location.reload();
+
+  const buttonProps = buttonsData.map(btn => ({
+    ...btn,
+    component:
+      btn.handler === 'goHome'
+        ? NavLink
+        : btn.handler === 'goBack' ||
+            btn.handler === 'retry' ||
+            btn.handler === 'copy' ||
+            btn.handler === 'refresh'
+          ? 'button'
+          : NavLink,
+    to: btn.handler === 'goHome' ? clickHandlers[btn.handler] : undefined,
+    onClick:
+      btn.handler === 'retry' ||
+      btn.handler === 'copy' ||
+      btn.handler === 'refresh'
+        ? clickHandlers[btn.handler]
+        : btn.handler === 'goBack'
+          ? clickHandlers[btn.handler]
+          : undefined,
+  }));
+  let errType = errorProps?.errorTypes[error.status];
+  const activeErrProps = {
+    theme: theme,
+    statusText: errType?.statusText,
+    message: errType?.message,
+    mainText: errType?.mainText,
+    subTextA: errType?.subTextA,
+    subTextB: error?.path,
   };
 
   return (
@@ -46,128 +184,16 @@ const NotFoundPage = failedRoute => {
         color: theme.palette.text.primary,
       }}
     >
-      <Typography
-        variant="h1"
-        component="h2"
-        gutterBottom
-        sx={{ fontSize: '6rem', fontWeight: 700 }}
-      >
-        404
-      </Typography>
-      <Typography variant="h4" gutterBottom>
-        Oops! Page Not Found.
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        sx={{ mb: 4, textAlign: 'center', color: theme.palette.text.tertiary }}
-      >
-        The page you&apos;re looking for doesn&apos;t exist or has been moved.
-      </Typography>
-      <FlexBetween
-        sx={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          mb: 4,
-        }}
-      >
-        <Typography
-          variant="subtitle1"
-          sx={{
-            mb: 4,
-            textAlign: 'center',
-            color: theme.palette.text.tertiary,
-          }}
-        >
-          Failed Route:
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          gutterBottom
-          sx={{
-            color: theme.palette.error.main,
-            fontWeight: 700,
-            ml: 1,
-            mb: 4,
-          }}
-        >
-          {failedRouteText}
-        </Typography>
-      </FlexBetween>
-      <Box
-        marginTop={2}
-        display={'flex'}
-        flexDirection={'column'}
-        alignItems={'flex-start'}
-        border={'1px solid #f44336'}
-      >
-        <Typography
-          variant="h6"
-          color="textPrimary"
-          fontWeight="bold"
-          gutterBottom
-        >
-          Route: {failedRoute?.name}
-        </Typography>
-        <Typography variant="body1" color="textSecondary">
-          {failedRoute?.message}
-        </Typography>
-        <Typography variant="body1" color="textSecondary">
-          {codeAsTLiteral}
-        </Typography>
-      </Box>
-      <RCButton
-        startIcon={<RefreshIcon />}
-        color="primary"
-        size="small"
-        // variant="holo"
-        variant="outlined"
-        withContainer={false}
-        onClick={handleRefresh}
-        // onClick={() => window.location.reload()}
-        theme={theme}
-      >
-        Refresh
-      </RCButton>
-      <Button
-        startIcon={<FileCopyIcon />}
-        variant="contained"
-        color="primary"
-        onClick={handleCopy}
-        sx={{ mt: 2 }}
-      >
-        Copy Route
-      </Button>
-      <Button
-        startIcon={<HomeIcon />}
-        variant="contained"
-        color="primary"
-        onClick={handleGoBack}
-        sx={{ mt: 2 }}
-      >
-        Go Back
-      </Button>
-      <Button
-        startIcon={<HomeIcon />}
-        variant="contained"
-        color="primary"
-        onClick={handleAttempt}
-        sx={{ mt: 2 }}
-        theme={theme}
-      >
-        Go to Route
-      </Button>
-      <Button
-        startIcon={<HomeIcon />}
-        variant="contained"
-        color="primary"
-        onClick={handleGoHome}
-        sx={{ mt: 2 }}
-      >
-        Go Back to Home
-      </Button>
+      {renderError(activeErrProps)}
+      {renderButtonStack({ buttonsData: buttonProps })}
     </Box>
   );
+};
+// =========================================================
+// Exports: RootErrorBoundary, NotFoundPage
+// =========================================================
+export const RootErrorBoundary = () => {
+  return <NotFoundPage />;
 };
 
 export default NotFoundPage;

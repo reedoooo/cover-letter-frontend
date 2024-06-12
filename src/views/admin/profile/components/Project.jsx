@@ -1,32 +1,32 @@
 import { Box, IconButton, Link, Typography, useTheme } from '@mui/material';
+import { EditIcon } from 'assets/humanIcons';
 import { Card } from 'components/index';
-
-const { EditIcon } = 'icons';
+import useMode from 'hooks/useMode';
 
 export default function Project(props) {
   const { title, ranking, link, image, ...rest } = props;
-  const theme = useTheme();
-  const textColorPrimary =
-    theme.palette.mode === 'light' ? 'text.primary' : 'white';
+  const { theme } = useMode();
+  const textColorPrimary = theme.palette.text.primary;
   const textColorSecondary = theme.palette.text.secondary;
   const brandColor = theme.palette.primary.main;
-  const bg = theme.palette.mode === 'light' ? 'background.paper' : 'navy.700';
+  const bg = theme.palette.background.paper;
 
   return (
     <Card bg={bg} {...rest} p="14px">
       <Box
         display="flex"
         alignItems="center"
-        flexDirection={{ base: 'column', md: 'row' }}
+        flexDirection={{ xs: 'column', md: 'row' }}
       >
-        <img
+        <Box
+          component="img"
           height="80px"
           width="80px"
           src={image}
           alt="project"
           style={{ borderRadius: '8px', marginRight: '20px' }}
         />
-        <Box mt={{ base: '10px', md: '0' }}>
+        <Box mt={{ xs: '10px', md: '0' }}>
           <Typography
             color={textColorPrimary}
             fontWeight="500"

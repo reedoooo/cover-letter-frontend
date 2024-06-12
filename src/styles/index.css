@@ -1,6 +1,14 @@
 /* index.css or App.css */
 @import 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf_viewer.css';
 
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+option {
+  color: black;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

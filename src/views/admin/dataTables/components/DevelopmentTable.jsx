@@ -9,15 +9,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useTheme,
 } from '@mui/material';
-import { useMemo } from 'react';
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from 'react-table';
 import { Card } from 'components/index';
 import {
   AndroidLogo,
@@ -25,6 +17,14 @@ import {
   WindowsLogo,
 } from 'components/themedV2/icons/Icons';
 import Menu from 'components/themedV2/menu/MainMenu.jsx';
+import { useMemo } from 'react';
+import {
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable,
+} from 'react-table';
+import useMode from 'hooks/useMode';
 
 export default function DevelopmentTable(props) {
   const { columnsData, tableData } = props;
@@ -48,7 +48,7 @@ export default function DevelopmentTable(props) {
     initialState,
   } = tableInstance;
   initialState.pageSize = 11;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColor =
     theme.palette.mode === 'light'
       ? theme.palette.secondaryGray[900]

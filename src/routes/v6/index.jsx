@@ -18,7 +18,160 @@ import {
 } from 'assets/humanIcons';
 import ActiveLayout from 'layouts/generic-layouts';
 import { Loadable } from 'layouts/navigation/shared/loadable';
-
+const localData = {
+  base: {
+    id: uniqueId('router-base-'),
+    path: '/land',
+    name: 'Land',
+    collapse: true,
+    functionalStatus: false,
+    items: [
+      {
+        id: uniqueId('router-base-'),
+        name: 'Home',
+        path: '/home',
+        icon: <HomeIcon />,
+        functionalStatus: false,
+      },
+      {
+        id: uniqueId('router-base-'),
+        name: 'Hero Docs',
+        path: '/heroDocs',
+        icon: <HomeIcon />,
+        functionalStatus: false,
+      },
+    ],
+  },
+  // test: {
+  //   id: uniqueId('router-test-'),
+  //   layout: '/blank',
+  //   name: 'Test',
+  //   collapse: true,
+  //   functionalStatus: false,
+  //   items: [
+  //     {
+  //       id: uniqueId('router-test-'),
+  //       name: 'Home',
+  //       path: '/test',
+  //       element: <Test />,
+  //       icon: <HomeIcon />,
+  //       functionalStatus: false,
+  //     },
+  //     {
+  //       id: uniqueId('router-test-'),
+  //       name: 'Chat Test',
+  //       path: '/test/chat-test',
+  //       element: <Chat />,
+  //       icon: <ChatIcon />,
+  //       functionalStatus: false,
+  //     },
+  //   ],
+  // },
+  // admin: {
+  //   id: uniqueId('router-admin-'),
+  //   layout: '/admin',
+  //   name: 'Admin',
+  //   collapse: true,
+  //   functionalStatus: false,
+  //   items: [
+  //     {
+  //       name: 'Dashboard',
+  //       path: '',
+  //       element: <Navigate to="dashboard" />,
+  //       icon: <DashboardIcon />,
+  //       functionalStatus: false,
+  //     },
+  //     {
+  //       name: 'Main Dashboard',
+  //       path: 'dashboard',
+  //       element: <MainDashboard />,
+  //       icon: <DashboardIcon />,
+  //       functionalStatus: false,
+  //     },
+  //     {
+  //       name: 'User Profile',
+  //       path: 'profile',
+  //       element: <UserProfile />,
+  //       icon: <PersonIcon />,
+  //       functionalStatus: false,
+  //     },
+  //     {
+  //       name: 'Data Tables',
+  //       path: 'data-tables',
+  //       element: <DataTable />,
+  //       icon: <TableChartIcon />,
+  //       functionalStatus: false,
+  //     },
+  //     {
+  //       name: 'Templates',
+  //       path: 'templates',
+  //       element: <Templates />,
+  //       icon: <ColorLensIcon />,
+  //       functionalStatus: false,
+  //       children: [
+  //         {
+  //           name: 'Blog Post Generator',
+  //           path: 'blog-post-generator',
+  //           element: <BlogPostGenerator />,
+  //           icon: <ArticleIcon />,
+  //           functionalStatus: false,
+  //         },
+  //         {
+  //           name: 'Chat Ai',
+  //           path: 'chat-ai',
+  //           element: <Chat />,
+  //           icon: <ChatIcon />,
+  //           functionalStatus: false,
+  //         },
+  //         {
+  //           name: 'Code Converter',
+  //           path: 'code-converter',
+  //           element: <CodeConverter />,
+  //           icon: <CodeIcon />,
+  //           functionalStatus: false,
+  //         },
+  //         {
+  //           name: 'Theme Generator',
+  //           path: 'theme-generator',
+  //           element: <ThemeGenerator />,
+  //           icon: <ColorLensIcon />,
+  //           functionalStatus: false,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: 'WorkSpace',
+  //       path: 'workspace',
+  //       element: <WorkSpace />,
+  //       icon: <WorkspaceIcon />,
+  //       functionalStatus: false,
+  //     },
+  //   ],
+  // },
+  // auth: {
+  //   id: uniqueId('router-auth-'),
+  //   layout: '/auth',
+  //   name: 'Auth',
+  //   collapse: true,
+  //   functionalStatus: false,
+  //   items: [
+  //     {
+  //       name: 'Sign In',
+  //       path: 'sign-in',
+  //       element: <SignInCentered />,
+  //       icon: <LockIcon />,
+  //       functionalStatus: false,
+  //     },
+  //     {
+  //       name: 'Sign Up',
+  //       path: 'sign-up',
+  //       element: <SignUpCentered />,
+  //       icon: <PersonAddIcon />,
+  //       functionalStatus: false,
+  //     },
+  //   ],
+  // },
+};
 const Test = Loadable(lazy(() => import('views/test')));
 
 /* ***Layouts**** */
@@ -26,10 +179,12 @@ const BlankLayout = Loadable(lazy(() => import('layouts/blank')));
 // const PageLayout = Loadable(lazy(() => import('layouts/page')));
 const AdminLayout = Loadable(lazy(() => import('layouts/admin')));
 const AuthLayout = Loadable(lazy(() => import('layouts/auth')));
-
+const RootLayout = Loadable(lazy(() => import('layouts/root')));
 /* ****Pages***** */
 const NotFoundPage = Loadable(lazy(() => import('views/error/NotFound')));
-const Landing = Loadable(lazy(() => import('views/land/Docs/index.jsx')));
+const RootErrorBoundary = Loadable(lazy(() => import('views/error/NotFound')));
+const Landing = Loadable(lazy(() => import('views/land/landing')));
+const HeroDocs = Loadable(lazy(() => import('views/land/heroDocs')));
 
 const SignInCentered = Loadable(lazy(() => import('views/auth/signIn')));
 const SignUpCentered = Loadable(lazy(() => import('views/auth/signUp')));
@@ -71,18 +226,6 @@ const generate404Routes = (basePath = '') => [
     icon: <ErrorIcon />,
   },
 ];
-const RootErrorBoundary = () => {
-  let error = useRouteError() || { message: 'An unknown error occurred' };
-  return (
-    <div>
-      <h1>Uh oh, something went terribly wrong 😩</h1>
-      <pre>{error.message || JSON.stringify(error)}</pre>
-      <button onClick={() => (window.location.href = '/')}>
-        Click here to reload the app
-      </button>
-    </div>
-  );
-};
 
 // =========================================================
 // Base Routes
@@ -257,6 +400,7 @@ const adminRoutes = [
             id: uniqueId('templates-'),
             name: 'Template Generator',
             path: 'generate-template',
+            element: <ThemeGenerator />,
             link: `${base}/templates/generate-template`,
             description: 'Template Generator Description',
             functionalStatus: false,

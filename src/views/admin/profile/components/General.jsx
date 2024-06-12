@@ -1,19 +1,14 @@
-import { Card, CardContent, Typography, Grid, useTheme } from '@mui/material';
-import React from 'react';
+import { CardContent, Grid, Typography } from '@mui/material';
+import { Card } from 'components/index';
+import useMode from 'hooks/useMode';
 import Information from './Information';
 
 export default function GeneralInformation(props) {
   const { ...rest } = props;
-  const theme = useTheme();
-  const textColorPrimary =
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[900]
-      : theme.palette.common.white;
+  const { theme } = useMode();
+  const textColorPrimary = theme.palette.grey[900];
   const textColorSecondary = theme.palette.grey[400];
-  const cardShadow =
-    theme.palette.mode === 'light'
-      ? '0px 18px 40px rgba(112, 144, 176, 0.12)'
-      : 'unset';
+  const cardShadow = '0px 18px 40px rgba(112, 144, 176, 0.12)';
   return (
     <Card
       {...rest}

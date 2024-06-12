@@ -1,15 +1,15 @@
-import { Box, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { ChevronLeft } from 'assets/humanIcons';
 import { FixedPlugin } from 'components/themedV2/fixedPlugin/FixedPlugin';
 import Footer from 'components/themedV2/footer/FooterAuth';
-// Custom components
+import useMode from 'hooks/useMode';
 
 function AuthIllustration(props) {
   const { children, illustrationBackground } = props;
   // Material UI theme
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColorSecondary = theme.palette.text.secondary;
 
   return (

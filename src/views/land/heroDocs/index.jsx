@@ -397,5 +397,8 @@ function Landing() {
     </Grid>
   );
 }
+export const HeroDocs = () => {
+  return <Landing />;
+};
 
 export default Landing;

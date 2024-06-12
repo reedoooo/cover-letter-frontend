@@ -1,5 +1,5 @@
-import Landing from './Docs';
-
+import { HeroDocs } from './heroDocs';
+import { Landing } from './landing';
 // ==============================|| LAND VIEWS ||============================== //
 
-export { Landing };
+export { Landing, HeroDocs };

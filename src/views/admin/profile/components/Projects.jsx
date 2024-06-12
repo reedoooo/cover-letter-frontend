@@ -1,23 +1,20 @@
-import { Typography, useTheme } from '@mui/material';
+import { Typography } from '@mui/material';
 import React from 'react';
 import Project1 from 'assets/img/profile/Project1.png';
-import Project2 from 'assets/img/profile/Project2.png';
-import Project3 from 'assets/img/profile/Project3.png';
+// import Project2 from 'assets/img/profile/Project2.png';
+// import Project3 from 'assets/img/profile/Project3.png';
 import { Card } from 'components/index';
-import Project from 'views/admin/profile/components/Project';
+import useMode from 'hooks/useMode';
+import Project from './Project';
 
 export default function Projects(props) {
-  const theme = useTheme();
-  const textColorPrimary =
-    theme.palette.mode === 'light' ? 'text.primary' : 'white';
+  const { theme } = useMode();
+  const textColorPrimary = theme.palette.text.primary;
   const textColorSecondary = theme.palette.text.secondary;
-  const cardShadow =
-    theme.palette.mode === 'light'
-      ? '0px 18px 40px rgba(112, 144, 176, 0.12)'
-      : 'unset';
+  // const cardShadow = '0px 18px 40px rgba(112, 144, 176, 0.12)';
 
   return (
-    <Card mb={{ base: '0px', '2xl': '20px' }}>
+    <Card mb={{ xs: '0px', '2xl': '20px' }}>
       <Typography
         color={textColorPrimary}
         fontWeight="bold"
@@ -37,14 +34,14 @@ export default function Projects(props) {
         engaged by providing meaningful information.
       </Typography>
       <Project
-        boxShadow={cardShadow}
+        // boxShadow={cardShadow}
         mb="20px"
         image={Project1}
         ranking="1"
         link="#"
         title="Technology behind the Blockchain"
       />
-      <Project
+      {/* <Project
         boxShadow={cardShadow}
         mb="20px"
         image={Project2}
@@ -58,7 +55,7 @@ export default function Projects(props) {
         ranking="3"
         link="#"
         title="Most essential tips for Burnout"
-      />
+      /> */}
     </Card>
   );
 }

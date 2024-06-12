@@ -1,4 +1,4 @@
-import { IconButton, TextField, Typography } from '@mui/material';
+import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Calendar as DashboardCalendar } from 'react-calendar';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
@@ -86,6 +86,7 @@ export const MiniCalendar = props => {
           onKeyDown={handleKeyDown}
           prevLabel={
             <IconButton
+              component={Box}
               aria-label="previous month"
               sx={{
                 height: '34px !important',
@@ -104,6 +105,7 @@ export const MiniCalendar = props => {
           }
           nextLabel={
             <IconButton
+              component={Box}
               aria-label="next month"
               sx={{
                 height: '34px !important',

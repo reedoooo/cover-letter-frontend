@@ -15,11 +15,11 @@ const BannerImage = styled(Box)(({ theme, src }) => ({
   width: '100%',
 }));
 
-const AvatarWrapper = styled(Avatar)(({ borderColor }) => ({
+const AvatarWrapper = styled(Avatar)(({ theme }) => ({
   height: 87,
   width: 87,
   marginTop: '-43px',
-  border: `4px solid ${borderColor}`,
+  border: `4px solid ${theme.palette.background.paper}`,
   margin: 'auto',
 }));
 
@@ -48,7 +48,7 @@ export default function Banner(props) {
       }}
     >
       <BannerImage src={banner} theme={theme} />
-      <AvatarWrapper src={avatar} borderColor={borderColor} theme={theme} />
+      <AvatarWrapper src={avatar} theme={theme} />
       <CardContent theme={theme}>
         <Typography
           color={textColorPrimary}

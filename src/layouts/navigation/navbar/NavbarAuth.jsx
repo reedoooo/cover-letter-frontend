@@ -1,29 +1,25 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   AppBar,
   Box,
   Button,
   Container,
-  IconButton,
   Menu,
-  MenuItem,
   MenuList,
   Toolbar,
   Typography,
-  useTheme,
   useMediaQuery,
-  Grid,
-  Stack,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { GoChevronDown, GoChevronDowd } from 'react-icons/go';
 import { NavLink } from 'react-router-dom';
 import routes from '@/routes/index';
-import { HorizonLogo } from 'components/index';
+import { LogoIcon } from 'components/index';
 import { SidebarContext } from 'contexts/SidebarProvider';
+import useMode from 'hooks/useMode';
 export default function AuthNavbar(props) {
   const { logoText, secondary } = props;
-  const theme = useTheme();
+  const { theme } = useMode();
   const matches = useMediaQuery(theme.breakpoints.up('lg'));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [menuName, setMenuName] = React.useState('');
@@ -39,18 +35,18 @@ export default function AuthNavbar(props) {
   };
 
   const createLinks = routeArray => {
-    return routeArray.map((link, key) => (
-      <NavLink key={key} to={link.layout + link.path}>
+    return routeArray?.map((link, key) => (
+      <NavLink key={key} to={link?.layout + link?.path}>
         <Typography variant="body2" color="textSecondary">
-          {link.name}
+          {link?.name}
         </Typography>
       </NavLink>
     ));
   };
 
   const renderMenuItems = routeName => {
-    const route = routes.find(route => route.name === routeName);
-    return createLinks(route.items);
+    const route = routes?.find(route => route.name === routeName);
+    return createLinks(route?.items);
   };
 
   const brand = (
@@ -59,7 +55,7 @@ export default function AuthNavbar(props) {
       to="/"
       sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
     >
-      <HorizonLogo />
+      <LogoIcon />
       <Typography variant="h6" ml={1}>
         {logoText}
       </Typography>
@@ -85,7 +81,7 @@ export default function AuthNavbar(props) {
                 aria-controls="dashboard-menu"
                 aria-haspopup="true"
                 onClick={event => handleClick(event, 'Dashboards')}
-                endIcon={<GoChevronDowd />}
+                endIcon={<KeyboardArrowDownIcon />}
               >
                 Dashboards
               </Button>
@@ -102,7 +98,7 @@ export default function AuthNavbar(props) {
                 aria-controls="auth-menu"
                 aria-haspopup="true"
                 onClick={event => handleClick(event, 'Authentication')}
-                endIcon={<GoChevronDown />}
+                endIcon={<KeyboardArrowDownIcon />}
               >
                 Authentications
               </Button>
@@ -119,7 +115,7 @@ export default function AuthNavbar(props) {
                 aria-controls="main-pages-menu"
                 aria-haspopup="true"
                 onClick={event => handleClick(event, 'Main Pages')}
-                endIcon={<GoChevronDown />}
+                endIcon={<KeyboardArrowDownIcon />}
               >
                 Main Pages
               </Button>
@@ -136,7 +132,7 @@ export default function AuthNavbar(props) {
                 aria-controls="nft-menu"
                 aria-haspopup="true"
                 onClick={event => handleClick(event, 'NFTs')}
-                endIcon={<GoChevronDown />}
+                endIcon={<KeyboardArrowDownIcon />}
               >
                 NFTs
               </Button>
@@ -167,5 +163,5 @@ export default function AuthNavbar(props) {
 
 AuthNavbar.propTypes = {
   logoText: PropTypes.string.isRequired,
-  secondary: PropTypes.bool,
+  // secondary: PropTypes.bool,
 };

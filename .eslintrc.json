@@ -9,6 +9,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:import/errors",
@@ -90,7 +91,6 @@
       "alias": {
         "map": [
           ["@", "./src"],
-          // ["@/", "./src"],
           ["@/humanIcons", "./src/assets/humanIcons"],
           ["@/routes", "./src/routes"]
         ],

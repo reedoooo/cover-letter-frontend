@@ -4,31 +4,33 @@ import {
   Grid,
   Box,
   Typography,
-  styled,
   alpha,
   MenuList,
   MenuItem,
 } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import { NavLink, useRoutes } from 'react-router-dom';
+import React, { useState, useEffect, forwardRef } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import routes from '@/routes/index';
 import { templateData } from 'config/data';
 import useMode from 'hooks/useMode';
-import useRouter from 'hooks/useRouter';
 
-const StyledMenuList = styled(props => (
-  <MenuList
-    elevation={0}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'left',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'left',
-    }}
-    {...props}
-  />
-))(({ theme }) => ({
+const StyledMenuList = forwardRef((props, ref) => {
+  const { anchorOrigin, transformOrigin, ...otherProps } = props;
+  return (
+    <MenuList
+      elevation={0}
+      anchorOrigin={anchorOrigin}
+      transformOrigin={transformOrigin}
+      ref={ref}
+      {...otherProps}
+    />
+  );
+});
+
+StyledMenuList.displayName = 'StyledMenuList';
+
+const StyledMenuListStyled = styled(StyledMenuList)(({ theme }) => ({
   '& .MuiPaper-root': {
     borderRadius: 2,
     marginTop: theme.spacing(1),
@@ -38,7 +40,7 @@ const StyledMenuList = styled(props => (
       theme.palette.mode === 'light'
         ? 'rgb(55, 65, 81)'
         : theme.palette.grey[300],
-    backgroundColor: alpha('#000000', 0.8), // Very translucent black background
+    backgroundColor: alpha('#000000', 0.8),
     boxShadow:
       'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
@@ -47,9 +49,9 @@ const StyledMenuList = styled(props => (
       flexWrap: 'wrap',
     },
     '& .MuiMenuItem-root': {
-      fontWeight: '400', // Adjust this to match ESLint text style
-      color: '#FFFFFF', // Adjust this to match ESLint text style
-      lineHeight: 1.5, // Adjust this to match ESLint text style
+      fontWeight: '400',
+      color: '#FFFFFF',
+      lineHeight: 1.5,
       '& .MuiSvgIcon-root': {
         fontSize: 18,
         color: theme.palette.text.secondary,
@@ -64,17 +66,13 @@ const StyledMenuList = styled(props => (
     },
   },
 }));
-
 function Test() {
   const { theme } = useMode();
-  const routes = useRoutes();
   console.log(routes);
-  const { navigate } = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuExpanded, setMenuExpanded] = useState(false);
   const [menuData, setMenuData] = useState([...templateData]);
-  // const routes = getRoutes
   const [menuItemsVisible, setMenuItemsVisible] = useState(false);
   const getInfoRef = React.useRef(null);
   const open = Boolean(anchorEl);
@@ -96,7 +94,7 @@ function Test() {
     if (menuVisible) {
       setTimeout(() => {
         setMenuExpanded(true);
-      }, 500); // Delay for initial visibility animation
+      }, 500);
     }
   }, [menuVisible]);
 
@@ -104,14 +102,13 @@ function Test() {
     if (menuExpanded) {
       setTimeout(() => {
         setMenuItemsVisible(true);
-      }, 500); // Delay for menu items animation
+      }, 500);
     }
   }, [menuExpanded]);
 
-  // Split templateData into two columns
-  const half = Math.ceil(routes?.length / 2);
-  const firstColumn = routes?.slice(0, half);
-  const secondColumn = routes?.slice(half);
+  const half = Math.ceil(templateData.length / 2);
+  const firstColumn = templateData.slice(0, half);
+  const secondColumn = templateData.slice(half);
 
   return (
     <Grid
@@ -135,7 +132,7 @@ function Test() {
         <Typography variant="h4" fontWeight="bold" mb="10px">
           Test Routes
         </Typography>
-        <StyledMenuList>
+        <StyledMenuListStyled ref={getInfoRef} theme={theme}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               {firstColumn.map((route, index) => (
@@ -152,7 +149,7 @@ function Test() {
               ))}
             </Grid>
           </Grid>
-        </StyledMenuList>
+        </StyledMenuListStyled>
       </Box>
     </Grid>
   );

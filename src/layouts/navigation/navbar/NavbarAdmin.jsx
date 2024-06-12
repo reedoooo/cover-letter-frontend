@@ -1,69 +1,125 @@
 import {
   Box,
   Breadcrumbs,
-  Link as MuiLink,
+  Link,
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import { uniqueId } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import { useLocation, useMatches, Link as RouterLink } from 'react-router-dom';
+import { RCFlex } from 'components/themed/RCFlex';
 import useMode from 'hooks/useMode';
+import { isWindowAvailable } from 'utils/navigation';
 import AdminNavbarLinks from './NavbarLinksAdmin';
+function BreadcrumbsComponent() {
+  const matches = useMatches();
+
+  return (
+    <Breadcrumbs aria-label="breadcrumb">
+      {matches?.map((match, index) => {
+        const route = match?.route;
+        const isLast = index === matches.length - 1;
+
+        return isLast ? (
+          <Typography key={uniqueId(`${route?.path}`)} color="text.primary">
+            {route?.breadcrumb}
+          </Typography>
+        ) : (
+          <Link
+            key={uniqueId(`${route?.path}`)}
+            component={RouterLink}
+            to={match.pathname}
+            color="inherit"
+          >
+            {route?.breadcrumb}
+          </Link>
+        );
+      })}
+    </Breadcrumbs>
+  );
+}
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
+  const anchorEl = React.useRef(null);
   const { theme } = useMode();
-  const matches = useMediaQuery(theme.breakpoints.up('xl'));
-
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 1) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    window.addEventListener('scroll', changeNavbar);
 
-    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', changeNavbar);
     };
-  }, []);
+  });
 
   const { secondary, message, brandText } = props;
-  // const mainText = theme.palette.text.primary;
+
+  const location = useLocation();
+  // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
   const mainText = '#1B254B';
-  const secondaryText = theme.palette.text.secondary;
-  const navbarBg = 'rgba(244, 247, 254, 0.2)';
-  const navbarBorder = 'transparent';
+  let secondaryText = theme.palette.text.primary;
   let navbarPosition = 'fixed';
   let navbarFilter = 'none';
   let navbarBackdrop = 'blur(20px)';
   let navbarShadow = 'none';
+  let navbarBg = 'rgba(244, 247, 254, 0.2)';
+  let navbarBorder = 'transparent';
   let secondaryMargin = '0px';
   let paddingX = '15px';
   let gap = '0px';
-  function handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
-  }
+  const changeNavbar = () => {
+    if (window.scrollY > 1) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 1) {
+  //       setScrolled(true);
+  //     } else {
+  //       setScrolled(false);
+  //     }
+  //   };
+
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   isWindowAvailable() && window.addEventListener('scroll', changeNavbar);
+  //   return () => {
+  //     isWindowAvailable() && window.removeEventListener('scroll', changeNavbar);
+  //   };
+  // });
+  // const changeNavbar = () => {
+  //   if (isWindowAvailable() && window.scrollY > 1) {
+  //     setScrolled(true);
+  //   } else {
+  //     setScrolled(false);
+  //   }
+  // };
   return (
     <Box
       sx={{
         position: navbarPosition,
         boxShadow: navbarShadow,
-        bg: navbarBg,
+        bgcolor: navbarBg,
         borderColor: navbarBorder,
+        filter: navbarFilter,
         backdropFilter: navbarBackdrop,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        borderRadius: '50%',
+        borderRadius: '16px',
         borderWidth: '1.5px',
         borderStyle: 'solid',
-        transition:
-          'box-shadow 0.25s linear, background-color 0.25s linear, filter 0.25s linear, border 0.25s linear',
-        // transitionProperty: 'box-shadow, background-color, filter, border',
+        transitionDelay: '0s, 0s, 0s, 0s',
         transitionDuration: '0.25s, 0.25s, 0.25s, 0s',
+        transitionProperty: 'box-shadow, background-color, filter, border',
+        transitionTimingFunction: 'linear, linear, linear, linear',
         alignItems: { xl: 'center' },
         display: secondary ? 'block' : 'flex',
         minHeight: '75px',
@@ -72,13 +128,18 @@ export default function AdminNavbar(props) {
         mx: 'auto',
         mt: secondaryMargin,
         pb: '8px',
-        right: { base: '12px', md: '30px' },
-        px: { sm: '15px', md: '10px' },
-        ps: { xl: '12px' },
+        right: { base: '12px', md: '30px', lg: '30px', xl: '30px' },
+        px: {
+          sm: paddingX,
+          md: '10px',
+        },
+        ps: {
+          xl: '12px',
+        },
         pt: '8px',
-        top: { base: '12px', md: '16px', lg: '20px' },
+        top: { base: '12px', md: '16px', lg: '20px', xl: '20px' },
         width: {
-          sm: 'calc(100vw - 6%)',
+          base: 'calc(100vw - 6%)',
           md: 'calc(100vw - 8%)',
           lg: 'calc(100vw - 6%)',
           xl: 'calc(100vw - 350px)',
@@ -86,82 +147,50 @@ export default function AdminNavbar(props) {
         },
       }}
     >
-      <Box
+      <RCFlex
         sx={{
           width: '100%',
-          display: 'flex',
           flexDirection: { sm: 'column', md: 'row' },
           alignItems: { xl: 'center' },
-          // mb: 0,
+          marginBottom: gap,
         }}
       >
-        <Box sx={{ mb: { sm: '8px', md: '0px' } }}>
-          <div role="presentation" onClick={handleClick}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <MuiLink
-                color={secondaryText}
-                underline="hover"
-                fontSize="small"
-                href="http://localhost:3000/admin/dashboard"
-                // href={`${process.env.PUBLIC_URL}/${matches ? 'admin/dashboard' : 'dashboard'}`}
-                sx={{
-                  textDecoration: 'none',
-                  '&:hover': { textDecoration: 'underline' },
-                }}
-              >
-                Pages
-              </MuiLink>
-              <MuiLink
-                underline="hover"
-                href="http://localhost:3000/admin/dashboard"
-                color={secondaryText}
-                fontSize="small"
-              >
-                {brandText}
-              </MuiLink>
-            </Breadcrumbs>
-            {/* Here we create navbar brand, based on route name */}
-            <MuiLink
-              color={mainText}
-              underline="hover"
-              href="http://localhost:3000/admin/dashboard"
-              sx={{
-                background: 'inherit',
-                borderRadius: 'inherit',
-                fontWeight: 'bold',
-                fontSize: '34px',
-                '&:hover': { color: mainText },
-                '&:active': {
-                  background: 'inherit',
-                  transform: 'none',
-                  borderColor: 'transparent',
-                },
-                '&:focus': {
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              {brandText}
-            </MuiLink>
-          </div>
+        <Box sx={{ marginBottom: { sm: '8px', md: '0px' } }}>
+          <BreadcrumbsComponent />
+          {/* Here we create navbar brand, based on route name */}
+          <Link
+            href="/"
+            color={mainText}
+            sx={{
+              bg: 'inherit',
+              borderRadius: 'inherit',
+              fontWeight: 'bold',
+              fontSize: '34px',
+              '&:hover': { color: mainText },
+              '&:active': {
+                bg: 'inherit',
+                transform: 'none',
+                borderColor: 'transparent',
+              },
+              '&:focus': {
+                boxShadow: 'none',
+              },
+            }}
+          >
+            {brandText}
+          </Link>
+          <Box sx={{ marginLeft: 'auto', width: { sm: '100%', md: 'unset' } }}>
+            <AdminNavbarLinks
+              onOpen={props.onOpen}
+              logoText={props.logoText}
+              secondary={props.secondary}
+              fixed={props.fixed}
+              scrolled={scrolled}
+            />
+          </Box>
         </Box>
-        <Box
-          ms="auto"
-          sx={{
-            // ml: 'auto',
-            width: { sm: '100%', md: 'unset' },
-          }}
-        >
-          <AdminNavbarLinks
-            onOpen={props.onOpen}
-            logoText={props.logoText}
-            secondary={props.secondary}
-            fixed={props.fixed}
-            scrolled={scrolled}
-          />
-        </Box>
-      </Box>
-      {secondary && <Typography color="white">{message}</Typography>}
+      </RCFlex>
+      {secondary ? <Typography color="white">{message}</Typography> : null}
     </Box>
   );
 }

@@ -1,9 +1,10 @@
-import { Card, CardContent, Typography, useTheme } from '@mui/material';
-import React from 'react';
+import { CardContent, Typography } from '@mui/material';
+import { Card } from 'components/index';
+import useMode from 'hooks/useMode';
 
 export default function Information(props) {
   const { title, value, ...rest } = props;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColorPrimary =
     theme.palette.mode === 'light'
       ? theme.palette.grey[900]

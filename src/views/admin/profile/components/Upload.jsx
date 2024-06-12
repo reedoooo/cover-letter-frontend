@@ -1,20 +1,11 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import { MdUpload } from 'react-icons/md';
+import useMode from 'hooks/useMode';
 import Dropzone from './Dropzone';
 export default function Upload(props) {
   const { used, total, ...rest } = props;
-  const theme = useTheme();
-  const textColorPrimary =
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[900]
-      : theme.palette.common.white;
+  const { theme } = useMode();
+  const textColorPrimary = theme.palette.grey[900];
   const brandColor = theme.palette.primary.main;
   const textColorSecondary = theme.palette.grey[400];
 

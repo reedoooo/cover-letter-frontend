@@ -1,5 +1,11 @@
 // src/variables/data.js
-import { Icon } from '@mui/material';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
+import BugReportIcon from '@mui/icons-material/BugReport';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import PendingIcon from '@mui/icons-material/Pending';
+import RefreshIcon from '@mui/icons-material/Refresh';
+
 import { uniqueId } from 'lodash';
 import {
   DashboardIcon,
@@ -8,7 +14,6 @@ import {
   LayersIcon,
   LoginIcon,
   MdAddTask,
-  MdHome,
   PageviewIcon,
   PersonAddIcon,
   TextFieldsIcon,
@@ -17,13 +22,12 @@ import {
   CodeIcon,
   ColorLensIcon,
   ErrorIcon,
-  LockIcon,
   NoteAddIcon,
   PersonIcon,
   TableChartIcon,
+  LockIcon,
   WorkspaceIcon,
 } from 'assets/humanIcons';
-import routes from '../routes';
 const miniStatisticsData = {
   interviewsEarned: {
     name: 'Interviews Earned',
@@ -43,7 +47,6 @@ const miniStatisticsData = {
   },
   followUpsSent: { name: 'Follow-ups Sent', value: 5, icon: <MdAddTask /> },
 };
-
 const tableColumnsCareerTracker = [
   { Header: 'COMPANY NAME', accessor: 'company_name' },
   { Header: 'APPLICATION DATA', accessor: 'application_data' },
@@ -52,7 +55,6 @@ const tableColumnsCareerTracker = [
   { Header: 'PROGRESS', accessor: 'progress' },
   { Header: 'STATUS', accessor: 'status' },
 ];
-
 const tableDataCareerTracker = [
   {
     company_name: ['Company A', true],
@@ -89,87 +91,116 @@ const tableDataCareerTracker = [
     status: 'Rejected',
   },
 ];
-
 const careerTrackerTable = {
   columns: tableColumnsCareerTracker,
   data: tableDataCareerTracker,
 };
-
 const base = `${window.location.origin}`;
-// const base2 = 'http://localhost:3000';
-const pathToIconMap = routes.reduce((acc, route) => {
-  if (route.icon) {
-    acc[route.path] = route.icon;
-  }
-  if (route.children) {
-    route.children.forEach(child => {
-      if (child.icon) {
-        acc[`${route.path}/${child.path}`] = child.icon;
-      }
-    });
-  }
-  return acc;
-}, {});
 const templateData = [
   {
-    id: uniqueId('templates-test'),
+    id: uniqueId('templates-test-'),
     title: 'Test Home',
     name: 'Test Home',
     description: 'Chat Test Description',
     functionalStatus: true,
-    icon: pathToIconMap['/test/test-home'],
-    path: '/test',
+    icon: <BugReportIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/test/test-home',
     route: `${base}/test/test-home`,
     link: `${base}/test/test-home`,
   },
   {
-    id: uniqueId('templates-'),
+    id: uniqueId('templates-test-'),
     title: 'Chat Test',
     name: 'Chat Test',
     description: 'Chat Test Description',
     functionalStatus: true,
-    icon: pathToIconMap['/test/chat-test'],
+    icon: <ChatIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/test/chat-test',
     route: `${base}/test/chat-test`,
     link: `${base}/test/chat-test`,
   },
   {
-    id: uniqueId('admin-'),
+    id: uniqueId('templates-test-'),
+    title: 'Loaders Test',
+    description: 'Loaders Test Description',
+    functionalStatus: true,
+    icon: <PendingIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    route: `${base}/test/loaders-test`,
+    link: `${base}/test/loaders-test`,
+    name: 'Loaders Test',
+    path: '/test/loaders-test',
+    // breadcrumb: 'Loaders Test',
+    // element: <LoadersDisplay />,
+    // errorElement: <RootErrorBoundary />,
+    // collapse: false,
+  },
+  {
+    id: uniqueId('templates-land-'),
+    title: 'Landing',
+    name: 'Landing',
+    description: 'Landing Page',
+    icon: <HomeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/hero-docs',
+    route: `${base}/hero-docs`,
+    link: `${base}/hero-docs`,
+  },
+  {
+    id: uniqueId('templates-admin-'),
     title: 'Main Dashboard',
     name: 'Main Dashboard',
     description: 'Main Dashboard Description',
-    icon: pathToIconMap['/admin/dashboard'],
+    icon: <DashboardIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/dashboard',
     route: `${base}/admin/dashboard`,
     link: `${base}/admin/dashboard`,
   },
   {
-    id: uniqueId('admin-'),
-    title: 'Work Space',
-    name: 'Work Space',
-    description: 'Work Space Description',
-    icon: pathToIconMap['/admin/workspace'],
-    path: '/admin/workspace',
-    route: `${base}/admin/workspace`,
-    link: `${base}/admin/workspace`,
+    id: uniqueId('templates-admin-'),
+    title: 'Data Tables',
+    name: 'Data Tables',
+    description: 'Data Tables Description',
+    icon: <TableChartIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/admin/data-tables',
+    route: `${base}/admin/data-tables`,
+    link: `${base}/admin/data-tables`,
   },
   {
-    id: uniqueId('admin-'),
+    id: uniqueId('templates-admin-'),
     title: 'Templates',
     name: 'Templates',
     description: 'Templates Description',
-    icon: pathToIconMap['/admin/templates'],
+    icon: <ColorLensIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/templates',
     route: `${base}/admin/templates`,
     link: `${base}/admin/templates`,
   },
+  {
+    id: uniqueId('templates-admin-'),
+    title: 'Profile',
+    name: 'Profile',
+    description: 'Profile Description',
+    icon: <PersonIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/admin/profile',
+    route: `${base}/admin/profile`,
+    link: `${base}/admin/profile`,
+  },
+  // {
+  //   id: uniqueId('admin-'),
+  //   title: 'Work Space',
+  //   name: 'Work Space',
+  //   description: 'Work Space Description',
+  //   icon: <WorkspaceIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+  //   path: '/admin/workspace',
+  //   route: `${base}/admin/workspace`,
+  //   link: `${base}/admin/workspace`,
+  // },
   {
     id: uniqueId('templates-'),
     title: 'Original Chat Ai',
     name: 'Original Chat Ai',
     description: 'Original Chat Ai Description',
     functionalStatus: true,
-    icon: pathToIconMap['/admin/templates/original-chat-ai'],
+    icon: <ChatIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/templates/original-chat-ai',
     route: `${base}/admin/templates/original-chat-ai`,
     link: `${base}/admin/templates/original-chat-ai`,
@@ -180,7 +211,7 @@ const templateData = [
     name: 'Blog Post Generator',
     description: 'Blog Post Generator Description',
     functionalStatus: false,
-    icon: pathToIconMap['/admin/templates/blog-post'],
+    icon: <ArticleIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/templates/blog-post',
     route: `${base}/admin/templates/blog-post`,
     link: `${base}/admin/templates/blog-post`,
@@ -190,7 +221,7 @@ const templateData = [
     title: 'Code Converter',
     name: 'Code Converter',
     description: 'Code Converter Description',
-    icon: pathToIconMap['/admin/templates/code-converter'],
+    icon: <CodeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/templates/code-converter',
     route: `${base}/admin/templates/code-converter`,
     link: `${base}/admin/templates/code-converter`,
@@ -200,7 +231,7 @@ const templateData = [
     title: 'Theme Generator',
     name: 'Theme Generator',
     description: 'Theme Generator Description',
-    icon: pathToIconMap['/admin/templates/theme-generator'],
+    icon: <ColorLensIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/templates/theme-generator',
     route: `${base}/admin/templates/theme-generator`,
     link: `${base}/admin/templates/theme-generator`,
@@ -210,219 +241,42 @@ const templateData = [
     title: 'Template Generator',
     name: 'Template Generator',
     description: 'Template Generator Description',
-    icon: pathToIconMap['/admin/templates/generate-template'],
+    icon: <NoteAddIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '/admin/templates/generate-template',
     route: `${base}/admin/templates/generate-template`,
     link: `${base}/admin/templates/generate-template`,
-  },
-  {
-    id: uniqueId('land-'),
-    title: 'Landing',
-    name: 'Landing',
-    description: 'Landing Page',
-    icon: pathToIconMap['/hero-docs'],
-    path: '/hero-docs',
-    route: `${base}/hero-docs`,
-    link: `${base}/hero-docs`,
-  },
-  {
-    id: uniqueId('auth-'),
-    title: 'Sign In',
-    name: 'Sign In',
-    description: 'Sign In Page',
-    icon: pathToIconMap['/auth/sign-in'],
-    path: '/auth/sign-in',
-    route: `${base}/auth/sign-in`,
-    link: `${base}/auth/sign-in`,
-  },
-  {
-    id: uniqueId('admin-'),
-    title: 'Data Tables',
-    name: 'Data Tables',
-    description: 'Data Tables Description',
-    icon: pathToIconMap['/admin/data-tables'],
-    path: '/admin/data-tables',
-    route: `${base}/admin/data-tables`,
-    link: `${base}/admin/data-tables`,
-  },
-  {
-    id: uniqueId('template-'),
-    title: 'Profile',
-    name: 'Profile',
-    description: 'Profile Description',
-    icon: pathToIconMap['/admin/profile'],
-    path: '/admin/profile',
-    route: `${base}/admin/profile`,
-    link: `${base}/admin/profile`,
   },
   {
     id: uniqueId('template-'),
     title: 'Not Found',
     name: 'Not Found',
     description: 'Page Not Found',
-    icon: pathToIconMap['*'],
+    icon: <ErrorIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
     path: '*',
     route: `${base}/*`,
     link: `${base}/*`,
   },
+  {
+    id: uniqueId('template-auth-'),
+    title: 'Sign In',
+    name: 'Sign In',
+    description: 'Sign In Page',
+    icon: <LoginIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/auth/sign-in',
+    route: `${base}/auth/sign-in`,
+    link: `${base}/auth/sign-in`,
+  },
+  {
+    id: uniqueId('template-auth-'),
+    title: 'Sign Up',
+    name: 'Sign Up',
+    description: 'Sign Up Page',
+    icon: <LockIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/auth/sign-up',
+    route: `${base}/auth/sign-up`,
+    link: `${base}/auth/sign-up`,
+  },
 ];
-// const templateData = [
-//   {
-//     id: uniqueId('templates-test'),
-//     title: 'Test Home',
-//     name: 'Test Home',
-//     description: 'Chat Test Description',
-//     functionalStatus: true,
-//     icon: <HomeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
-//     path: '/test',
-//     route: `${base}/test/test-home`,
-//     link: `${base}/test/test-home`,
-//   },
-//   {
-//     id: uniqueId('templates-'),
-//     title: 'Chat Test',
-//     name: 'Chat Test',
-//     description: 'Chat Test Description',
-//     functionalStatus: true,
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/test/chat-test',
-//     route: `${base}/test/chat-test`,
-//     link: `${base}/test/chat-test`,
-//   },
-//   {
-//     id: uniqueId('admin-'),
-//     title: 'Main Dashboard',
-//     name: 'Main Dashboard',
-//     description: 'Main Dashboard Description',
-//     icon: <Icon as={MdHome} color="#7551FF" />,
-//     path: '/admin/dashboard',
-//     route: `${base}/admin/dashboard`,
-//     link: `${base}/admin/dashboard`,
-//   },
-//   {
-//     id: uniqueId('admin-'),
-//     title: 'Work Space',
-//     name: 'Work Space',
-//     description: 'Work Space Description',
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/workspace',
-//     route: `${base}/admin/workspace`,
-//     link: `${base}/admin/workspace`,
-//   },
-//   {
-//     id: uniqueId('admin-'),
-//     title: 'Templates',
-//     name: 'Templates',
-//     description: 'Templates Description',
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/templates',
-//     route: `${base}/admin/templates`,
-//     link: `${base}/admin/templates`,
-//   },
-//   {
-//     id: uniqueId('templates-'),
-//     title: 'Original Chat Ai',
-//     name: 'Original Chat Ai',
-//     description: 'Original Chat Ai Description',
-//     functionalStatus: true,
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/templates/original-chat-ai',
-//     route: `${base}/admin/templates/original-chat-ai`,
-//     link: `${base}/admin/templates/original-chat-ai`,
-//   },
-//   {
-//     id: uniqueId('templates-'),
-//     title: 'Blog Post Generator',
-//     name: 'Blog Post Generator',
-//     description: 'Blog Post Generator Description',
-//     functionalStatus: false,
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/templates/blog-post',
-//     route: `${base}/admin/templates/blog-post`,
-//     link: `${base}/admin/templates/blog-post`,
-//   },
-//   {
-//     id: uniqueId('templates-'),
-//     title: 'Code Converter',
-//     name: 'Code Converter',
-//     description: 'Code Converter Description',
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/templates/code-converter',
-//     route: `${base}/admin/templates/code-converter`,
-//     link: `${base}/admin/templates/code-converter`,
-//   },
-//   {
-//     id: uniqueId('templates-'),
-//     title: 'Theme Generator',
-//     name: 'Theme Generator',
-//     description: 'Theme Generator Description',
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/templates/theme-generator',
-//     route: `${base}/admin/templates/theme-generator`,
-//     link: `${base}/admin/templates/theme-generator`,
-//   },
-//   {
-//     id: uniqueId('templates-'),
-//     title: 'Template Generator',
-//     name: 'Template Generator',
-//     description: 'Template Generator Description',
-//     icon: <Icon as={MdAddTask} color="#7551FF" />,
-//     path: '/admin/templates/generate-template',
-//     route: `${base}/admin/templates/generate-template`,
-//     link: `${base}/admin/templates/generate-template`,
-//   },
-//   {
-//     id: uniqueId('land-'),
-//     title: 'Landing',
-//     name: 'Landing',
-//     description: 'Landing Page',
-//     icon: <HomeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
-//     path: '/hero-docs',
-//     route: `${base}/hero-docs`,
-//     link: `${base}/hero-docs`,
-//   },
-//   {
-//     id: uniqueId('auth-'),
-//     title: 'Sign In',
-//     name: 'Sign In',
-//     description: 'Sign In Page',
-//     icon: <HomeIcon sx={{ width: 20, height: 20 }} />,
-//     path: '/auth/sign-in',
-//     route: `${base}/auth/sign-in`,
-//     link: `${base}/auth/sign-in`,
-//   },
-//   {
-//     id: uniqueId('admin-'),
-//     title: 'Data Tables',
-//     name: 'Data Tables',
-//     description: 'Data Tables Description',
-//     icon: <HomeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
-//     path: '/admin/data-tables',
-//     route: `${base}/admin/data-tables`,
-//     link: `${base}/admin/data-tables`,
-//   },
-//   {
-//     id: uniqueId('template-'),
-//     title: 'Profile',
-//     name: 'Profile',
-//     description: 'Profile Description',
-//     icon: <HomeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
-//     path: '/admin/profile',
-//     route: `${base}/admin/profile`,
-//     link: `${base}/admin/profile`,
-//   },
-//   {
-//     id: uniqueId('template-'),
-//     title: 'Not Found',
-//     name: 'Not Found',
-//     description: 'Page Not Found',
-//     icon: <HomeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
-//     path: '*',
-//     route: `${base}/*`,
-//     link: `${base}/*`,
-//   },
-// ];
-
 const Menuitems = [
   {
     navlabel: true,
@@ -468,5 +322,79 @@ const Menuitems = [
     href: '/sample-page',
   },
 ];
+const buttonsData = [
+  {
+    startIcon: <RefreshIcon />,
+    variant: 'outlined',
+    color: 'primary',
+    onClick: () => {},
+    sx: { mt: 2 },
+    handler: 'refresh',
+    children: 'Refresh',
+  },
+  {
+    startIcon: <FileCopyIcon />,
+    variant: 'contained',
+    color: 'primary',
+    onClick: () => {},
+    sx: { mt: 2 },
+    handler: 'copy',
+    children: 'Copy Route',
+  },
+  {
+    startIcon: <HomeIcon />,
+    variant: 'contained',
+    color: 'primary',
+    onClick: () => {},
+    sx: { mt: 2 },
+    handler: 'back',
+    children: 'Go Back',
+  },
+  {
+    startIcon: <HomeIcon />,
+    variant: 'contained',
+    color: 'primary',
+    onClick: () => {},
+    sx: { mt: 2 },
+    handler: 'retry',
+    children: 'Go to Route',
+  },
+  {
+    startIcon: <HomeIcon />,
+    variant: 'contained',
+    color: 'primary',
+    onClick: () => {},
+    sx: { mt: 2 },
+    handler: 'home',
+    children: 'Go Back to Home',
+  },
+];
+const error404Props = {
+  statusText: '404',
+  message: 'Oops! Page Not Found.',
+  mainText: "The page you're looking for doesn't exist or has been moved.",
+  letSubTextA: 'Failed Route: ',
+  subTextB: ' ~ insert error details here ~ ',
+};
+const error500Props = {
+  statusText: '500',
+  message: 'Oops! Something went wrong.',
+  mainText: 'An unexpected error has occurred. Our team has been notified.',
+  subTextA: 'Routing Error: ',
+  subTextB: ' ~ insert error details here ~ ',
+};
+const errorProps = {
+  errorTypes: {
+    404: error404Props,
+    500: error500Props,
+  },
+};
 
-export { Menuitems, careerTrackerTable, miniStatisticsData, templateData };
+export {
+  Menuitems,
+  careerTrackerTable,
+  miniStatisticsData,
+  templateData,
+  errorProps,
+  buttonsData,
+};

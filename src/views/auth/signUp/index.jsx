@@ -16,9 +16,16 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
-import { NavLink } from 'react-router-dom';
+import {
+  NavLink,
+  useActionData,
+  useNavigation,
+  useLocation,
+} from 'react-router-dom';
+import useAuth from 'hooks/useAuth';
 
 function SignUp() {
+  const { signupAction } = useAuth();
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const handlePasswordClick = () => setShowPassword(!showPassword);

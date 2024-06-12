@@ -2,10 +2,11 @@ import { Menu } from '@mui/icons-material';
 import { Box, LinearProgress, Typography, useTheme } from '@mui/material';
 import { MdOutlineCloudDone } from 'react-icons/md';
 import { Card, IconBox } from 'components/index';
+import useMode from 'hooks/useMode';
 
 export default function Banner(props) {
   const { used, total } = props;
-  const theme = useTheme();
+  const { theme } = useMode();
   const textColorPrimary =
     theme.palette.mode === 'light'
       ? theme.palette.text.primary
