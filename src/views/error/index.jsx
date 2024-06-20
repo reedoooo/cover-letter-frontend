@@ -1,5 +1,5 @@
-import NotFoundPage, { RootErrorBoundary } from './NotFound';
+import NotFoundPage, { ErrorFallBack } from './NotFound';
 
 // ==============================|| ERROR VIEWS ||============================== //
 
-export { NotFoundPage, RootErrorBoundary as RootErrorBoundary };
+export { NotFoundPage, ErrorFallBack as ErrorFallBack };

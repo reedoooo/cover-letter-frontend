@@ -1,41 +1,184 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Box,
+  Divider,
   Drawer,
   IconButton,
-  useTheme,
-  useMediaQuery,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Stack,
+  Typography,
 } from '@mui/material';
+import { uniqueId } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars-2';
+import React, { useEffect } from 'react';
 import { IoMenuOutline } from 'react-icons/io5';
-import { SidebarContext } from 'contexts/SidebarProvider';
+import { NavLink, resolvePath } from 'react-router-dom';
+import { extractPaths } from '@/routes/index';
+import { FlexBetween, PaperCard, RCBox, RCIconWrapper } from 'components/index';
+import { RCFlex } from 'components/themed/RCFlex';
 import useDisclosure from 'hooks/useDisclosure';
 import useMode from 'hooks/useMode';
-import {
-  renderThumb,
-  renderTrack,
-  renderView,
-} from '../shared/scrollbar/Scrollbar';
-import { Content } from './components/Content';
+import Brand from './components/Brand';
 
 function SidebarResponsive(props) {
-  const { routes } = props;
   const { theme } = useMode();
-  const [isOpen, setIsOpen] = React.useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef(null);
+  const boxRef = React.useRef(null);
+  const anchorRef = React.useRef('left');
+
+  const { routes } = props;
 
   const handleOpen = () => {
-    setIsOpen(true);
+    onOpen();
   };
 
   const handleClose = () => {
-    setIsOpen(false);
+    onClose();
   };
 
+  const toggleDrawer = () => {
+    if (isOpen) {
+      onClose();
+    } else {
+      onOpen();
+    }
+  };
+  const linkPaths = extractPaths(routes);
+  const pathsMap = linkPaths.reduce((map, path) => {
+    const key = path.replace(/\/$/, '').split('/').pop() || 'root';
+    map[key] = path;
+    return map;
+  }, {});
+  const createSidebarLinks = (routes, paddingLeft = 0) => {
+    // LOG A COUNTER EVERY TIME A ROUTES SECTION IS RENDERED
+    return routes.map(route => {
+      if (!route.path) return null;
+      const children = route.children || [];
+      const key = route.path
+        ? route.path.replace(/\/$/, '').split('/').pop() || 'root'
+        : route.index
+          ? route.name.toLowerCase().replace(/ /g, '-')
+          : null;
+      let menuLink = null;
+      if (key && pathsMap[key]) {
+        menuLink = pathsMap[key];
+
+        console.log('-- menu link at path --', menuLink);
+      }
+      return (
+        <div key={uniqueId(route.name)}>
+          <MenuItem
+            component={NavLink}
+            to={menuLink || route.path}
+            onClick={toggleDrawer}
+            style={{ paddingLeft }}
+            sx={{
+              // styles for active state
+              // ((})
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              width: '100%',
+              boxSizing: 'border-box',
+              maxWidth: '100%',
+            }}
+          >
+            {route.icon && <React.Fragment>{route.icon}</React.Fragment>}
+            <ListItemText
+              primary={
+                <Typography
+                  variant={route.collapse ? 'h6' : 'body1'}
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    maxWidth: '100%',
+                  }}
+                >
+                  {route.name}
+                </Typography>
+              }
+            />
+          </MenuItem>
+          {children.length > 0 && (
+            <div
+              key={uniqueId('children')}
+              style={{ paddingLeft: paddingLeft + 20 }}
+            >
+              {createSidebarLinks(children, paddingLeft + 20)}
+              <Divider />
+            </div>
+          )}
+        </div>
+      );
+    });
+  };
+  const createLinkHeader = (route, paddingLeft = 0) => {
+    return (
+      <MenuItem
+        component={NavLink}
+        to={route.path}
+        onClick={toggleDrawer}
+        key={uniqueId(route.path)}
+        style={{ paddingLeft }}
+        sx={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          width: '100%',
+          boxSizing: 'border-box',
+          maxWidth: '100%',
+        }}
+      >
+        {route.icon && <React.Fragment>{route.icon}</React.Fragment>}
+        <ListItemText
+          primary={
+            <Typography
+              variant={route.collapse ? 'h6' : 'body1'}
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                width: '100%',
+                boxSizing: 'border-box',
+                maxWidth: '100%',
+              }}
+            >
+              {route.name}
+            </Typography>
+          }
+        />
+      </MenuItem>
+    );
+  };
+  const createSidebarSubmenu = (routes, paddingLeft = 0) => {
+    return routes.map(route => {
+      const rootChildren = route.children || [];
+      return (
+        <div key={uniqueId(route.name)}>
+          {createLinkHeader(route, paddingLeft)}
+          {rootChildren.length > 0 && (
+            <div
+              key={uniqueId('routes')}
+              style={{ paddingLeft: paddingLeft + 20 }}
+            >
+              {createSidebarLinks(rootChildren, paddingLeft + 20)}
+              <Divider />
+            </div>
+          )}
+        </div>
+      );
+    });
+  };
   return (
     <Box sx={{ display: { xs: 'flex', xl: 'none' }, alignItems: 'center' }}>
+      {/* --- Drawer Menu Button --- */}
       <Box
         ref={btnRef}
         sx={{ width: 'max-content', height: 'max-content' }}
@@ -51,39 +194,61 @@ function SidebarResponsive(props) {
           />
         </IconButton>
       </Box>
+      <Divider />
+
+      {/* --- Drawer Menu --- */}
       <Drawer
-        anchor={document.documentElement.dir === 'rtl' ? 'right' : 'left'}
         open={isOpen}
         onClose={handleClose}
+        anchor={anchorRef.current}
         PaperProps={{
           sx: {
-            width: '285px',
-            maxWidth: '285px',
+            width: 'clamp(240px, 50vw, 285px)',
+            maxWidth: '100%',
             backgroundColor: theme.palette.background.paper,
+            position: 'relative',
           },
         }}
       >
-        <IconButton
-          onClick={handleClose}
-          sx={{ position: 'absolute', right: 0, top: 0, zIndex: 3 }}
-        >
-          <IoMenuOutline
-            style={{
-              color: theme.palette.text.secondary,
-              width: '20px',
-              height: '20px',
+        {/* <RCBox ref={boxRef}> */}
+        {isOpen && (
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: '-30px', // 10px outside of the drawer width (20px button width + 10px margin)
+              top: '10px',
+              zIndex: 1300, // Ensuring the button appears above other elements
+              backgroundColor: theme.palette.background.paper, // Optional: to match the drawer background
             }}
-          />
-        </IconButton>
-        <Box sx={{ width: '285px', padding: '0', paddingBottom: '0' }}>
-          <Scrollbars
-            autoHide
-            renderTrackVertical={renderTrack}
-            renderThumbVertical={renderThumb}
-            renderView={renderView}
           >
-            <Content routes={routes} />
-          </Scrollbars>
+            <IoMenuOutline
+              style={{
+                color: theme.palette.text.secondary,
+                width: '20px',
+                height: '20px',
+              }}
+            />
+          </IconButton>
+        )}
+        {/* </RCBox> */}
+        {/* --- Drawer Menu Header --- */}
+        <PaperCard theme={theme}></PaperCard>
+        <Box sx={{ width: '285px', padding: '0', paddingBottom: '0' }}>
+          <RCFlex
+            direction="column"
+            height="100%"
+            pt="25px"
+            px="16px"
+            borderRadius="30px"
+          >
+            <Brand />
+            <Stack direction="column" mb="auto" mt="8px">
+              <Box ps="20px" pe={{ md: '16px', '2xl': '1px' }}>
+                {createSidebarSubmenu(routes)}
+              </Box>
+            </Stack>
+          </RCFlex>
         </Box>
       </Drawer>
     </Box>
@@ -95,72 +260,3 @@ SidebarResponsive.propTypes = {
 };
 
 export { SidebarResponsive };
-
-// const SidebarResponsive = ({ routes }) => {
-//   const {
-//     isSidebarOpen,
-//     isMobileSidebarOpen,
-//     setMobileSidebarOpen,
-//     setSidebarOpen,
-//     onClose,
-//   } = useContext(SidebarContext);
-//   const btnRef = React.useRef(null);
-//   const { theme } = useMode();
-//   const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
-//   const sidebarBg =
-//     theme.palette.mode === 'light'
-//       ? theme.palette.background.paper
-//       : theme.palette.background.default;
-//   const menuColor =
-//     theme.palette.mode === 'light'
-//       ? theme.palette.grey[400]
-//       : theme.palette.common.white;
-
-//   return (
-//     <Box display={{ xs: 'block', xl: 'none' }}>
-//       <IconButton ref={btnRef} color="inherit" onClick={setSidebarOpen}>
-//         <MenuIcon sx={{ color: menuColor }} />
-//       </IconButton>
-//       <Drawer
-//         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-//         open={isSidebarOpen}
-//         onClose={onClose}
-//         ModalProps={{ keepMounted: true }}
-//         sx={{ '& .MuiDrawer-paper': { width: 285, bgcolor: sidebarBg } }}
-//       >
-//         <Box sx={{ position: 'relative', height: '100%' }}>
-//           <IconButton
-//             onClick={onClose}
-//             sx={{ position: 'absolute', top: 16, right: 16 }}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           <Box
-//             sx={{
-//               px: 0,
-//               pb: 0,
-//               maxWidth: 285,
-//               overflow: 'hidden',
-//               height: '100%',
-//             }}
-//           >
-//             <Scrollbars
-//               autoHide
-//               renderTrackVertical={renderTrack}
-//               renderThumbVertical={renderThumb}
-//               renderView={renderView}
-//             >
-//               <Content routes={routes} />
-//             </Scrollbars>
-//           </Box>
-//         </Box>
-//       </Drawer>
-//     </Box>
-//   );
-// };
-
-// SidebarResponsive.propTypes = {
-//   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-// };
-
-// export { SidebarResponsive };

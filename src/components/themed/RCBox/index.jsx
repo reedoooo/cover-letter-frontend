@@ -60,6 +60,8 @@ RCBox.propTypes = {
     'outlined',
     'text',
     'button',
+    'paper',
+    'card',
   ]),
   borderWidth: PropTypes.number,
   bgColor: PropTypes.string,

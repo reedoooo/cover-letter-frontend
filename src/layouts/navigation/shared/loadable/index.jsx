@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
+import LoadingIndicator from 'utils/LoadingIndicator';
 
 export const Loadable = Component => {
   const WrappedComponent = props => (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingIndicator />}>
       <Component {...props} />
     </Suspense>
   );

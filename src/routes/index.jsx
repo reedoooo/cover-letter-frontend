@@ -33,32 +33,40 @@ import {
   WorkspaceIcon,
 } from 'assets/humanIcons';
 import { Loadable } from 'layouts/navigation/shared/loadable';
+import { dispatch } from 'store/index';
+import { setField } from 'store/Reducers/draftSlice';
+import ErrorBoundary from 'utils/ErrorBoundary';
+import { NotFoundPage } from 'views/error';
 
-const Test = Loadable(lazy(() => import('views/test')));
-const LoadersDisplay = Loadable(lazy(() => import('views/test/loaders')));
-
-/* ***Layouts**** */
+/* *** Error Utils *** */
+const RootErrorBoundary = Loadable(
+  lazy(() => import('utils/RouterErrorBoundary.jsx'))
+);
+const PageErrorBoundary = Loadable(
+  lazy(() => import('utils/RouteErrorBoundary.jsx'))
+);
+const ErrorLayout = Loadable(lazy(() => import('layouts/error')));
+// const ErrorPage = Loadable(lazy(() => import('views/error/ErrorPage')));
+/* *** Layouts *** */
 const BlankLayout = Loadable(lazy(() => import('layouts/blank')));
 const PageLayout = Loadable(lazy(() => import('layouts/page')));
 const AdminLayout = Loadable(lazy(() => import('layouts/admin')));
 const AuthLayout = Loadable(lazy(() => import('layouts/auth')));
-const RootLayout = Loadable(lazy(() => import('layouts/root')));
 const ActiveLayout = Loadable(lazy(() => import('layouts/generic-layouts')));
-/* ****Pages***** */
-const NotFoundPage = Loadable(lazy(() => import('views/error/NotFound')));
-const RootErrorBoundary = Loadable(lazy(() => import('views/error/NotFound')));
-const Landing = Loadable(lazy(() => import('views/land/landing')));
+/* *** Views *** */
 const HeroDocs = Loadable(lazy(() => import('views/land/heroDocs')));
+
+const Test = Loadable(lazy(() => import('views/test')));
+const LoadersDisplay = Loadable(lazy(() => import('views/test/loaders')));
 
 const SignInCentered = Loadable(lazy(() => import('views/auth/signIn')));
 const SignUpCentered = Loadable(lazy(() => import('views/auth/signUp')));
 
-const DataTable = Loadable(lazy(() => import('views/admin/dataTables')));
 const MainDashboard = Loadable(lazy(() => import('views/admin/default')));
+const DataTable = Loadable(lazy(() => import('views/admin/dataTables')));
 const UserProfile = Loadable(lazy(() => import('views/admin/profile')));
 
 const Templates = Loadable(lazy(() => import('views/admin/templates')));
-const WorkSpace = Loadable(lazy(() => import('views/admin/workspace')));
 const BlogPostGenerator = Loadable(
   lazy(() => import('views/admin/templates/components/BlogPostGenerator'))
 );
@@ -71,6 +79,12 @@ const CodeConverter = Loadable(
 const ThemeGenerator = Loadable(
   lazy(() => import('views/admin/templates/components/ThemeGenerator'))
 );
+const EditorInterface = Loadable(
+  lazy(() => import('views/admin/templates/components/EditorInterface'))
+);
+const TemplateGenerator = Loadable(
+  lazy(() => import('views/admin/templates/components/TemplateGenerator.jsx'))
+);
 const base = `${window.location.origin}`;
 
 // =========================================================
@@ -80,7 +94,7 @@ const baseRoutes = [
   {
     name: 'Docs',
     path: '/land',
-    breadcrumb: 'Root',
+    breadcrumb: 'Docs',
     element: <BlankLayout />,
     errorElement: <RootErrorBoundary />,
     icon: <HomeIcon />,
@@ -114,12 +128,17 @@ const testRoutes = [
     collapse: true,
     items: ['Test Home', 'Chat Test', 'Loaders Test'],
     children: [
+      // {
+      //   index: true,
+      //   path: 'test-home',
+      //   element: <Navigate to="/test/test-home" />,
+      // },
       {
+        index: true,
         name: 'Test Home',
         path: 'test-home',
         breadcrumb: 'Test Home',
         element: <Test />,
-        errorElement: <RootErrorBoundary />,
         icon: <HomeIcon />,
         collapse: false,
       },
@@ -128,7 +147,6 @@ const testRoutes = [
         path: 'chat-test',
         breadcrumb: 'Chat Test',
         element: <Chat />,
-        errorElement: <RootErrorBoundary />,
         icon: <ChatIcon />,
         collapse: false,
       },
@@ -137,22 +155,9 @@ const testRoutes = [
         path: 'loaders-test',
         breadcrumb: 'Loaders Test',
         element: <LoadersDisplay />,
-        errorElement: <RootErrorBoundary />,
         icon: <PendingIcon />,
         collapse: false,
       },
-      // {
-      //   name: 'My Projects',
-      //   disabled: true,
-      //   path: 'my-projects-test',
-      //   icon: React.createElement(Icon, {
-      //     as: MdLayers,
-      //     width: '20px',
-      //     height: '20px',
-      //     color: 'inherit',
-      //   }),
-      //   collapse: false,
-      // },
     ],
   },
 ];
@@ -168,29 +173,16 @@ const adminRoutes = [
     errorElement: <RootErrorBoundary />,
     icon: <AdminPanelSettingsRoundedIcon />,
     collapse: true,
-    items: [
-      'Main Dashboard',
-      'Data Tables',
-      {
-        name: 'Templates',
-        icon: 'documentscannerroundedicon',
-        items: [
-          'Templates Home',
-          'Original Chat Ai',
-          'Blog Post Generator',
-          'Code Converter',
-          'Theme Generator',
-          'Template Generator',
-        ],
-      },
-      'Profile',
-    ],
     children: [
+      // {
+      //   index: true,
+      //   element: <Navigate to="/admin/dashboard" />,
+      // },
       {
+        index: true,
         name: 'Main Dashboard',
         path: 'dashboard',
         breadcrumb: 'Main Dashboard',
-        exact: true,
         element: <MainDashboard />,
         icon: <DashboardIcon />,
         description: 'Main Dashboard',
@@ -204,12 +196,6 @@ const adminRoutes = [
         icon: <TableChartIcon />,
         collapse: false,
       },
-      // {
-      //   name: 'Work Space',
-      //   path: 'workspace',
-      //   element: <WorkSpace />,
-      //   icon: <WorkspaceIcon />,
-      // },
       {
         name: 'Templates',
         path: 'templates',
@@ -218,7 +204,13 @@ const adminRoutes = [
         icon: <DocumentScannerRoundedIcon />,
         collapse: true,
         children: [
+          // {
+          //   index: true,
+          //   // path: '/admin/templates',
+          //   element: <Navigate to="/admin/templates/templates-home" />,
+          // },
           {
+            index: true,
             name: 'Templates Home',
             path: 'templates-home',
             breadcrumb: 'Templates Home',
@@ -276,52 +268,24 @@ const adminRoutes = [
             name: 'Template Generator',
             path: 'generate-template',
             breadcrumb: 'Template Generator',
-            element: <ThemeGenerator />,
+            element: <TemplateGenerator />,
             link: `${base}/templates/generate-template`,
             description: 'Template Generator Description',
             functionalStatus: false,
             icon: <NoteAddIcon />,
             collapse: false,
           },
-          // {
-          //   name: 'Email Enhancer',
-          //   disabled: true,
-          //   path: 'email-enhancer',
-          //   icon: /*#__PURE__*/ React.createElement(Icon, {
-          //     as: IoMdPerson,
-          //     width: '20px',
-          //     height: '20px',
-          //     color: 'inherit',
-          //   }),
-          //   invisible: true,
-          //   collapse: false,
-          // },
-          // {
-          //   name: 'LinkedIn Message',
-          //   disabled: true,
-          //   path: 'linkedin-message',
-          //   icon: React.createElement(Icon, {
-          //     as: IoMdPerson,
-          //     width: '20px',
-          //     height: '20px',
-          //     color: 'inherit',
-          //   }),
-          //   invisible: true,
-          //   collapse: false,
-          // },
-          // {
-          //   name: 'Content Simplifier',
-          //   disabled: true,
-          //   path: 'simplifier',
-          //   icon: React.createElement(Icon, {
-          //     as: IoMdPerson,
-          //     width: '20px',
-          //     height: '20px',
-          //     color: 'inherit',
-          //   }),
-          //   invisible: true,
-          //   collapse: false,
-          // },
+          {
+            name: 'Template Editor',
+            path: 'editor',
+            breadcrumb: 'Template Editor',
+            element: <EditorInterface />,
+            link: `${base}/templates/editor`,
+            description: 'Editor Description',
+            functionalStatus: false,
+            icon: <NoteAddIcon />,
+            collapse: false,
+          },
         ],
       },
       {
@@ -332,6 +296,34 @@ const adminRoutes = [
         icon: <PersonIcon />,
         collapse: false,
       },
+      // {
+      //   path: 'templates-home',
+      //   element: <Navigate to="/admin/templates/templates-home" />,
+      // },
+      // {
+      //   path: 'original-chat-ai',
+      //   element: <Navigate to="/admin/templates/original-chat-ai" />,
+      // },
+      // {
+      //   path: 'blog-post',
+      //   element: <Navigate to="/admin/templates/blog-post" />,
+      // },
+      // {
+      //   path: 'code-converter',
+      //   element: <Navigate to="/admin/templates/code-converter" />,
+      // },
+      // {
+      //   path: 'theme-generator',
+      //   element: <Navigate to="/admin/templates/theme-generator" />,
+      // },
+      // {
+      //   path: 'generate-template',
+      //   element: <Navigate to="/admin/templates/generate-template" />,
+      // },
+      // {
+      //   path: 'editor',
+      //   element: <Navigate to="/admin/templates/editor" />,
+      // },
     ],
   },
 ];
@@ -340,6 +332,7 @@ const adminRoutes = [
 // =========================================================
 const authRoutes = [
   {
+    type: 'layout',
     name: 'Auth',
     path: '/auth',
     breadcrumb: 'Auth',
@@ -347,17 +340,24 @@ const authRoutes = [
     errorElement: <RootErrorBoundary />,
     icon: <LockIcon />,
     collapse: true,
-    items: ['Sign In', 'Sign Up', 'Logout'],
     children: [
+      // {
+      //   index: true,
+      //   element: <Navigate to="/auth/sign-in" />,
+      // },
       {
+        index: true,
         name: 'Sign In',
         path: 'sign-in',
         breadcrumb: 'Sign In',
-        // action: loginAction,
-        // loader: loginLoader,
         element: <SignInCentered />,
         icon: <LockIcon />,
         collapse: false,
+        onLoginSuccess: (token, userData) => {
+          localStorage.setItem('userToken', token);
+          localStorage.setItem('user', JSON.stringify(userData));
+          dispatch(setField({ field: 'isAuthenticated', value: true }));
+        },
       },
       {
         name: 'Sign Up',
@@ -366,6 +366,11 @@ const authRoutes = [
         element: <SignUpCentered />,
         icon: <PersonAddIcon />,
         collapse: false,
+        onSignupSuccess: (token, userData) => {
+          localStorage.setItem('userToken', token);
+          localStorage.setItem('user', JSON.stringify(userData));
+          dispatch(setField({ field: 'isAuthenticated', value: true }));
+        },
       },
       {
         name: 'Logout',
@@ -380,19 +385,6 @@ const authRoutes = [
           return redirect('/');
         },
       },
-      // {
-      //   name: 'Profile Settings',
-      //   disabled: true,
-      //   path: '/settings',
-      //   icon: React.createElement(Icon, {
-      //     as: MdOutlineManageAccounts,
-      //     width: '20px',
-      //     height: '20px',
-      //     color: 'inherit',
-      //   }),
-      //   invisible: true,
-      //   collapse: false,
-      // },
     ],
   },
 ];
@@ -401,34 +393,15 @@ const authRoutes = [
 // =========================================================
 const rootRoutes = [
   {
+    type: 'root',
     name: 'Root',
     path: '/',
-    breadcrumb: 'Root',
-    icon: <HomeIcon />,
-    element: <RootLayout />,
+    element: <BlankLayout />,
     errorElement: <RootErrorBoundary />,
-    collapse: true,
-    loader() {
-      // Our root route always provides the user, if logged in
-      return {
-        user: {
-          name: 'Admin',
-          email: 'Admin@Fmail.com',
-          avatar: 'assets/img/avatars/avatar2.png',
-          role: 'admin',
-        },
-      };
-    },
     children: [
       {
         index: true,
-        name: 'Home',
-        path: '',
-        breadcrumb: 'Home',
-        element: <Landing />,
-        icon: <HomeIcon />,
-        invisible: false,
-        collapse: false,
+        element: <Navigate to="/land/heroDocs" />,
       },
       ...baseRoutes,
       ...testRoutes,
@@ -436,15 +409,60 @@ const rootRoutes = [
       ...authRoutes,
     ],
   },
+  // {
+  //   type: 'error',
+  //   name: 'Error',
+  //   path: '/error',
+  //   element: <ErrorLayout />,
+  //   // errorElement: <RootErrorBoundary />,
+  //   children: [
+  //     {
+  //       index: true,
+  //       path: '404',
+  //       element: <Navigate to="/error/404" />,
+  //     },
+  //     {
+  //       name: '404',
+  //       element:
+  //   ],
+  // },
 ];
 // Combine all routes into a single array to be used in the router
 const routes = [...rootRoutes];
+export const extractPaths = (routes, basePath = '') => {
+  const paths = [];
+  routes.forEach(route => {
+    if (route.path) {
+      const fullPath =
+        basePath === '/' ? `/${route.path}` : `${basePath}${route.path}`;
+      paths.push(fullPath);
+      if (route.children) {
+        paths.push(
+          ...extractPaths(
+            route.children,
+            fullPath === '/' ? '' : `${fullPath}/`
+          )
+        );
+      }
+    } else if (route.index) {
+      const fullPath = basePath.endsWith('/')
+        ? basePath.slice(0, -1)
+        : basePath;
+      paths.push(fullPath);
+    }
+  });
+  return paths;
+};
 // Add items property to routes with collapse value of true
 const addItemsToRoutes = routes => {
-  routes.forEach(route => {
+  const routeLinks = extractPaths(routes);
+  routes.forEach((route, index) => {
+    const linkPath = routeLinks[index];
+    console.log(`[LINK PATH @ ${route?.name}] `, linkPath);
     if (route.collapse) {
       route.items = route.children.map(child => ({
         ...child,
+        link: linkPath,
         // name: child.name,
         // path: child.path,
         // layout: route.path,
@@ -458,10 +476,48 @@ const addItemsToRoutes = routes => {
 };
 addItemsToRoutes(routes);
 
-console.log('ROUTES', routes);
-
 export const Router = createBrowserRouter(routes);
 
-console.log('ROUTER', Router);
+export const checkARouterValue = () => {
+  const linkPaths = extractPaths(rootRoutes);
+  console.log(linkPaths);
+  console.log('ROUTES', routes);
+  console.log('ROUTER', Router);
+};
+
+export const validateLinkPath = path => {
+  const correctPaths = [
+    '/',
+    '/land',
+    '/land/heroDocs',
+    '/test',
+    '/test/test-home',
+    '/test/chat-test',
+    '/test/loaders-test',
+    '/admin',
+    '/admin/dashboard',
+    '/admin/data-tables',
+    '/admin/templates',
+    '/admin/templates/templates-home',
+    '/admin/templates/original-chat-ai',
+    '/admin/templates/blog-post',
+    '/admin/templates/code-converter',
+    '/admin/templates/theme-generator',
+    '/admin/templates/generate-template',
+    '/admin/templates/editor',
+    '/admin/profile',
+    '/auth',
+    '/auth/sign-in',
+    '/auth/sign-up',
+    '/auth/logout',
+    '/404',
+  ];
+  if (correctPaths.includes(path)) {
+    return true;
+  } else {
+    console.log('Invalid Path:', path);
+    return false;
+  }
+};
 
 export default routes;

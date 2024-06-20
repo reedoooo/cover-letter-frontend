@@ -12,7 +12,8 @@ import {
   Typography,
 } from '@mui/material';
 import { Card } from 'components/index';
-import Menu from 'components/themedV2/menu/MainMenu.jsx';
+import useMode from 'hooks/useMode';
+import Menu from 'layouts/navigation/menu/MainMenu.jsx';
 import { useMemo } from 'react';
 import {
   useGlobalFilter,
@@ -20,7 +21,6 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import useMode from 'hooks/useMode';
 
 export default function CheckTable(props) {
   const { columnsData, tableData } = props;
@@ -45,14 +45,9 @@ export default function CheckTable(props) {
   } = tableInstance;
   initialState.pageSize = 11;
   const { theme } = useMode();
-  const textColor =
-    theme.palette.mode === 'light'
-      ? theme.palette.secondaryGray[900]
-      : theme.palette.common.white;
-  const borderColor =
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[200]
-      : theme.palette.whiteAlpha[100];
+  const textColor = theme.palette.text.primary;
+  const iconColor = theme.palette.grey[500];
+  const borderColor = theme.palette.grey[200];
 
   return (
     <Card

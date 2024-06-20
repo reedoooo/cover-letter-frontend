@@ -1,6 +1,7 @@
 /* eslint-disable import/order */
 // GENERAL
 import AddIcon from '@mui/icons-material/Add';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -40,12 +41,16 @@ import WorkIcon from '@mui/icons-material/Work';
 import ChatIcon from '@mui/icons-material/Chat';
 import UpgradeIcon from '@mui/icons-material/Upgrade'; // Importing UpgradeIcon
 import CancelIcon from '@mui/icons-material/Cancel';
+import KeyIcon from '@mui/icons-material/Key';
+import FingerprintIcon from '@mui/icons-material/Fingerprint';
 // SOCIAL
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import ApiIcon from '@mui/icons-material/Api';
 
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 // USER
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import LockIcon from '@mui/icons-material/Lock';
@@ -58,7 +63,7 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import EmailIcon from '@mui/icons-material/Email';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
-
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 // CONTENT
 import ArticleIcon from '@mui/icons-material/Article';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -66,7 +71,8 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import CodeIcon from '@mui/icons-material/Code';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
-
+import SendIcon from '@mui/icons-material/Send';
+import SettingsIcon from '@mui/icons-material/Settings';
 // FONT AWESOME
 import {
   FaCameraRetro,
@@ -85,6 +91,8 @@ import { SvgIcon } from '@mui/material';
 // Named exports
 export {
   // GENERAL
+  SettingsIcon,
+  AttachFileIcon,
   AddIcon,
   ArrowForwardIcon,
   CheckCircleIcon,
@@ -126,6 +134,8 @@ export {
   ChatIcon,
   PersonAddIcon,
   CancelIcon,
+  TextSnippetIcon,
+  ApiIcon,
   // Social
   FacebookIcon,
   GitHubIcon,
@@ -149,6 +159,10 @@ export {
   ColorLensIcon,
   CodeOutlinedIcon,
   ColorLensOutlinedIcon,
+  DashboardCustomizeIcon,
+  SendIcon,
+  KeyIcon,
+  FingerprintIcon,
 
   // Font Awesome
   // Font Awesome
@@ -165,6 +179,10 @@ export {
 };
 const reedThaHumansIconLibrary = {
   // General
+  KeyIcon,
+  FingerprintIcon,
+  SettingsIcon,
+  DashboardCustomizeIcon,
   AddIcon,
   ArrowForwardIcon,
   CheckCircleIcon,
@@ -204,6 +222,9 @@ const reedThaHumansIconLibrary = {
   WorkIcon,
   ChatIcon,
   UpgradeIcon,
+  TextSnippetIcon,
+  ApiIcon,
+
   CancelIcon,
   // Social
   FacebookIcon,
@@ -211,6 +232,7 @@ const reedThaHumansIconLibrary = {
   GoogleIcon,
   LinkedInIcon,
 
+  SendIcon,
   // User
   EmojiEmotionsIcon,
   LockIcon,

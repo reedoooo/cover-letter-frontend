@@ -1,0 +1,33 @@
+import request from '@/utils/request/axios';
+export const updateChatMessage = async chat => {
+  try {
+    const response = await request.put(
+      `/uuid/chat_messages/${chat.uuid}`,
+      chat
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const deleteChatMessage = async uuid => {
+  try {
+    const response = await request.delete(`/uuid/chat_messages/${uuid}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const getChatMessagesBySessionUUID = async uuid => {
+  try {
+    const response = await request.get(
+      `/uuid/chat_messages/chat_sessions/${uuid}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

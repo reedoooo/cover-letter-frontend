@@ -22,8 +22,8 @@ import {
   useTable,
 } from 'react-table';
 import { Card } from 'components/index';
-import Menu from 'components/themedV2/menu/MainMenu.jsx';
 import useMode from 'hooks/useMode';
+import Menu from 'layouts/navigation/menu/MainMenu.jsx';
 
 // Custom components
 
@@ -51,14 +51,9 @@ export default function ColumnsTable(props) {
   initialState.pageSize = 5;
   const { theme } = useMode();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const textColor =
-    theme.palette.mode === 'light'
-      ? theme.palette.secondaryGray[900]
-      : theme.palette.common.white;
-  const borderColor =
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[200]
-      : theme.palette.whiteAlpha[100];
+  const textColor = theme.palette.text.primary;
+  const iconColor = theme.palette.grey[500];
+  const borderColor = theme.palette.grey[200];
 
   return (
     <Card

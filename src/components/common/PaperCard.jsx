@@ -18,4 +18,5 @@ const PaperCard = styled(Box)(({ theme }) => ({
   padding: theme.spacing(8),
   // background-clip: border-box;
 }));
+
 export default PaperCard;

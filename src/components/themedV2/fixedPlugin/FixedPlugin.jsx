@@ -2,11 +2,10 @@ import { Button, CssBaseline, IconButton, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import useMode from 'hooks/useMode';
-
+// FixedPlugin: This component is used to change the color mode of the application
 export const FixedPlugin = props => {
   const { ...rest } = props;
-  const { colorModeValues } = useMode();
-  const [theme, toggleColorMode] = colorModeValues();
+  const { theme, toggleColorMode } = useMode();
   const colorMode = theme.palette.mode;
   const bgButton = 'linear-gradient(135deg, #868CFF 0%, #4318FF 100%)';
 

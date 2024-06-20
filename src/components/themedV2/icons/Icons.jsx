@@ -2,20 +2,22 @@
 import { SvgIcon } from '@mui/material';
 import React from 'react';
 
-export const LogoIcon = () => (
-  <svg
-    version="1.1"
-    id="Layer_1"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    x="0px"
-    y="0px"
-    width="100%"
-    viewBox="0 0 3000 3000"
-    enableBackground="new 0 0 3000 3000"
-    xmlSpace="preserve"
-    preserveAspectRatio="xMidYMid meet"
-  >
+// export const LogoIcon = () => (
+//   <svg
+//     version="1.1"
+//     id="Layer_1"
+//     xmlns="http://www.w3.org/2000/svg"
+//     xmlnsXlink="http://www.w3.org/1999/xlink"
+//     x="0px"
+//     y="0px"
+//     width="100%"
+//     viewBox="0 0 3000 3000"
+//     enableBackground="new 0 0 3000 3000"
+//     xmlSpace="preserve"
+//     preserveAspectRatio="xMidYMid meet"
+//   >
+export const LogoIcon = props => (
+  <SvgIcon {...props} viewBox="0 0 3000 3000">
     <path
       fill="#1B0046"
       opacity="1.000000"
@@ -4774,7 +4776,7 @@ M1399.847412,1378.014893
 	C1395.989014,1385.562866 1395.374512,1381.381958 1399.847412,1378.014893
 z"
     />
-  </svg>
+  </SvgIcon>
 );
 export const OpenAiIcon = () => (
   <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

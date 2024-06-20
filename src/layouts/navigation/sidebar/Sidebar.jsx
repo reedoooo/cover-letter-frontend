@@ -14,35 +14,35 @@ import 'styles/Sidebar.css';
 function Sidebar(props) {
   const { routes } = props;
   const { theme } = useMode();
-  const btnRef = React.useRef(null);
-  const convertRoutesToMenuItems = routes => {
-    const traverseRoutes = routes => {
-      return routes.map(route => {
-        const { name, icon, children, collapse } = route;
-        const menuItem = {
-          name,
-          icon,
-        };
+  // const btnRef = React.useRef(null);
+  // const convertRoutesToMenuItems = routes => {
+  //   const traverseRoutes = routes => {
+  //     return routes.map(route => {
+  //       const { name, icon, children, collapse } = route;
+  //       const menuItem = {
+  //         name,
+  //         icon,
+  //       };
 
-        if (collapse && children) {
-          const childItems = traverseRoutes(children);
-          menuItem.items = childItems.map(child => ({
-            name: child.name,
-            icon: child.icon,
-            items: child.items,
-          }));
-        }
+  //       if (collapse && children) {
+  //         const childItems = traverseRoutes(children);
+  //         menuItem.items = childItems.map(child => ({
+  //           name: child.name,
+  //           icon: child.icon,
+  //           items: child.items,
+  //         }));
+  //       }
 
-        return menuItem;
-      });
-    };
+  //       return menuItem;
+  //     });
+  //   };
 
-    return traverseRoutes(routes);
-  };
-  useEffect(() => {
-    const menuItems = convertRoutesToMenuItems(routes);
-    console.log('menuItems', menuItems);
-  }, [routes]);
+  //   return traverseRoutes(routes);
+  // };
+  // useEffect(() => {
+  //   const menuItems = convertRoutesToMenuItems(routes);
+  //   console.log('menuItems', menuItems);
+  // }, [routes]);
 
   return (
     <Box

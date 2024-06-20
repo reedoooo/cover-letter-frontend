@@ -274,6 +274,7 @@ export const colors = {
     main: '#1C1C1C',
     light: '#212121',
     focus: '#26242C',
+    lighterFocus: '#2C2A32',
     gradient: 'linear-gradient(180deg, #1C1C1C, #26242C)',
   },
   white: {

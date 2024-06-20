@@ -1,83 +1,98 @@
-import constants from 'config/constants';
-import useApiService from 'hooks/useApiService';
+export * from './admin';
+export * from './chat_user_model_privilege';
+export * from './chat_main';
+export * from './chat_message';
+export * from './chat_model';
+export * from './chat_session';
+export * from './chat_snapshot';
+export * from './chat_active_user_session';
+export * from './content';
+export * from './export';
+export * from './user';
+export * from './auth';
+export * from './cover_letter_drafts';
 
-const { API_URL } = constants;
-export const getGeneralChatResponse = async formData => {
-  try {
-    const response = await useApiService.post('/chat/create', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Failed to create cover letter:', error);
-    throw error;
-  }
-};
-export const createCoverLetter = async formData => {
-  try {
-    const response = await useApiService.post(
-      '/cover-letter/create',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Failed to create cover letter:', error);
-    throw error;
-  }
-};
+// import constants from 'config/constants';
+// import useApiService from 'hooks/useApiService';
 
-export const saveDraft = async (draftData, contentName, userId) => {
-  const data = {
-    name: draftData.title,
-    pdf: draftData.pdf,
-    text: draftData.text,
-    html: draftData.html,
-    blocks: draftData.blocks,
-    metadata: draftData.metadata,
-  };
-  const draft = {
-    title: contentName,
-    content: data,
-  };
+// const { API_URL } = constants;
+// export const getGeneralChatResponse = async formData => {
+//   try {
+//     const response = await useApiService.post('/chat/create', formData, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error('Failed to create cover letter:', error);
+//     throw error;
+//   }
+// };
 
-  try {
-    const response = await useApiService.post('/cover-letter/save', {
-      draft,
-      userId,
-    });
-    console.log('Draft saved successfully:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error saving draft:', error);
-  }
-};
+// export const createCoverLetter = async formData => {
+//   try {
+//     const response = await useApiService.post(
+//       '/cover-letter/create',
+//       formData,
+//       {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     console.error('Failed to create cover letter:', error);
+//     throw error;
+//   }
+// };
 
-export const updateDraft = async (draftId, content, contentName, userId) => {
-  const endpoint = `${API_URL}/cover-letter/update/${draftId}`;
-  const req = { content, contentName, userId };
+// export const saveDraft = async (draftData, contentName, userId) => {
+//   const data = {
+//     name: draftData.title,
+//     pdf: draftData.pdf,
+//     text: draftData.text,
+//     html: draftData.html,
+//     blocks: draftData.blocks,
+//     metadata: draftData.metadata,
+//   };
+//   const draft = {
+//     title: contentName,
+//     content: data,
+//   };
 
-  try {
-    const response = await useApiService.put(endpoint, req);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating draft:', error);
-  }
-};
+//   try {
+//     const response = await useApiService.post('/cover-letter/save', {
+//       draft,
+//       userId,
+//     });
+//     console.log('Draft saved successfully:', response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error saving draft:', error);
+//   }
+// };
 
-export const deleteDraft = async draftId => {
-  const endpoint = `${API_URL}/cover-letter/delete/${draftId}`;
+// export const updateDraft = async (draftId, content, contentName, userId) => {
+//   const endpoint = `${API_URL}/cover-letter/update/${draftId}`;
+//   const req = { content, contentName, userId };
 
-  try {
-    const response = await useApiService.delete(endpoint);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting draft:', error);
-  }
-};
+//   try {
+//     const response = await useApiService.put(endpoint, req);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error updating draft:', error);
+//   }
+// };
+
+// export const deleteDraft = async draftId => {
+//   const endpoint = `${API_URL}/cover-letter/delete/${draftId}`;
+
+//   try {
+//     const response = await useApiService.delete(endpoint);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error deleting draft:', error);
+//   }
+// };

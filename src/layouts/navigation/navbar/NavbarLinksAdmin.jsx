@@ -11,6 +11,8 @@ import {
   Typography,
   useMediaQuery,
   Link as MuiLink,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -24,13 +26,21 @@ import {
   MdPerson,
   MdSettings,
 } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import routes from '@/routes/index';
+import {
+  CheckCircleRoundedIcon,
+  MailIcon,
+  PersonIcon,
+} from 'assets/humanIcons';
 import navImage from 'assets/img/layout/Navbar.png';
+import ProfileImg from 'assets/img/profile/user-1.png';
+import ProfileImgAuth from 'assets/img/profile/user-3.png';
+import { useAuthStore } from 'contexts/AuthProvider';
 import useMode from 'hooks/useMode';
 import { SidebarResponsive } from '../sidebar/SidebarResponsive';
 import { SearchBar } from './searchBar/SearchBar';
-
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   // width: '60%',
   background: theme.palette.common.white,
@@ -51,6 +61,8 @@ export default function HeaderLinks(props) {
   const { secondary } = props;
   const { theme } = useMode();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const { state } = useAuthStore(); // Use the useAuthStore hook to get state
+  const { isAuthenticated } = state; // Destructure isAuthenticated from state
   const [anchorEl, setAnchorEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
   const [mainMenuAnchorEl, setMainMenuAnchorEl] = useState(null);
@@ -62,7 +74,15 @@ export default function HeaderLinks(props) {
   const isMainMenuOpen = Boolean(mainMenuAnchorEl);
   const isNotificationsMenuOpen = Boolean(notificationsAnchorEl);
   const isInfoMenuOpen = Boolean(infoAnchorEl);
+  const [anchorEl2, setAnchorEl2] = useState(null);
 
+  const handleClick2 = event => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
   const handleMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -179,55 +199,82 @@ export default function HeaderLinks(props) {
             </Box>
           </MenuList>
         </Menu>
-        <IconButton onClick={handleProfileMenuOpen}>
+        {/* <IconButton onClick={handleProfileMenuOpen}>
           <Avatar
             sx={{ cursor: 'pointer', backgroundColor: '#11047A' }}
             name="Adela Parkson"
           />
-        </IconButton>
-        <Menu
-          anchorEl={profileAnchorEl}
-          open={isProfileMenuOpen}
-          onClose={handleProfileMenuClose}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        </IconButton> */}
+        <IconButton
+          size="large"
+          aria-label="show 11 new notifications"
+          color="inherit"
+          aria-controls="msgs-menu"
+          aria-haspopup="true"
+          sx={{
+            ...(anchorEl2 && {
+              color: 'primary.main',
+            }),
+          }}
+          onClick={handleClick2}
         >
-          <MenuList>
-            <Box
-              component="img"
-              src={navImage}
-              alt="Navbar Image"
-              style={{ borderRadius: '16px', marginBottom: '28px' }}
-            />
-            <Box display="flex" flexDirection="column">
-              <MuiLink href="https://horizon-ui.com/pro" target="_blank">
-                <Button fullWidth variant="contained">
-                  Buy Horizon UI PRO
-                </Button>
-              </MuiLink>
-              <MuiLink
-                href="https://horizon-ui.com/documentation/docs/introduction"
-                target="_blank"
+          <Avatar
+            src={isAuthenticated ? ProfileImgAuth : ProfileImg} // Use the authenticated profile image if authenticated
+            alt="Profile"
+            sx={{
+              width: 35,
+              height: 35,
+            }}
+          />
+        </IconButton>
+        <Box>
+          {/* ------------------------------------------- */}
+          {/* Message Dropdown */}
+          <Menu
+            id="msgs-menu"
+            anchorEl={anchorEl2}
+            keepMounted
+            open={Boolean(anchorEl2)}
+            onClose={handleClose2}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            sx={{
+              '& .MuiMenu-paper': {
+                width: '200px',
+              },
+            }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <PersonIcon width={20} />
+              </ListItemIcon>
+              <ListItemText>My Profile</ListItemText>
+            </MenuItem>
+            <MenuItem>
+              <ListItemIcon>
+                <MailIcon width={20} />
+              </ListItemIcon>
+              <ListItemText>My Account</ListItemText>
+            </MenuItem>
+            <MenuItem>
+              <ListItemIcon>
+                <CheckCircleRoundedIcon width={20} />
+              </ListItemIcon>
+              <ListItemText>My Tasks</ListItemText>
+            </MenuItem>
+            <Box mt={1} py={1} px={2}>
+              <Button
+                to="/auth/login"
+                variant="outlined"
+                color="primary"
+                component={Link}
+                fullWidth
               >
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  sx={{ borderColor: borderButton }}
-                >
-                  See Documentation
-                </Button>
-              </MuiLink>
-              <MuiLink
-                href="https://github.com/horizon-ui/horizon-ui-chakra"
-                target="_blank"
-              >
-                <Button fullWidth variant="text" color={textColor}>
-                  Try Horizon Free
-                </Button>
-              </MuiLink>
+                Logout
+              </Button>
             </Box>
-          </MenuList>
-        </Menu>
+          </Menu>
+        </Box>
       </Toolbar>
     </StyledAppBar>
   );

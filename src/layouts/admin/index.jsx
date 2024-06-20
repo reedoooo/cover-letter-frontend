@@ -3,29 +3,23 @@ import { Box, CssBaseline, Portal, useTheme } from '@mui/material';
 import { useContext, useState } from 'react';
 import { Route, Outlet, useNavigation } from 'react-router-dom';
 import routes from '@/routes/index';
-import { FooterAdmin } from 'components/index';
 import { SidebarContext } from 'contexts/SidebarProvider';
 import useDisclosure from 'hooks/useDisclosure';
 import useMode from 'hooks/useMode';
+import FooterAdmin from 'layouts/navigation/footer/FooterAdmin';
 import Navbar from 'layouts/navigation/navbar/NavbarAdmin';
 import Sidebar from 'layouts/navigation/sidebar/Sidebar';
+import { SidebarResponsive } from 'layouts/navigation/sidebar/SidebarResponsive';
+import LoadingIndicator from 'utils/LoadingIndicator';
 
 const AdminLayout = props => {
   const { ...rest } = props;
-  const { theme } = useMode();
-  const MuiTheme = useTheme();
+  // states and functions
   const [fixed] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+  // navigation states
   const navigation = useNavigation();
-
-  const {
-    isSidebarOpen,
-    isMobileSidebarOpen,
-    setSidebarOpen,
-    toggleSidebarOpen,
-    toggleMobileSidebar,
-    onClose,
-  } = useContext(SidebarContext);
-  const isUserLoggedIn = true; // Replace with actual login state
+  // functions for changing the states from components
   const getRoute = () => {
     return window.location.pathname !== '/admin/full-screen-maps';
   };
@@ -33,6 +27,7 @@ const AdminLayout = props => {
     let activeRoute = 'Default Brand Text';
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].collapse) {
+        console.log('ROUTES', routes[i].items);
         let collapseActiveRoute = getActiveRoute(routes[i].items);
         if (collapseActiveRoute !== activeRoute) {
           return collapseActiveRoute;
@@ -98,85 +93,85 @@ const AdminLayout = props => {
     }
     return activeNavbar;
   };
-  const getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.layout === '/admin') {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      if (prop.collapse) {
-        return getRoutes(prop.items);
-      }
-      if (prop.category) {
-        return getRoutes(prop.items);
+  const getMenuItems = routes => {
+    let menuItems = [];
+    for (let i = 0; i < routes.length; i++) {
+      if (routes[i].collapse) {
+        menuItems.push(...getMenuItems(routes[i].items));
+      } else if (routes[i].category) {
+        menuItems.push(...getMenuItems(routes[i].items));
       } else {
-        return null;
+        menuItems.push(routes[i]);
       }
-    });
+    }
+    return menuItems;
   };
-  console.log('FILTERED ROUTES', routes);
   const { onOpen } = useDisclosure();
   if (navigation.state === 'loading') {
-    return <h1>Loading...</h1>;
+    return <LoadingIndicator />;
   }
   return (
     <Box>
       <Box>
-        <Box
-          sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+        <SidebarContext.Provider
+          value={{
+            toggleSidebar,
+            setToggleSidebar,
+          }}
         >
-          <CssBaseline />
-          <Portal>
-            <Box>
-              <Navbar
-                onOpen={onOpen}
-                logoText={'Horizon UI Dashboard PRO'}
-                brandText={getActiveRoute(routes)}
-                secondary={getActiveNavbar(routes)}
-                message={getActiveNavbarText(routes)}
-                fixed={fixed}
-              />
-            </Box>
-          </Portal>
-          <Sidebar
-            isOpen={isSidebarOpen}
-            onOpen={toggleSidebarOpen}
-            onClose={onClose}
-            isMobileOpen={isMobileSidebarOpen}
-            onMobileOpen={toggleMobileSidebar}
-            routes={routes}
-            {...rest}
-          />
+          {/* <CssBaseline /> */}
+          <SidebarResponsive routes={routes} display="none" {...rest} />
           <Box
-            component="main"
+            id="main-panel"
             sx={{
-              mx: 'auto',
-              padding: { xs: '20px', md: '30px' },
-              paddingRight: '20px',
+              float: 'right',
               minHeight: '100vh',
-              paddingTop: '50px',
-              flexGrow: 1,
-              p: 3,
-              backgroundColor: theme.palette.background.default,
-              transition: theme =>
-                theme.transitions.create('margin', {
-                  easing: theme.transitions.easing.sharp,
-                  duration: theme.transitions.duration.leavingScreen,
-                }),
-              marginLeft: isSidebarOpen ? 240 : 0,
+              height: '100%',
+              overflow: 'auto',
+              position: 'relative',
+              maxHeight: '100%',
+              width: { xs: '100%', xl: 'calc(100% - 290px)' },
+              maxWidth: { xs: '100%', xl: 'calc(100% - 290px)' },
+              transition: 'all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)',
+              transitionDuration: '.2s, .2s, .35s',
+              transitionProperty: 'top, bottom, width',
+              transitionTimingFunction: 'linear, linear, ease',
             }}
           >
-            <Outlet />
+            <Portal>
+              <Box>
+                <Navbar
+                  onOpen={onOpen}
+                  logoText={'Human Websites'}
+                  brandText={getActiveRoute(routes)}
+                  secondary={getActiveNavbar(routes)}
+                  message={getActiveNavbarText(routes)}
+                  fixed={fixed}
+                />
+              </Box>
+            </Portal>
+            {getRoute() ? (
+              <Box
+                sx={{
+                  mx: 'auto',
+                  P: { xs: '20px', md: '30px' },
+                  // pt: `3.5rem`,
+                  minHeight: '100vh',
+                  transition: 'all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)',
+                }}
+              >
+                <Outlet
+                  context={{
+                    menuItemData: getMenuItems(routes),
+                  }}
+                />
+              </Box>
+            ) : null}
+            <Box>
+              <FooterAdmin />
+            </Box>
           </Box>
-          <Portal>
-            <FooterAdmin />
-          </Portal>
-        </Box>
+        </SidebarContext.Provider>
       </Box>
     </Box>
   );

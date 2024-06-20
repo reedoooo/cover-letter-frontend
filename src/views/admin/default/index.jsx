@@ -2,7 +2,7 @@ import { Box, Grid, Icon, Paper } from '@mui/material';
 
 import React from 'react';
 import { AddIcon } from 'assets/humanIcons';
-import { IconBox, MiniStatistics, PaperCard } from 'components/index';
+import { IconBox, MiniStatistics, PaperCard, RCBox } from 'components/index';
 import { careerTrackerTable, miniStatisticsData } from 'config/data';
 import useMode from 'hooks/useMode';
 import {
@@ -17,8 +17,8 @@ import {
 const MainDashboard = () => {
   const { theme } = useMode();
   // const inputRef = React.useRef(null);
-  const brandColor = theme.palette.secondary.main;
-  const boxBg = theme.palette.grey[300];
+  const brandColor = '#422AFB';
+  const boxBg = '#F4F7FE';
 
   // const handleMarkdownChange = content => {
   //   console.log('Markdown content:', content);
@@ -60,9 +60,12 @@ const MainDashboard = () => {
       {/* <----- Job Status Tracker Section -----> */}
 
       <Grid container mb={2} spacing={2}>
-        <PaperCard component={Grid} item xs={12} theme={theme}>
-          <JobStatusTracker tableData={careerTrackerTable} />
-        </PaperCard>
+        <Grid item xs={12}>
+          <RCBox theme={theme} variant="card">
+            <JobStatusTracker tableData={careerTrackerTable} />
+          </RCBox>
+        </Grid>
+
         {/* Placeholder for AI generated Text Editor Header */}
         <Grid item xs={12} md={6}>
           <Box sx={{ height: '100%' }}>
@@ -93,7 +96,9 @@ const MainDashboard = () => {
       {/* <----- Task Tracker Section -----> */}
 
       <Grid container mb={2} spacing={2}>
-        <TaskTracker sx={{ height: '100%' }} />
+        <Box sx={{ height: '100%' }}>
+          <TaskTracker />
+        </Box>
       </Grid>
       {/* <----- Dashboard Calendar Section -----> */}
 

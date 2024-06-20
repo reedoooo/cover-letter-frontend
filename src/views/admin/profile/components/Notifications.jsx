@@ -7,7 +7,7 @@ import {
   Box,
 } from '@mui/material';
 import React from 'react';
-import { MainMenu } from 'components/index';
+import MainMenu from 'layouts/navigation/menu/MainMenu';
 
 export default function Notifications(props) {
   return (

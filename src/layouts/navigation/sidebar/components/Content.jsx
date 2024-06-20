@@ -6,12 +6,14 @@ import styled from 'styled-components';
 import { RCFlex } from 'components/themed/RCFlex';
 import useMode from 'hooks/useMode';
 import Brand from './Brand';
-import Links from './MenuLinks';
+import Links from './old/Links';
+// import Links from './MenuLinks';
 // import NavbarLogo from './NavbarLogo';
 
 export const Content = ({ routes }) => {
   const { theme } = useMode();
   const borderRadius = theme.borders.borderRadius.md;
+  console.log('Content -> borderRadius', routes);
   return (
     <RCFlex
       direction="column"

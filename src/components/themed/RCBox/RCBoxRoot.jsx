@@ -60,8 +60,8 @@ const StyledBox = styledDefault(Box)(({ ownerState }) => {
   let backgroundValue = bgColor;
   if (variant === 'gradient') {
     backgroundValue = validGradients.find(el => el === bgColor)
-      ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
-      : white.main;
+      ? linearGradient(gradients[bgColor]?.main, gradients[bgColor]?.state)
+      : white?.main;
   } else if (validColors.find(el => el === bgColor)) {
     backgroundValue = palette[bgColor]
       ? palette[bgColor].main
@@ -99,10 +99,41 @@ const StyledBox = styledDefault(Box)(({ ownerState }) => {
     borderRadius: '1rem',
     flexGrow: 1,
   });
+  const basePaper = {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    position: 'relative',
+    minWidth: '100%',
+    overflowWrap: 'break-word',
+    maxWidth: 'max-content',
+    height: '100%',
+    borderRadius: '20px',
+    background: 'border-box rgb(255, 255, 255)',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
+  };
+  const getCardTheme = () => ({
+    ...basePaper,
+    padding: '20px 20px',
+  });
+  const getPaperTheme = () => ({
+    ...basePaper,
+    padding: theme.spacing(8),
+  });
+  const getOutlinedTheme = () => ({
+    backgroundColor: 'transparent',
+    border: `1px solid ${palette.grey[500]}`,
+    color: palette.grey[500],
+    borderRadius: '1rem',
+    padding: '1rem',
+  });
 
   return {
     ...(baseVariants.includes(variant) && getBaseTheme()),
     ...(variant === 'dashboard' && getDashboardTheme()),
+    ...(variant === 'paper' && getPaperTheme()),
+    ...(variant === 'card' && getCardTheme()),
+    ...(variant === 'outlined' && getOutlinedTheme()),
   };
 });
 

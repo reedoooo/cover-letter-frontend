@@ -38,8 +38,8 @@ import {
 // import CoverLetterFormResumeUpload from './CoverLetterFormResumeUpload';
 // import CoverLetterFormResumeUploadPreview from './CoverLetterFormResumeUploadPreview';
 // import CoverLetterFormSubmitButton from './CoverLetterFormSubmitButton';
-import FormContainerWithBackdrop from './layout/FormContainerWithBackdrop';
-import FormFields from './layout/FormFields';
+import FormContainerWithBackdrop from './data/FormContainerWithBackdrop';
+import FormFields from './data/FormFields';
 import ResultPreview from './ResultPreview';
 import {
   PdfPreviewContainer,

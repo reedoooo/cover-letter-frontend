@@ -28,9 +28,8 @@
   ],
   "liveServer.settings.root": "/public",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "always"
-    // "source.fixAll.eslint": "always",
-    // "source.fixAll.markdownlint": "always"
+    "source.organizeImports": "always",
+    "source.fixAll.eslint": "explicit"
   },
   "editor.formatOnSave": true, // Prettier auto format on save
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -39,6 +38,8 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true
   // "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"]
 }

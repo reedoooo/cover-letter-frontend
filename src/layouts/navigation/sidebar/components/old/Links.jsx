@@ -4,7 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { RCFlex } from 'components/themed/RCFlex';
 import useMode from 'hooks/useMode';
 
-const SidebarLinks = ({ routes }) => {
+const SidebarLinks = props => {
   const { theme } = useMode();
   const activeColor = theme.palette.text.primary;
   const inactiveColor = theme.palette.text.secondary;
@@ -13,8 +13,8 @@ const SidebarLinks = ({ routes }) => {
   const brandColor = theme.palette.primary.main;
   const location = useLocation();
 
-  const [activePaths, setActivePaths] = useState([]);
-  const [layout, setLayout] = useState('');
+  const { routes } = props;
+
   // verifies if routeName is the one active (in browser input)
   const activeRoute = routeName => {
     return location.pathname.includes(routeName);
@@ -23,11 +23,12 @@ const SidebarLinks = ({ routes }) => {
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = routes => {
     return routes.map((route, index) => {
-      if (route.collapse) {
-        setLayout(route.path);
-      }
-
+      console.log('Content -> createLinks -> map', route);
       if (route.category) {
+        console.log(
+          'Content -> createLinks -> map -> category',
+          route.category
+        );
         return (
           <React.Fragment key={index}>
             <Typography
@@ -47,9 +48,13 @@ const SidebarLinks = ({ routes }) => {
             {createLinks(route.items)}
           </React.Fragment>
         );
-      } else if (layout.includes(['/admin', '/auth'])) {
+      } else if (
+        route.layout === '/admin' ||
+        route.layout === '/auth' ||
+        route.layout === '/rtl'
+      ) {
         return (
-          <NavLink key={index} to={layout + route.path}>
+          <NavLink key={index} to={route.layout + route.path}>
             {route.icon ? (
               <Box>
                 <RCFlex
@@ -132,6 +137,7 @@ const SidebarLinks = ({ routes }) => {
   //  BRAND
   return createLinks(routes);
 };
+
 export default SidebarLinks;
 
 //   const activeRoute = routeName => location.pathname.includes(routeName);

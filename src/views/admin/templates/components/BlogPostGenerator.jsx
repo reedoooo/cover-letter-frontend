@@ -26,27 +26,19 @@ export default function BlogPostGenerator(props) {
   const [blogContent, setBlogContent] = useState('');
   const [outputBlogPost, setOutputBlogPost] = useState('');
   const [loading, setLoading] = useState(false);
-  const { colorModeValues } = useMode();
 
-  const borderColor = colorModeValues('gray.200', 'whiteAlpha.200');
-  const inputColor = colorModeValues('navy.700', 'white');
-  const iconColor = colorModeValues('brand.500', 'white');
-  const bgIcon = colorModeValues(
-    'linear-gradient(180deg, #FBFBFF 0%, #CACAFF 100%)',
-    'whiteAlpha.200'
-  );
-  const brandColor = colorModeValues('brand.500', 'white');
-  const buttonBg = colorModeValues('white', 'whiteAlpha.100');
-  const gray = colorModeValues('gray.500', 'white');
-  const buttonShadow = colorModeValues(
-    '14px 27px 45px rgba(112, 144, 176, 0.2)',
-    'none'
-  );
-  const textColor = colorModeValues('navy.700', 'white');
-  const placeholderColor = colorModeValues(
-    { color: 'gray.500' },
-    { color: 'whiteAlpha.600' }
-  );
+  const borderColor = '#e3e8ef';
+  const inputColor = '#1B254B';
+  const iconColor = '#422AFB';
+  const bgIcon = 'linear-gradient(180deg, #FBFBFF 0%, #CACAFF 100%)';
+
+  const brandColor = '#422AFB';
+  const buttonBg = '#fff';
+  const gray = '#697586';
+  const buttonShadow = '14px 27px 45px rgba(112, 144, 176, 0.2)';
+
+  const textColor = '#1B254B';
+  const placeholderColor = '#697586';
 
   const handleGeneratePost = async () => {
     setLoading(true);
@@ -73,7 +65,7 @@ export default function BlogPostGenerator(props) {
   return (
     <Box
       sx={{
-        width: '100%',
+        width: '80%',
         pt: { xs: '70px', md: '0px' },
         display: 'flex',
         flexDirection: 'column',

@@ -1,18 +1,8 @@
-// src/store/index.jsx
-
 import { configureStore } from '@reduxjs/toolkit';
-import appTasksReducer from './Reducers/appTasksSlice';
-import draftsReducer from './Reducers/draftSlice';
-import navigationReducer from './Reducers/navigationSlice';
-import userReducer from './Reducers/userSlice';
+import * as reducers from './Slices';
 
 export const store = configureStore({
-  reducer: {
-    tasks: appTasksReducer,
-    drafts: draftsReducer,
-    user: userReducer,
-    navigation: navigationReducer,
-  },
+  reducer: reducers,
 });
 export const dispatch = store.dispatch;
 

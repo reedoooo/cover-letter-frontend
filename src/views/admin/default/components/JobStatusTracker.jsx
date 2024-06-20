@@ -21,10 +21,10 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import { CheckCircleIcon, CancelIcon } from 'assets/humanIcons';
+import { CancelIcon, CheckCircleIcon } from 'assets/humanIcons';
 import { Card } from 'components/index';
-import Menu from 'components/themedV2/menu/MainMenu';
 import useMode from 'hooks/useMode';
+import Menu from 'layouts/navigation/menu/MainMenu';
 
 const JobStatusTracker = ({ tableData }) => {
   const columns = useMemo(() => tableData.columns, [tableData.columns]);
@@ -47,9 +47,9 @@ const JobStatusTracker = ({ tableData }) => {
   } = tableInstance;
   initialState.pageSize = 11;
 
-  const { theme, colorModeValues } = useMode();
-  const textColor = colorModeValues('secondaryGray.900', 'white');
-  const borderColor = colorModeValues('gray.200', 'whiteAlpha.100');
+  const { theme } = useMode();
+  const textColor = '#1B2559';
+  const borderColor = '#cdd5df';
 
   const renderCellData = (cell, index) => {
     const { Header } = cell.column;

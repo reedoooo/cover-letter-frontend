@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { ChevronLeft } from 'assets/humanIcons';
 import { FixedPlugin } from 'components/themedV2/fixedPlugin/FixedPlugin';
-import Footer from 'components/themedV2/footer/FooterAuth';
 import useMode from 'hooks/useMode';
+import FooterAdmin from 'layouts/navigation/footer/FooterAdmin';
 
 function AuthIllustration(props) {
   const { children, illustrationBackground } = props;
@@ -83,7 +83,7 @@ function AuthIllustration(props) {
           borderBottomLeftRadius: { lg: '120px', xl: '200px' },
         }}
       />
-      <Footer />
+      <FooterAdmin />
       <FixedPlugin />
     </Grid>
   );

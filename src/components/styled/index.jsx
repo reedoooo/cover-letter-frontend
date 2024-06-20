@@ -25,7 +25,7 @@ const StyledIconContainer = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   '&:hover': {
-    color: theme.palette.dark.main,
+    // color: theme.palette.dark.main,
     backgroundColor: theme.palette.background.hover,
   },
 }));

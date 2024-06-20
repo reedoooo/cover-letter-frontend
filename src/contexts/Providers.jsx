@@ -1,18 +1,24 @@
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import React from 'react';
-import { SidebarProvider } from 'contexts/SidebarProvider';
-import { StoreProvider } from 'contexts/StoreProvider';
 import ContextErrorBoundary from 'utils/ContextErrorBoundary';
+import * as providers from './index';
 
-// List of providers to be used in the ProviderWrapper
-const providers = [SidebarProvider, StoreProvider, StyledEngineProvider];
-// Function to wrap children with all providers
+const providerList = [
+  providers.UserProvider,
+  providers.PromptProvider,
+  providers.ChatProvider,
+  providers.AuthProvider,
+  providers.AppProvider,
+  StyledEngineProvider,
+];
+
 const ProviderWrapper = ({ children }) => {
-  return providers.reduce(
+  return providerList.reduce(
     (acc, Provider) => <Provider>{acc}</Provider>,
     children
   );
 };
+
 export const Providers = ({ children }) => {
   return (
     <ContextErrorBoundary>

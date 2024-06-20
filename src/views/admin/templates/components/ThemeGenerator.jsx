@@ -9,14 +9,9 @@ export default function ThemeGenerator(props) {
   const [themeName, setThemeName] = useState('');
   const [outputMessage, setOutputMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const { colorModeValues } = useMode();
-
-  const borderColor = colorModeValues('gray.200', 'whiteAlpha.200');
-  const inputColor = colorModeValues('navy.700', 'white');
-  const placeholderColor = colorModeValues(
-    { color: 'gray.500' },
-    { color: 'whiteAlpha.600' }
-  );
+  const borderColor = '#e3e8ef';
+  const inputColor = '#1B254B';
+  const placeholderColor = '#697586';
 
   const handleGenerateTheme = async () => {
     setLoading(true);

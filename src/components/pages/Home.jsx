@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
-import TypingAnimation from 'assets/TypingAnimation';
+import TypingAnimation from 'assets/animation/TypingAnimation';
 import PageLayout from 'components/common/PageLayout';
 import useMode from 'hooks/useMode';
 import useRouter from 'hooks/useRouter';

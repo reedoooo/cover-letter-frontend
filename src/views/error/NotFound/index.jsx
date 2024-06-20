@@ -129,7 +129,6 @@ const renderButtonStack = ({ buttonsData }) => {
 };
 const NotFoundPage = props => {
   const { theme } = useMode();
-  const error = useRouteError();
   // const navigation = useNavigation();
   const navigate = useNavigate();
   const clickHandlers = {
@@ -161,14 +160,14 @@ const NotFoundPage = props => {
           ? clickHandlers[btn.handler]
           : undefined,
   }));
-  let errType = errorProps?.errorTypes[error.status];
+  let errType = errorProps?.errorTypes[props.error.status];
   const activeErrProps = {
     theme: theme,
     statusText: errType?.statusText,
     message: errType?.message,
     mainText: errType?.mainText,
     subTextA: errType?.subTextA,
-    subTextB: error?.path,
+    subTextB: props.error?.path,
   };
 
   return (
@@ -186,14 +185,21 @@ const NotFoundPage = props => {
     >
       {renderError(activeErrProps)}
       {renderButtonStack({ buttonsData: buttonProps })}
+      {props.resetErrorBoundary && (
+        <div>
+          <button className={'retry-button'} onClick={props.resetErrorBoundary}>
+            🔄 Try Again!
+          </button>
+        </div>
+      )}
     </Box>
   );
 };
 // =========================================================
 // Exports: RootErrorBoundary, NotFoundPage
 // =========================================================
-export const RootErrorBoundary = () => {
-  return <NotFoundPage />;
+export const ErrorFallBack = props => {
+  return <NotFoundPage {...props} />;
 };
 
 export default NotFoundPage;

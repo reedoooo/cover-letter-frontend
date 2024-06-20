@@ -96,6 +96,7 @@ const careerTrackerTable = {
   data: tableDataCareerTracker,
 };
 const base = `${window.location.origin}`;
+const host = 'http://localhost:3000';
 const templateData = [
   {
     id: uniqueId('templates-test-'),
@@ -107,6 +108,7 @@ const templateData = [
     path: '/test/test-home',
     route: `${base}/test/test-home`,
     link: `${base}/test/test-home`,
+    a: `${host}/test/test-home`,
   },
   {
     id: uniqueId('templates-test-'),
@@ -118,6 +120,7 @@ const templateData = [
     path: '/test/chat-test',
     route: `${base}/test/chat-test`,
     link: `${base}/test/chat-test`,
+    a: `${host}/test/chat-test`,
   },
   {
     id: uniqueId('templates-test-'),
@@ -129,6 +132,7 @@ const templateData = [
     link: `${base}/test/loaders-test`,
     name: 'Loaders Test',
     path: '/test/loaders-test',
+    a: `${host}/test/loaders-test`,
     // breadcrumb: 'Loaders Test',
     // element: <LoadersDisplay />,
     // errorElement: <RootErrorBoundary />,
@@ -184,18 +188,9 @@ const templateData = [
     route: `${base}/admin/profile`,
     link: `${base}/admin/profile`,
   },
-  // {
-  //   id: uniqueId('admin-'),
-  //   title: 'Work Space',
-  //   name: 'Work Space',
-  //   description: 'Work Space Description',
-  //   icon: <WorkspaceIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
-  //   path: '/admin/workspace',
-  //   route: `${base}/admin/workspace`,
-  //   link: `${base}/admin/workspace`,
-  // },
   {
     id: uniqueId('templates-'),
+    type: 'template',
     title: 'Original Chat Ai',
     name: 'Original Chat Ai',
     description: 'Original Chat Ai Description',
@@ -204,9 +199,11 @@ const templateData = [
     path: '/admin/templates/original-chat-ai',
     route: `${base}/admin/templates/original-chat-ai`,
     link: `${base}/admin/templates/original-chat-ai`,
+    a: `${host}/admin/templates/original-chat-ai/*`,
   },
   {
     id: uniqueId('templates-'),
+    type: 'template',
     title: 'Blog Post Generator',
     name: 'Blog Post Generator',
     description: 'Blog Post Generator Description',
@@ -215,9 +212,11 @@ const templateData = [
     path: '/admin/templates/blog-post',
     route: `${base}/admin/templates/blog-post`,
     link: `${base}/admin/templates/blog-post`,
+    a: `${host}/admin/templates/blog-post/*`,
   },
   {
     id: uniqueId('templates-'),
+    type: 'template',
     title: 'Code Converter',
     name: 'Code Converter',
     description: 'Code Converter Description',
@@ -225,9 +224,23 @@ const templateData = [
     path: '/admin/templates/code-converter',
     route: `${base}/admin/templates/code-converter`,
     link: `${base}/admin/templates/code-converter`,
+    a: `${host}/admin/templates/code-converter/*`,
   },
   {
     id: uniqueId('templates-'),
+    type: 'template',
+    title: 'Editor',
+    name: 'Editor',
+    description: 'Editor Description',
+    icon: <CodeIcon sx={{ width: 20, height: 20, color: 'inherit' }} />,
+    path: '/admin/templates/editor',
+    route: `${base}/admin/templates/editor`,
+    link: `${base}/admin/templates/editor`,
+    a: `${host}/admin/templates/editor/*`,
+  },
+  {
+    id: uniqueId('templates-'),
+    type: 'template',
     title: 'Theme Generator',
     name: 'Theme Generator',
     description: 'Theme Generator Description',
@@ -235,9 +248,11 @@ const templateData = [
     path: '/admin/templates/theme-generator',
     route: `${base}/admin/templates/theme-generator`,
     link: `${base}/admin/templates/theme-generator`,
+    a: `${host}/admin/templates/theme-generator`,
   },
   {
     id: uniqueId('templates-'),
+    type: 'template',
     title: 'Template Generator',
     name: 'Template Generator',
     description: 'Template Generator Description',
@@ -245,6 +260,7 @@ const templateData = [
     path: '/admin/templates/generate-template',
     route: `${base}/admin/templates/generate-template`,
     link: `${base}/admin/templates/generate-template`,
+    a: `${host}/admin/templates/generate-template`,
   },
   {
     id: uniqueId('template-'),

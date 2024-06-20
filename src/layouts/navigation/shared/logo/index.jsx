@@ -1,6 +1,6 @@
 import { SvgIcon, styled, Link } from '@mui/material';
 import React from 'react';
-import LogoSvg from 'assets/logo';
+import LogoSvg from 'assets/logo.svg';
 
 // Styled link component for the logo
 const LinkStyled = styled(Link)(({ theme }) => ({

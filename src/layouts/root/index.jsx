@@ -1,6 +1,7 @@
 import { styled, Container, Box, Grid, CssBaseline } from '@mui/material';
 import React, { useState } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
+import LoadingIndicator from 'utils/LoadingIndicator';
 
 const RootLayout = props => {
   const { ...rest } = props;
@@ -21,7 +22,7 @@ const RootLayout = props => {
   // };
   // const { onOpen } = useDisclosure();
   if (navigation.state === 'loading') {
-    return <h1>Loading...</h1>;
+    return <LoadingIndicator />;
   }
   return (
     <Box

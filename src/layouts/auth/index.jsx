@@ -1,90 +1,121 @@
 // LAYOUTS: auth/index.js
-import { Box, Card, CssBaseline, Portal } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { useState } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
-import routes from '@/routes/index';
-import { PageLayout } from 'components/index';
-import Footer from 'components/themedV2/footer/FooterAuth';
+import { SidebarContext } from 'contexts/SidebarProvider';
 import useDisclosure from 'hooks/useDisclosure';
-import useMode from 'hooks/useMode';
-import AuthNavbar from 'layouts/navigation/navbar/NavbarAuth';
+import LoadingIndicator from 'utils/LoadingIndicator';
 
 // Custom Material UI theme
-export const AuthLayout = props => {
-  const { theme } = useMode();
-  const { ...rest } = props;
-  const authBg = theme.palette.background.default;
+export const AuthLayout = () => {
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+  // navigation states
   const navigation = useNavigation();
-  const [fixed] = useState(false);
+  // const { theme } = useMode();
+  // const authBg = theme.palette.background.default;
+  // const navigation = useNavigation();
+  // const [fixed] = useState(false);
   const getRoute = () => {
     return window.location.pathname !== '/auth/full-screen-maps';
   };
-  const getActiveRoute = routes => {
-    const route = routes.find(r => window.location.pathname.includes(r.path));
-    return route ? route.name : 'Default';
-  };
-
-  const getActiveNavbar = routes => {
-    const route = routes.find(r => window.location.pathname.includes(r.path));
-    return route ? route.icon : null;
-  };
-
-  const getActiveNavbarText = routes => {
-    const route = routes.find(r => window.location.pathname.includes(r.path));
-    return route ? route.description : '';
-  };
-  console.log('FILTERED ROUTES', routes);
+  // const getRoutes = routes => {
+  //   return routes.map((prop, key) => {
+  //     if (prop.layout === '/auth') {
+  //       return (
+  //         <Route
+  //           path={prop.layout + prop.path}
+  //           component={prop.component}
+  //           key={key}
+  //         />
+  //       );
+  //     }
+  //     if (prop.collapse) {
+  //       return getRoutes(prop.items);
+  //     }
+  //     if (prop.category) {
+  //       return getRoutes(prop.items);
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // };
+  const authBg = '#f5f5f5';
+  // const getActiveRoute = routes => {
+  //   const route = routes.find(r => window.location.pathname.includes(r.path));
+  //   return route ? route.name : 'Default';
+  // };
+  // const getActiveNavbar = routes => {
+  //   const route = routes.find(r => window.location.pathname.includes(r.path));
+  //   return route ? route.icon : null;
+  // };
+  // const getActiveNavbarText = routes => {
+  //   const route = routes.find(r => window.location.pathname.includes(r.path));
+  //   return route ? route.description : '';
+  // };
+  // console.log('FILTERED ROUTES', routes);
   const { onOpen } = useDisclosure();
   if (navigation.state === 'loading') {
-    return <h1>Loading...</h1>;
+    return <LoadingIndicator />;
   }
   return (
-    <PageLayout>
-      <CssBaseline />
-      <Portal>
-        <Box>
-          <AuthNavbar
-            onOpen={onOpen}
-            logoText={'Horizon UI Dashboard PRO'}
-            brandText={getActiveRoute(routes)}
-            secondary={getActiveNavbar(routes)}
-            message={getActiveNavbarText(routes)}
-            fixed={fixed}
-          />
-        </Box>
-      </Portal>
-      <Box
-        sx={{
-          backgroundColor: authBg,
-          float: 'right',
-          minHeight: '100vh',
-          height: '100%',
-          position: 'relative',
-          width: '100%',
-          transition: 'all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)',
-          transitionDuration: '.2s, .2s, .35s',
-          transitionProperty: 'top, bottom, width',
-          transitionTimingFunction: 'linear, linear, ease',
+    <Box>
+      <SidebarContext.Provider
+        value={{
+          toggleSidebar,
+          setToggleSidebar,
         }}
       >
-        <Card
-          component={Box}
-          minHeight="100vh"
-          mx="auto"
-          pr={20}
-          pt={50}
-          p={{
-            xs: 10,
-            md: 20,
+        <CssBaseline />
+        {/* <Portal>
+          <Box>
+            <AuthNavbar
+              onOpen={onOpen}
+              logoText={'Horizon UI Dashboard PRO'}
+              brandText={getActiveRoute(routes)}
+              secondary={getActiveNavbar(routes)}
+              message={getActiveNavbarText(routes)}
+              fixed={fixed}
+            />
+          </Box>
+        </Portal> */}
+        <Box
+          sx={{
+            backgroundColor: authBg,
+            float: 'right',
+            minHeight: '100vh',
+            height: '100%',
+            position: 'relative',
+            width: '100%',
+            transition: 'all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)',
+            transitionDuration: '.2s, .2s, .35s',
+            transitionProperty: 'top, bottom, width',
+            transitionTimingFunction: 'linear, linear, ease',
           }}
         >
-          <Outlet />
-        </Card>
-        <Box>
-          <Footer />
+          {/* {getRoute() ? (
+            <Box mx="auto" minHeight="100vh">
+              <Outlet />
+            </Box>
+          ) : null} */}
+          {/* <Card
+            component={Box}
+            minHeight="100vh"
+            mx="auto"
+            pr={20}
+            pt={50}
+            p={{
+              xs: 10,
+              md: 20,
+            }}
+          >
+            <Outlet />
+          </Card> */}
+          <Box mx="auto" minHeight="100vh">
+            <Outlet />
+          </Box>
         </Box>
-      </Box>
-    </PageLayout>
+      </SidebarContext.Provider>
+    </Box>
   );
 };
 export default AuthLayout;

@@ -18,7 +18,7 @@ import {
 import { motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import TypingAnimation from 'assets/TypingAnimation';
+import TypingAnimation from 'assets/animation/TypingAnimation';
 import { PageLayout } from 'components/index';
 import RCTypography from 'components/themed/RCTypography';
 import { templateData } from 'config/data';

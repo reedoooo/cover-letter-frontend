@@ -29,6 +29,8 @@ import linearProgress from './linearProgress';
 import link from './link';
 import { baseMenu, menuItem } from './menu';
 import skeleton from './skeleton';
+import stat from './stat';
+// import stat from './stat';
 import svgIcon from './svgIcon';
 
 export default {
@@ -38,6 +40,10 @@ export default {
       ...globals,
       ...container,
     },
+  },
+  // === CUSTOM COMPONENTS ===
+  MuiStat: {
+    ...stat,
   },
   // === LOADING AND PROGRESS ===
   MuiLinearProgress: {
@@ -73,32 +79,34 @@ export default {
   // MuiTableCell: { ...tableCell },
   // === BUTTONS ===
   MuiButton: {
-    root: { ...root.base },
-    // contained: { ...contained.base },
-    // containedSizeSmall: { ...contained.small },
-    // containedSizeLarge: { ...contained.large },
-    // containedPrimary: { ...contained.primary },
-    // containedSecondary: { ...contained.secondary },
-    outlined: { ...outlined.base },
-    outlinedSizeSmall: { ...outlined.small },
-    outlinedSizeLarge: { ...outlined.large },
-    outlinedPrimary: { ...outlined.primary },
-    outlinedSecondary: { ...outlined.secondary },
+    styleOverrides: {
+      root: { ...root.base },
+      // contained: { ...contained.base },
+      // containedSizeSmall: { ...contained.small },
+      // containedSizeLarge: { ...contained.large },
+      // containedPrimary: { ...contained.primary },
+      // containedSecondary: { ...contained.secondary },
+      outlined: { ...outlined.base },
+      outlinedSizeSmall: { ...outlined.small },
+      outlinedSizeLarge: { ...outlined.large },
+      outlinedPrimary: { ...outlined.primary },
+      outlinedSecondary: { ...outlined.secondary },
 
-    // outlinedInfo: { ...outlined.info },
-    // outlinedError: { ...outlined.error },
-    // outlinedSuccess: { ...outlined.success },
-    // holo: { ...holo.base },
-    // holoSizeSmall: { ...holo.small },
-    // holoSizeMedium: { ...holo.medium },
-    // holoSizeLarge: { ...holo.large },
-    // holoPrimary: { ...holo.primary },
-    // holoSecondary: { ...holo.secondary },
-    // text: { ...buttonText.base },
-    // textSizeSmall: { ...buttonText.small },
-    // textSizeLarge: { ...buttonText.large },
-    // textPrimary: { ...buttonText.primary },
-    // textSecondary: { ...buttonText.secondary },
+      // outlinedInfo: { ...outlined.info },
+      // outlinedError: { ...outlined.error },
+      // outlinedSuccess: { ...outlined.success },
+      // holo: { ...holo.base },
+      // holoSizeSmall: { ...holo.small },
+      // holoSizeMedium: { ...holo.medium },
+      // holoSizeLarge: { ...holo.large },
+      // holoPrimary: { ...holo.primary },
+      // holoSecondary: { ...holo.secondary },
+      // text: { ...buttonText.base },
+      // textSizeSmall: { ...buttonText.small },
+      // textSizeLarge: { ...buttonText.large },
+      // textPrimary: { ...buttonText.primary },
+      // textSecondary: { ...buttonText.secondary },
+    },
   },
   MuiIcon: { ...icon },
   MuiSvgIcon: { ...svgIcon },

@@ -1,6 +1,6 @@
+const { OpenAIStream } = require('utils/chatStream');
 const { constants } = require('config/constants');
 const useApiService = require('hooks/useApiService');
-const { OpenAIStream } = require('utils/chatStream');
 
 const { API_URL, OPENAI_API_KEY } = constants;
 

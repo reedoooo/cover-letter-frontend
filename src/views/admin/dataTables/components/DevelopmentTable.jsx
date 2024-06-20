@@ -16,7 +16,8 @@ import {
   AppleLogo,
   WindowsLogo,
 } from 'components/themedV2/icons/Icons';
-import Menu from 'components/themedV2/menu/MainMenu.jsx';
+import useMode from 'hooks/useMode';
+import Menu from 'layouts/navigation/menu/MainMenu.jsx';
 import { useMemo } from 'react';
 import {
   useGlobalFilter,
@@ -24,7 +25,6 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import useMode from 'hooks/useMode';
 
 export default function DevelopmentTable(props) {
   const { columnsData, tableData } = props;
@@ -49,22 +49,19 @@ export default function DevelopmentTable(props) {
   } = tableInstance;
   initialState.pageSize = 11;
   const { theme } = useMode();
-  const textColor =
-    theme.palette.mode === 'light'
-      ? theme.palette.secondaryGray[900]
-      : theme.palette.common.white;
-  const iconColor = theme.palette.secondaryGray[500];
-  const borderColor =
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[200]
-      : theme.palette.whiteAlpha[100];
+  const textColor = theme.palette.text.primary;
+  const iconColor = theme.palette.grey[500];
+  const borderColor = theme.palette.grey[200];
 
   return (
     <Card
-      direction="column"
-      width="100%"
-      px="0px"
-      overflowX={{ xs: 'scroll', lg: 'hidden' }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        overflowX: { xs: 'scroll', lg: 'hidden' },
+        // padding: theme.spacing(4),
+      }}
     >
       <Box
         display="flex"

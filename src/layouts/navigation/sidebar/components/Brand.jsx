@@ -1,23 +1,26 @@
 import { Box, SvgIcon, useTheme } from '@mui/material';
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
+import { LogoIcon } from 'components/index';
 import { RCFlex } from 'components/themed/RCFlex';
 import useMode from 'hooks/useMode';
-import Loadable from 'layouts/navigation/shared/loadable';
+import LoadingIndicator from 'utils/LoadingIndicator';
+// import Loadable from 'layouts/navigation/shared/loadable';
 
 const StyledLogoIcon = styled(SvgIcon)(({ theme }) => ({
-  width: '100%',
-  height: '100%',
+  width: 45,
+  height: 45,
   borderRadius: '50%',
-  boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+  overflow: 'hidden',
 }));
 
-const LazyLogoIcon = Loadable(() => import('components/index').LogoIcon);
+// const LazyLogoIcon = Loadable(() => import('components/index').LogoIcon);
 
 const NavbarLogo = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<LoadingIndicator />}>
     <StyledLogoIcon>
-      <LazyLogoIcon />
+      <LogoIcon />
     </StyledLogoIcon>
   </Suspense>
 );
@@ -38,8 +41,6 @@ const HSeparator = props => {
 
 export function SidebarBrand() {
   const { theme } = useMode();
-  const logoColor = theme.palette.mode === 'light' ? 'navy.700' : 'white';
-
   return (
     <RCFlex align="center" direction="column">
       <NavbarLogo />

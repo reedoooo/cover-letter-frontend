@@ -5,8 +5,7 @@ import { Card } from '..';
 
 export default function MessageBox(props) {
   const { output } = props;
-  const { colorModeValues } = useMode();
-  const textColor = colorModeValues('navy.700', 'white');
+  const textColor = '#1B254B';
 
   return (
     <Card

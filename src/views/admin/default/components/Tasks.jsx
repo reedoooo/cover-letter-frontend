@@ -10,17 +10,15 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
-import React from 'react';
 import { MdCheckBox, MdDragIndicator } from 'react-icons/md';
 import IconBox from 'components/themedV2/icons/IconBox';
-import Menu from 'components/themedV2/menu/MainMenu.jsx';
 import useMode from 'hooks/useMode';
+import Menu from 'layouts/navigation/menu/MainMenu.jsx';
 
 const Conversion = props => {
-  const { theme, colorModeValues } = useMode();
-  const textColor = colorModeValues('secondaryGray.900', 'white');
-  const boxBg = colorModeValues('secondaryGray.300', 'navy.700');
-  const brandColor = colorModeValues('brand.500', 'brand.400');
+  const textColor = '#1B2559';
+  const boxBg = '#F4F7FE';
+  const brandColor = '#422AFB';
   return (
     <Card
       sx={{
@@ -74,6 +72,7 @@ const Conversion = props => {
     </Card>
   );
 };
+
 export function Tasks() {
   <Box paddingTop={{ xs: '130px', md: '80px', xl: '80px' }}>
     <Conversion />

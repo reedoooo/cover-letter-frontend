@@ -22,5 +22,5 @@
     },
   },
   "exclude": ["node_modules", "build"],
-  "include": ["src", "cleanup/savedUnused", "cleanup/cleanupAdmin"],
+  "include": ["src", "cleanup/savedUnused", "cleanup/cleanupAdmin", "cleanup/scroll", "cleanup/header", "cleanup/v6", "cleanup/user", "cleanup/prompt", "cleanup/colormode", "cleanup/chat", "cleanup/auth", "cleanup/app"],
 }
